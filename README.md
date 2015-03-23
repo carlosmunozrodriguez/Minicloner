@@ -1,2 +1,2 @@
 # minicloner
-Small library to deep clone objects
+Small library for .NET to deep clone objects
