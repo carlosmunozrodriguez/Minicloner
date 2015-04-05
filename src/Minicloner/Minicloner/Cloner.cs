@@ -35,6 +35,20 @@ namespace Minicloner
 
             var type = source.GetType();
 
+            // TODO: Find out if the cloned instance is really a clone or differs in something from the original array
+            var array = source as Array;
+            if (array != null)
+            {
+                var newArray = Array.CreateInstance(type.GetElementType(), array.Length);
+
+                for (var i = 0; i < array.Length; i++)
+                {
+                    newArray.SetValue(array.GetValue(i), i);
+                }
+
+                return newArray;
+            }
+
             var cloned = FormatterServices.GetUninitializedObject(type);
 
             // TODO: Clone property values to cloned object
