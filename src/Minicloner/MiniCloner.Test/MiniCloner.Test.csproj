@@ -51,11 +51,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClonerClassesTests.cs" />
     <Compile Include="ClonerDateTimeTests.cs" />
     <Compile Include="ClonerNullableTypesTests.cs" />
     <Compile Include="ClonerIntPtrTests.cs" />
     <Compile Include="ClonerStringTests.cs" />
     <Compile Include="ClonerPrimitiveTypesTests.cs" />
+    <Compile Include="ClonerObject.cs" />
+    <Compile Include="ClonerStructsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
