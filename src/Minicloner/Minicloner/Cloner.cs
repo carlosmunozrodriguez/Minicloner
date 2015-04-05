@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Runtime.Serialization;
 
 namespace Minicloner
@@ -7,10 +8,12 @@ namespace Minicloner
     {
         public T Clone<T>(T source)
         {
-            if (source == null || source.GetType().IsValueType)
-            {
-                return source;
-            }
+            #region This code seems to be redundant
+            //if (source == null || source.GetType().IsValueType)
+            //{
+            //    return source;
+            //}
+            #endregion
 
             return (T)CloneRefenceType(source);
         }
@@ -30,11 +33,18 @@ namespace Minicloner
                 return String.Copy(s);
             }
 
-            var cloned = FormatterServices.GetUninitializedObject(source.GetType());
+            var type = source.GetType();
 
-            // TODO: Copy fields, and property values to cloned object
+            var cloned = FormatterServices.GetUninitializedObject(type);
+
+            // TODO: Clone property values to cloned object
             // TODO: Deep clone recursively
             // TODO: Allow circular references
+
+            foreach (var fieldInfo in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            {
+                fieldInfo.SetValue(cloned, fieldInfo.GetValue(source));
+            }
 
             return cloned;
         }
