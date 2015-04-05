@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClonerArrayTests.cs" />
     <Compile Include="ClonerClassesTests.cs" />
     <Compile Include="ClonerDateTimeTests.cs" />
     <Compile Include="ClonerNullableTypesTests.cs" />
