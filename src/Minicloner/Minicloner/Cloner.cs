@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 
@@ -39,11 +41,31 @@ namespace Minicloner
             var array = source as Array;
             if (array != null)
             {
-                var newArray = Array.CreateInstance(type.GetElementType(), array.Length);
+                // Unoptimized
+                //var lengths = Enumerable.Range(0, array.Rank)
+                //    .Select(x => array.GetLength(x));
 
-                for (var i = 0; i < array.Length; i++)
+                var lengths = new List<int>(array.Rank);
+                for (var i = 0; i < array.Rank; i++)
                 {
-                    newArray.SetValue(array.GetValue(i), i);
+                    lengths.Add(array.GetLength(i));
+                }
+
+                var newArray = Array.CreateInstance(type.GetElementType(), lengths.ToArray());
+
+                IEnumerable<IEnumerable<int>> listWithEmptyListOfIndices = new List<List<int>> { new List<int>() };
+                var indicesList = lengths
+                    .Select(length => Enumerable.Range(0, length))
+                    .Aggregate(
+                        listWithEmptyListOfIndices,
+                        (accumulatedCartesianProduct, rightSideOfCartesianProduct) => from partialIndicesList in accumulatedCartesianProduct
+                                                                                      from nextIndex in rightSideOfCartesianProduct
+                                                                                      select partialIndicesList.Concat(new[] { nextIndex }))
+                    .Select(indices => indices.ToArray());
+
+                foreach (var indices in indicesList)
+                {
+                    newArray.SetValue(array.GetValue(indices), indices);
                 }
 
                 return newArray;
