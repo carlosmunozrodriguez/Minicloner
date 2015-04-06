@@ -46,16 +46,18 @@ namespace Minicloner
                 //    .Select(x => array.GetLength(x));
 
                 var lengths = new List<int>(array.Rank);
+                var lowerBounds = new List<int>(array.Rank);
                 for (var i = 0; i < array.Rank; i++)
                 {
                     lengths.Add(array.GetLength(i));
+                    lowerBounds.Add(array.GetLowerBound(i));
                 }
 
-                var newArray = Array.CreateInstance(type.GetElementType(), lengths.ToArray());
+                var newArray = Array.CreateInstance(type.GetElementType(), lengths.ToArray(), lowerBounds.ToArray());
 
                 IEnumerable<IEnumerable<int>> listWithEmptyListOfIndices = new List<List<int>> { new List<int>() };
                 var indicesList = lengths
-                    .Select(length => Enumerable.Range(0, length))
+                    .Select((length, rankIndex) => Enumerable.Range(lowerBounds[rankIndex], length))
                     .Aggregate(
                         listWithEmptyListOfIndices,
                         (accumulatedCartesianProduct, rightSideOfCartesianProduct) => from partialIndicesList in accumulatedCartesianProduct
