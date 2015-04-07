@@ -75,7 +75,7 @@ namespace Minicloner
 
             foreach (var indices in indicesList)
             {
-                newArray.SetValue(array.GetValue(indices), indices);
+                newArray.SetValue(CloneObject(array.GetValue(indices)), indices);
             }
 
             return newArray;
@@ -91,13 +91,10 @@ namespace Minicloner
             var type = source.GetType();
             var cloned = FormatterServices.GetUninitializedObject(type);
 
-            // TODO: Clone property values to cloned object
-            // TODO: Deep clone recursively
             // TODO: Allow circular references
-
             foreach (var fieldInfo in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
             {
-                fieldInfo.SetValue(cloned, fieldInfo.GetValue(source));
+                fieldInfo.SetValue(cloned, CloneObject(fieldInfo.GetValue(source)));
             }
 
             return cloned;
