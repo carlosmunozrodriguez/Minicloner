@@ -80,8 +80,97 @@ namespace Minicloner.Tests
             Assert.NotSame(source, cloned);
             Assert.Equal(source.GetInt32PropertyWithPrivateSetter(), cloned.GetInt32PropertyWithPrivateSetter());
         }
+
+        [Fact]
+        public void CloneClassWithReferenceTypeProperty()
+        {
+            var source = new ClassWithReferenceTypeProperty
+            {
+                ReferenceTypeProperty = new ClassWithPublicAutomaticallyImplementedProperty
+                {
+                    PublicInt32Property = 1
+                }
+            };
+
+            var cloned = new Cloner().Clone(source);
+
+            Assert.IsType<ClassWithReferenceTypeProperty>(cloned);
+            Assert.NotSame(source, cloned);
+
+            Assert.IsType<ClassWithPublicAutomaticallyImplementedProperty>(cloned.ReferenceTypeProperty);
+            Assert.NotSame(source.ReferenceTypeProperty, cloned.ReferenceTypeProperty);
+
+            Assert.IsType<Int32>(cloned.ReferenceTypeProperty.PublicInt32Property);
+            Assert.Equal(source.ReferenceTypeProperty.PublicInt32Property, cloned.ReferenceTypeProperty.PublicInt32Property);
+        }
+
+        [Fact]
+        public void CloneClassWithTwoLevelsOfReferenceTypeProperties()
+        {
+            var source = new ClassWithTwoLevelsOfReferenceTypeProperties
+            {
+                ReferenceTypeProperty = new ClassWithPublicAutomaticallyImplementedProperty
+                {
+                    PublicInt32Property = 1
+                },
+                TwoLeveledReferenceTypeProperty = new ClassWithReferenceTypeProperty
+                {
+                    ReferenceTypeProperty = new ClassWithPublicAutomaticallyImplementedProperty
+                    {
+                        PublicInt32Property = 2
+                    }
+                }
+            };
+
+            var cloned = new Cloner().Clone(source);
+
+            Assert.IsType<ClassWithTwoLevelsOfReferenceTypeProperties>(cloned);
+            Assert.NotSame(source, cloned);
+
+            Assert.IsType<ClassWithPublicAutomaticallyImplementedProperty>(cloned.ReferenceTypeProperty);
+            Assert.NotSame(source.ReferenceTypeProperty, cloned.ReferenceTypeProperty);
+
+            Assert.IsType<Int32>(cloned.ReferenceTypeProperty.PublicInt32Property);
+            Assert.Equal(source.ReferenceTypeProperty.PublicInt32Property, cloned.ReferenceTypeProperty.PublicInt32Property);
+
+            Assert.IsType<ClassWithReferenceTypeProperty>(cloned.TwoLeveledReferenceTypeProperty);
+            Assert.NotSame(source.TwoLeveledReferenceTypeProperty, cloned.TwoLeveledReferenceTypeProperty);
+
+            Assert.IsType<ClassWithPublicAutomaticallyImplementedProperty>(cloned.TwoLeveledReferenceTypeProperty.ReferenceTypeProperty);
+            Assert.NotSame(source.TwoLeveledReferenceTypeProperty.ReferenceTypeProperty, cloned.TwoLeveledReferenceTypeProperty.ReferenceTypeProperty);
+
+            Assert.IsType<Int32>(cloned.TwoLeveledReferenceTypeProperty.ReferenceTypeProperty.PublicInt32Property);
+            Assert.Equal(source.TwoLeveledReferenceTypeProperty.ReferenceTypeProperty.PublicInt32Property, cloned.TwoLeveledReferenceTypeProperty.ReferenceTypeProperty.PublicInt32Property);
+        }
+
+        [Fact]
+        public void CloneArrayWithReferenceTypeElements()
+        {
+            ClassWithPublicAutomaticallyImplementedProperty[] source =
+            {
+                new ClassWithPublicAutomaticallyImplementedProperty{ PublicInt32Property = 1 }, 
+                new ClassWithPublicAutomaticallyImplementedProperty{ PublicInt32Property = 2 } 
+            };
+
+            var cloned = new Cloner().Clone(source);
+
+            Assert.IsType<ClassWithPublicAutomaticallyImplementedProperty[]>(cloned);
+            Assert.NotSame(cloned, source);
+
+            Assert.Equal(2, cloned.Length);
+            for (var i = 0; i < cloned.Length; i++)
+            {
+                Assert.IsType<ClassWithPublicAutomaticallyImplementedProperty>(cloned[i]);
+                Assert.NotSame(source[i], cloned[i]);
+
+                Assert.IsType<Int32>(cloned[i].PublicInt32Property);
+                Assert.Equal(source[i].PublicInt32Property, cloned[i].PublicInt32Property);
+            }
+        }
+
     }
 
+    #region Class Definitions
     public class EmptyClass
     {
     }
@@ -137,4 +226,17 @@ namespace Minicloner.Tests
             return Int32PropertyWithPrivateGetter;
         }
     }
+
+    public class ClassWithReferenceTypeProperty
+    {
+        public ClassWithPublicAutomaticallyImplementedProperty ReferenceTypeProperty { get; set; }
+    }
+
+    public class ClassWithTwoLevelsOfReferenceTypeProperties
+    {
+        public ClassWithPublicAutomaticallyImplementedProperty ReferenceTypeProperty { get; set; }
+        public ClassWithReferenceTypeProperty TwoLeveledReferenceTypeProperty { get; set; }
+    }
+
+    #endregion
 }
