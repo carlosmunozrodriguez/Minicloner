@@ -1,8 +1,7 @@
 ﻿using System;
-using Minicloner;
 using Xunit;
 
-namespace MiniCloner.Test
+namespace Minicloner.Tests
 {
     public class ClonerIntPtrTests
     {

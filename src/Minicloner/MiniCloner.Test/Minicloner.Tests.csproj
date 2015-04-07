@@ -9,8 +9,8 @@
     <ProjectGuid>{8A660009-1F0E-4FD1-BD2C-52CC9C3E18FB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MiniCloner.Test</RootNamespace>
-    <AssemblyName>MiniCloner.Test</AssemblyName>
+    <RootNamespace>Minicloner.Tests</RootNamespace>
+    <AssemblyName>Minicloner.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>bb0b88a1</NuGetPackageImportStamp>
