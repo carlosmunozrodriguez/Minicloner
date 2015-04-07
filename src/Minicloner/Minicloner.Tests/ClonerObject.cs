@@ -1,9 +1,6 @@
-﻿using System.Configuration;
-using System.Security.Cryptography.X509Certificates;
-using Minicloner;
-using Xunit;
+﻿using Xunit;
 
-namespace MiniCloner.Test
+namespace Minicloner.Tests
 {
     public class ClonerObject
     {

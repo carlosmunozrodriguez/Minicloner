@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Minicloner;
 using Xunit;
 
-namespace MiniCloner.Test
+namespace Minicloner.Tests
 {
     public class ClonerArrayTests
     {
