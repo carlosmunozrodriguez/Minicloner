@@ -51,16 +51,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClonerArrayTests.cs" />
-    <Compile Include="ClonerClassesTests.cs" />
-    <Compile Include="ClonerDateTimeTests.cs" />
-    <Compile Include="ClonerNullableTypesTests.cs" />
-    <Compile Include="ClonerIntPtrTests.cs" />
-    <Compile Include="ClonerStringTests.cs" />
-    <Compile Include="ClonerPrimitiveTypesTests.cs" />
-    <Compile Include="ClonerObject.cs" />
-    <Compile Include="ClonerStructsTests.cs" />
+    <Compile Include="Fakes\EmptyStruct.cs" />
+    <Compile Include="Fakes\Class_Without_ParameterlessConstructor.cs" />
+    <Compile Include="Fakes\Class_With_PrivateGetter.cs" />
+    <Compile Include="Fakes\Class_With_PrivateSetter.cs" />
+    <Compile Include="Fakes\Class_With_PrivateValueTypeField.cs" />
+    <Compile Include="Fakes\Class_With_PublicAutoImplementedProperty.cs" />
+    <Compile Include="Fakes\Class_With_PublicValueTypeField.cs" />
+    <Compile Include="Fakes\Class_With_ReferenceTypeProperty.cs" />
+    <Compile Include="Fakes\Class_With_TwoLevels_Of_ReferenceTypeProperties.cs" />
+    <Compile Include="Fakes\EmptyClass.cs" />
+    <Compile Include="CloneArraysTests.cs" />
+    <Compile Include="CloneClassesTests.cs" />
+    <Compile Include="CloneDateTimeTests.cs" />
+    <Compile Include="CloneNullableTypesTests.cs" />
+    <Compile Include="CloneIntPtrTests.cs" />
+    <Compile Include="CloneStringTests.cs" />
+    <Compile Include="ClonePrimitiveTypesTests.cs" />
+    <Compile Include="CloneObject.cs" />
+    <Compile Include="CloneStructsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Fakes\Struct_With_PublicValueTypeField.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -74,6 +85,7 @@
       <Name>Minicloner</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

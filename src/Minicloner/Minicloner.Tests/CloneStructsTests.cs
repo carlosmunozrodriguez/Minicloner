@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Minicloner.Tests.Fakes;
 using Xunit;
 
 namespace Minicloner.Tests
 {
-    public class ClonerStructsTests
+    public class CloneStructsTests
     {
         [Fact]
-        public void CloneEmptyStruct()
+        public void Clone_EmptyStruct()
         {
             var emptyStruct = new EmptyStruct();
             var cloned = new Cloner().Clone(emptyStruct);
@@ -16,23 +16,14 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneStructWithPublicField()
+        public void Clone_Struct_With_PublicField()
         {
-            var structWithPublicField = new StructWithPublicValueTypeField { PublicInt32Field = 1 };
+            var structWithPublicField = new Struct_With_PublicValueTypeField { PublicInt32Field = 1 };
             var cloned = new Cloner().Clone(structWithPublicField);
 
-            Assert.IsType<StructWithPublicValueTypeField>(cloned);
+            Assert.IsType<Struct_With_PublicValueTypeField>(cloned);
             Assert.NotSame(structWithPublicField, cloned);
             Assert.Equal(structWithPublicField.PublicInt32Field, cloned.PublicInt32Field);
         }
-    }
-
-    public struct EmptyStruct
-    {
-    }
-
-    public struct StructWithPublicValueTypeField
-    {
-        public Int32 PublicInt32Field;
     }
 }

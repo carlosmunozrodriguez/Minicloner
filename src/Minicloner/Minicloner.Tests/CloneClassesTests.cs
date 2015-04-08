@@ -1,0 +1,172 @@
+﻿using System;
+using Minicloner.Tests.Fakes;
+using Xunit;
+
+namespace Minicloner.Tests
+{
+    public class CloneClassesTests
+    {
+        [Fact]
+        public void Clone_EmptyClass()
+        {
+            var emptyClass = new EmptyClass();
+            var cloned = new Cloner().Clone(emptyClass);
+
+            Assert.IsType<EmptyClass>(cloned);
+            Assert.NotSame(emptyClass, cloned);
+        }
+
+        [Fact]
+        public void Clone_Class_With_PublicValueTypeField()
+        {
+            var classWithPublicField = new Class_With_PublicValueTypeField { PublicInt32Field = 1 };
+            var cloned = new Cloner().Clone(classWithPublicField);
+
+            Assert.IsType<Class_With_PublicValueTypeField>(cloned);
+            Assert.NotSame(classWithPublicField, cloned);
+            Assert.Equal(classWithPublicField.PublicInt32Field, cloned.PublicInt32Field);
+        }
+
+        [Fact]
+        public void Clone_Class_Without_Parameterless_Constructor()
+        {
+            var source = new Class_Without_ParameterlessConstructor(null);
+            var cloned = new Cloner().Clone(source);
+
+            Assert.IsType<Class_Without_ParameterlessConstructor>(cloned);
+            Assert.NotSame(source, cloned);
+        }
+
+        [Fact]
+        public void Clone_Class_With_PrivateValueTypeField()
+        {
+            var classWithPrivateField = new Class_With_PrivateValueTypeField(1);
+            var cloned = new Cloner().Clone(classWithPrivateField);
+
+            Assert.IsType<Class_With_PrivateValueTypeField>(cloned);
+            Assert.NotSame(classWithPrivateField, cloned);
+            Assert.Equal(classWithPrivateField.Get_PrivateValueTypeField(), cloned.Get_PrivateValueTypeField());
+        }
+
+        [Fact]
+        public void Clone_Class_With_PublicAutoImplementedProperty()
+        {
+            var source = new Class_With_PublicAutoImplementedProperty { PulicAutoImplementedProperty = 1 };
+            var cloned = new Cloner().Clone(source);
+
+            Assert.IsType<Class_With_PublicAutoImplementedProperty>(cloned);
+            Assert.NotSame(source, cloned);
+            Assert.Equal(source.PulicAutoImplementedProperty, cloned.PulicAutoImplementedProperty);
+        }
+
+        [Fact]
+        public void Clone_Class_With_PrivateSetter()
+        {
+            var source = new Class_With_PrivateSetter();
+            source.Set_Int32Property_With_PrivateSetter(1);
+            var cloned = new Cloner().Clone(source);
+
+            Assert.IsType<Class_With_PrivateSetter>(cloned);
+            Assert.NotSame(source, cloned);
+            Assert.Equal(source.Int32Property_With_PrivateSetter, cloned.Int32Property_With_PrivateSetter);
+        }
+
+        [Fact]
+        public void Clone_Class_With_PrivateGetter()
+        {
+            var source = new Class_With_PrivateGetter { Int32Property_With_PrivateGetter = 1 };
+            var cloned = new Cloner().Clone(source);
+
+            Assert.IsType<Class_With_PrivateGetter>(cloned);
+            Assert.NotSame(source, cloned);
+            Assert.Equal(source.Get_Int32Property_With_PrivateGetter(), cloned.Get_Int32Property_With_PrivateGetter());
+        }
+
+        [Fact]
+        public void Clone_Class_With_ReferenceTypeProperty()
+        {
+            var source = new Class_With_ReferenceTypeProperty
+            {
+                ReferenceTypeProperty = new Class_With_PublicAutoImplementedProperty
+                {
+                    PulicAutoImplementedProperty = 1
+                }
+            };
+
+            var cloned = new Cloner().Clone(source);
+
+            Assert.IsType<Class_With_ReferenceTypeProperty>(cloned);
+            Assert.NotSame(source, cloned);
+
+            Assert.IsType<Class_With_PublicAutoImplementedProperty>(cloned.ReferenceTypeProperty);
+            Assert.NotSame(source.ReferenceTypeProperty, cloned.ReferenceTypeProperty);
+
+            Assert.IsType<Int32>(cloned.ReferenceTypeProperty.PulicAutoImplementedProperty);
+            Assert.Equal(source.ReferenceTypeProperty.PulicAutoImplementedProperty, cloned.ReferenceTypeProperty.PulicAutoImplementedProperty);
+        }
+
+        [Fact]
+        public void Clone_Class_With_TwoLevels_Of_ReferenceTypeProperties()
+        {
+            var source = new Class_With_TwoLevels_Of_ReferenceTypeProperties
+            {
+                ReferenceTypeProperty = new Class_With_PublicAutoImplementedProperty
+                {
+                    PulicAutoImplementedProperty = 1
+                },
+                TwoLeveled_ReferenceTypeProperty = new Class_With_ReferenceTypeProperty
+                {
+                    ReferenceTypeProperty = new Class_With_PublicAutoImplementedProperty
+                    {
+                        PulicAutoImplementedProperty = 2
+                    }
+                }
+            };
+
+            var cloned = new Cloner().Clone(source);
+
+            Assert.IsType<Class_With_TwoLevels_Of_ReferenceTypeProperties>(cloned);
+            Assert.NotSame(source, cloned);
+
+            Assert.IsType<Class_With_PublicAutoImplementedProperty>(cloned.ReferenceTypeProperty);
+            Assert.NotSame(source.ReferenceTypeProperty, cloned.ReferenceTypeProperty);
+
+            Assert.IsType<Int32>(cloned.ReferenceTypeProperty.PulicAutoImplementedProperty);
+            Assert.Equal(source.ReferenceTypeProperty.PulicAutoImplementedProperty, cloned.ReferenceTypeProperty.PulicAutoImplementedProperty);
+
+            Assert.IsType<Class_With_ReferenceTypeProperty>(cloned.TwoLeveled_ReferenceTypeProperty);
+            Assert.NotSame(source.TwoLeveled_ReferenceTypeProperty, cloned.TwoLeveled_ReferenceTypeProperty);
+
+            Assert.IsType<Class_With_PublicAutoImplementedProperty>(cloned.TwoLeveled_ReferenceTypeProperty.ReferenceTypeProperty);
+            Assert.NotSame(source.TwoLeveled_ReferenceTypeProperty.ReferenceTypeProperty, cloned.TwoLeveled_ReferenceTypeProperty.ReferenceTypeProperty);
+
+            Assert.IsType<Int32>(cloned.TwoLeveled_ReferenceTypeProperty.ReferenceTypeProperty.PulicAutoImplementedProperty);
+            Assert.Equal(source.TwoLeveled_ReferenceTypeProperty.ReferenceTypeProperty.PulicAutoImplementedProperty, cloned.TwoLeveled_ReferenceTypeProperty.ReferenceTypeProperty.PulicAutoImplementedProperty);
+        }
+
+        [Fact]
+        public void Clone_Array_With_ReferenceTypeElements()
+        {
+            Class_With_PublicAutoImplementedProperty[] source =
+            {
+                new Class_With_PublicAutoImplementedProperty{ PulicAutoImplementedProperty = 1 }, 
+                new Class_With_PublicAutoImplementedProperty{ PulicAutoImplementedProperty = 2 } 
+            };
+
+            var cloned = new Cloner().Clone(source);
+
+            Assert.IsType<Class_With_PublicAutoImplementedProperty[]>(cloned);
+            Assert.NotSame(cloned, source);
+
+            Assert.Equal(2, cloned.Length);
+            for (var i = 0; i < cloned.Length; i++)
+            {
+                Assert.IsType<Class_With_PublicAutoImplementedProperty>(cloned[i]);
+                Assert.NotSame(source[i], cloned[i]);
+
+                Assert.IsType<Int32>(cloned[i].PulicAutoImplementedProperty);
+                Assert.Equal(source[i].PulicAutoImplementedProperty, cloned[i].PulicAutoImplementedProperty);
+            }
+        }
+    }
+}

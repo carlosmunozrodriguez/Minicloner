@@ -3,10 +3,10 @@ using Xunit;
 
 namespace Minicloner.Tests
 {
-    public class ClonerDateTimeTests
+    public class CloneDateTimeTests
     {
         [Fact]
-        public void CloneDefaultDateTime()
+        public void Clone_DefaultDateTime()
         {
             var dateTime = new DateTime();
             var cloned = new Cloner().Clone(dateTime);
@@ -16,7 +16,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneDateTimeNow()
+        public void Clone_DateTime_Now()
         {
             var dateTime = DateTime.Now;
             var cloned = new Cloner().Clone(dateTime);

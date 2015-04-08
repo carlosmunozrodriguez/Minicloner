@@ -3,10 +3,10 @@ using Xunit;
 
 namespace Minicloner.Tests
 {
-    public class ClonerNullableTypesTests
+    public class CloneNullableTypesTests
     {
         [Fact]
-        public void CloneNullInt32()
+        public void Clone_NullInt32()
         {
             Nullable<Int32> nullInt32 = null;
             var cloned = new Cloner().Clone(nullInt32);
@@ -15,7 +15,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneNotNullInt32()
+        public void Clone_NotNullInt32()
         {
             Nullable<Int32> notNullInt32 = 1;
             var cloned = new Cloner().Clone(notNullInt32);
