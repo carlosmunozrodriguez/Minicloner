@@ -6,7 +6,7 @@ namespace Minicloner.Tests
     public class CloneStringTests
     {
         [Fact]
-        public void CloneNullString()
+        public void Clone_NullString()
         {
             const String nullString = null;
             var cloned = new Cloner().Clone(nullString);
@@ -15,7 +15,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneEmptyString()
+        public void Clone_EmptyString()
         {
             const String emptyString = "";
             var cloned = new Cloner().Clone(emptyString);
@@ -26,7 +26,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneSomeString()
+        public void Clone_SomeString()
         {
             const String someString = "qwertyáéíóúñ";
             var cloned = new Cloner().Clone(someString);

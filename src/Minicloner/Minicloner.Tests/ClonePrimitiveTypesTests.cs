@@ -6,7 +6,7 @@ namespace Minicloner.Tests
     public class ClonePrimitiveTypesTests
     {
         [Fact]
-        public void CloneInt16()
+        public void Clone_Int16()
         {
             const Int16 someInt16 = 1;
             var cloned = new Cloner().Clone(someInt16);
@@ -16,7 +16,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneInt32()
+        public void Clone_Int32()
         {
             const Int32 someInt32 = 1;
             var cloned = new Cloner().Clone(someInt32);
@@ -26,7 +26,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneInt64()
+        public void Clone_Int64()
         {
             const Int64 someInt64 = 1;
             var cloned = new Cloner().Clone(someInt64);
@@ -36,7 +36,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneUInt16()
+        public void Clone_UInt16()
         {
             const UInt16 someInt16 = 1;
             var cloned = new Cloner().Clone(someInt16);
@@ -46,7 +46,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneUInt32()
+        public void Clone_UInt32()
         {
             const UInt32 someUInt32 = 1;
             var cloned = new Cloner().Clone(someUInt32);
@@ -56,7 +56,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneUInt64()
+        public void Clone_UInt64()
         {
             const UInt64 someUInt64 = 1;
             var cloned = new Cloner().Clone(someUInt64);
@@ -66,7 +66,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneByte()
+        public void Clone_Byte()
         {
             const Byte someByte = 1;
             var cloned = new Cloner().Clone(someByte);
@@ -76,7 +76,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneSByte()
+        public void Clone_SByte()
         {
             const SByte someSByte = 1;
             var cloned = new Cloner().Clone(someSByte);
@@ -86,7 +86,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneChar()
+        public void Clone_Char()
         {
             const Char someChar = 'A';
             var cloned = new Cloner().Clone(someChar);
@@ -96,7 +96,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneSingle()
+        public void Clone_Single()
         {
             const Single someSingle = 1f;
             var cloned = new Cloner().Clone(someSingle);
@@ -106,7 +106,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneDouble()
+        public void Clone_Double()
         {
             const Double someDouble = 1d;
             var cloned = new Cloner().Clone(someDouble);
@@ -116,7 +116,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneBoolean()
+        public void Clone_Boolean()
         {
             const Boolean someBoolean = true;
             var cloned = new Cloner().Clone(someBoolean);
@@ -127,7 +127,7 @@ namespace Minicloner.Tests
 
         // Decimal is not exactly primitive but a common type
         [Fact]
-        public void CloneDecimal()
+        public void Clone_Decimal()
         {
             const decimal someDecimal = 1m;
             var cloned = new Cloner().Clone(someDecimal);

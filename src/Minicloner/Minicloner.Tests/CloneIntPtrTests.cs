@@ -6,7 +6,7 @@ namespace Minicloner.Tests
     public class CloneIntPtrTests
     {
         [Fact]
-        public void CloneIntPtr()
+        public void Clone_IntPtr()
         {
             var someIntPtr = (IntPtr)1;
             var cloned = new Cloner().Clone(someIntPtr);
@@ -16,7 +16,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneUIntPtr()
+        public void Clone_UIntPtr()
         {
             var someUIntPtr = (UIntPtr)1;
             var cloned = new Cloner().Clone(someUIntPtr);

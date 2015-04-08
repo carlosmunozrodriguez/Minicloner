@@ -3,10 +3,10 @@ using Xunit;
 
 namespace Minicloner.Tests
 {
-    public class CloneArrayTests
+    public class CloneArraysTests
     {
         [Fact]
-        public void CloneEmptyInt32Array()
+        public void Clone_EmptyInt32Array()
         {
             Int32[] array = { };
             var cloned = new Cloner().Clone(array);
@@ -17,7 +17,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneNonEmptyInt32ArrayWithElements()
+        public void Clone_NonEmptyInt32Array()
         {
             Int32[] array = { 1, 2, 3, 4, 5 };
             var cloned = new Cloner().Clone(array);
@@ -34,7 +34,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneTwoDimensionalArray()
+        public void Clone_TwoDimensionalArray()
         {
             Int32[,] array2D = {
                                 { 1, 2 },
@@ -59,7 +59,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneThreeDimensionalArray()
+        public void Clone_ThreeDimensionalArray()
         {
             Int32[, ,] array3D = {
                                 { { 1, 2 }, { 3, 4 }, { 5, 6 } },
@@ -89,7 +89,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneNon0BasedArray()
+        public void Clone_Non0BasedArray()
         {
             // 1-dimensional array (not vector) has length 5 and index starts in -10.
             // Since it's non 0-based it is not an Int32[] but an Int32[*] with Rank 1
@@ -116,7 +116,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneNon0BasedTwoDimensionalArray()
+        public void Clone_Non0Based_TwoDimensionalArray()
         {
             // 2-dimensional array with lengths 2 and 3 and with indices that starts in -10 and -20.
             var array = Array.CreateInstance(typeof(Int32), new[] { 2, 3 }, new[] { -10, -20 });

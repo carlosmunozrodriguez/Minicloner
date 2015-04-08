@@ -51,16 +51,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fakes\ClassWithoutParameterlessConstructor.cs" />
-    <Compile Include="Fakes\ClassWithPrivateGetter.cs" />
-    <Compile Include="Fakes\ClassWithPrivateSetter.cs" />
-    <Compile Include="Fakes\ClassWithPrivateValueTypeField.cs" />
-    <Compile Include="Fakes\ClassWithPublicAutomaticallyImplementedProperty.cs" />
-    <Compile Include="Fakes\ClassWithPublicValueTypeField.cs" />
-    <Compile Include="Fakes\ClassWithReferenceTypeProperty.cs" />
-    <Compile Include="Fakes\ClassWithTwoLevelsOfReferenceTypeProperties.cs" />
+    <Compile Include="Fakes\EmptyStruct.cs" />
+    <Compile Include="Fakes\Class_Without_ParameterlessConstructor.cs" />
+    <Compile Include="Fakes\Class_With_PrivateGetter.cs" />
+    <Compile Include="Fakes\Class_With_PrivateSetter.cs" />
+    <Compile Include="Fakes\Class_With_PrivateValueTypeField.cs" />
+    <Compile Include="Fakes\Class_With_PublicAutoImplementedProperty.cs" />
+    <Compile Include="Fakes\Class_With_PublicValueTypeField.cs" />
+    <Compile Include="Fakes\Class_With_ReferenceTypeProperty.cs" />
+    <Compile Include="Fakes\Class_With_TwoLevels_Of_ReferenceTypeProperties.cs" />
     <Compile Include="Fakes\EmptyClass.cs" />
-    <Compile Include="CloneArrayTests.cs" />
+    <Compile Include="CloneArraysTests.cs" />
     <Compile Include="CloneClassesTests.cs" />
     <Compile Include="CloneDateTimeTests.cs" />
     <Compile Include="CloneNullableTypesTests.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="CloneObject.cs" />
     <Compile Include="CloneStructsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Fakes\Struct_With_PublicValueTypeField.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

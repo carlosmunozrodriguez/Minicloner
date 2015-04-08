@@ -5,7 +5,7 @@ namespace Minicloner.Tests
     public class CloneObject
     {
         [Fact]
-        public void CloneNullObject()
+        public void Clone_NullObject()
         {
             object nullObject = null;
             var cloned = new Cloner().Clone(nullObject);
@@ -14,7 +14,7 @@ namespace Minicloner.Tests
         }
 
         [Fact]
-        public void CloneNotNullObject()
+        public void Clone_NotNullObject()
         {
             object notNullObject = new object();
             var cloned = new Cloner().Clone(notNullObject);
