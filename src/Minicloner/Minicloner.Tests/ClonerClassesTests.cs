@@ -1,4 +1,5 @@
 ﻿using System;
+using Minicloner.Tests.Fakes;
 using Xunit;
 
 namespace Minicloner.Tests
@@ -167,76 +168,5 @@ namespace Minicloner.Tests
                 Assert.Equal(source[i].PublicInt32Property, cloned[i].PublicInt32Property);
             }
         }
-
     }
-
-    #region Class Definitions
-    public class EmptyClass
-    {
-    }
-
-    public class ClassWithPublicValueTypeField
-    {
-        public Int32 PublicInt32Field;
-    }
-
-    public class ClassWithoutParameterlessConstructor
-    {
-        public ClassWithoutParameterlessConstructor(object dummy)
-        {
-        }
-    }
-
-    public class ClassWithPrivateValueTypeField
-    {
-        private readonly Int32 _publicInt32Field;
-
-        public ClassWithPrivateValueTypeField(Int32 int32Parameter)
-        {
-            _publicInt32Field = int32Parameter;
-        }
-
-        public Int32 GetPrivateFieldValue()
-        {
-            return _publicInt32Field;
-        }
-    }
-
-    public class ClassWithPublicAutomaticallyImplementedProperty
-    {
-        public Int32 PublicInt32Property { get; set; }
-    }
-
-    public class ClassWithPrivateSetter
-    {
-        public Int32 Int32PropertyWithPrivateSetter { get; private set; }
-
-        public void SetInt32PropertyWithPrivateSetter(Int32 int32Parameter)
-        {
-            Int32PropertyWithPrivateSetter = int32Parameter;
-        }
-    }
-
-    public class ClassWithPrivateGetter
-    {
-        public Int32 Int32PropertyWithPrivateGetter { private get; set; }
-
-        public Int32 GetInt32PropertyWithPrivateSetter()
-        {
-            return Int32PropertyWithPrivateGetter;
-        }
-    }
-
-    public class ClassWithReferenceTypeProperty
-    {
-        public ClassWithPublicAutomaticallyImplementedProperty ReferenceTypeProperty { get; set; }
-    }
-
-    public class ClassWithTwoLevelsOfReferenceTypeProperties
-    {
-        public ClassWithPublicAutomaticallyImplementedProperty ReferenceTypeProperty { get; set; }
-        public ClassWithReferenceTypeProperty TwoLeveledReferenceTypeProperty { get; set; }
-    }
-
-    #endregion
 }
