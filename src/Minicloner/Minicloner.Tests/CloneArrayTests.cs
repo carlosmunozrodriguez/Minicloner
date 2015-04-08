@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Minicloner.Tests
 {
-    public class ClonerArrayTests
+    public class CloneArrayTests
     {
         [Fact]
         public void CloneEmptyInt32Array()

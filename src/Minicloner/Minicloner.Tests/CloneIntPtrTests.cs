@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Minicloner.Tests
 {
-    public class ClonerIntPtrTests
+    public class CloneIntPtrTests
     {
         [Fact]
         public void CloneIntPtr()

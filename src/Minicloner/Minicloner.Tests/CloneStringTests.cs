@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Minicloner.Tests
 {
-    public class ClonerStringTests
+    public class CloneStringTests
     {
         [Fact]
         public void CloneNullString()

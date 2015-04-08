@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Minicloner.Tests
 {
-    public class ClonerStructsTests
+    public class CloneStructsTests
     {
         [Fact]
         public void CloneEmptyStruct()

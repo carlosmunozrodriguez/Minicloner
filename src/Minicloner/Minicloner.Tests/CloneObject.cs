@@ -2,7 +2,7 @@
 
 namespace Minicloner.Tests
 {
-    public class ClonerObject
+    public class CloneObject
     {
         [Fact]
         public void CloneNullObject()

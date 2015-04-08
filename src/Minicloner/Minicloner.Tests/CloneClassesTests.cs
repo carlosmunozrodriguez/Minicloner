@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Minicloner.Tests
 {
-    public class ClonerClassesTests
+    public class CloneClassesTests
     {
         [Fact]
         public void CloneEmptyClass()

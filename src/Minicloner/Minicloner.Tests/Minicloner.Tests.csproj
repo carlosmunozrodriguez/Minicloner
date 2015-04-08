@@ -60,15 +60,15 @@
     <Compile Include="Fakes\ClassWithReferenceTypeProperty.cs" />
     <Compile Include="Fakes\ClassWithTwoLevelsOfReferenceTypeProperties.cs" />
     <Compile Include="Fakes\EmptyClass.cs" />
-    <Compile Include="ClonerArrayTests.cs" />
-    <Compile Include="ClonerClassesTests.cs" />
-    <Compile Include="ClonerDateTimeTests.cs" />
-    <Compile Include="ClonerNullableTypesTests.cs" />
-    <Compile Include="ClonerIntPtrTests.cs" />
-    <Compile Include="ClonerStringTests.cs" />
-    <Compile Include="ClonerPrimitiveTypesTests.cs" />
-    <Compile Include="ClonerObject.cs" />
-    <Compile Include="ClonerStructsTests.cs" />
+    <Compile Include="CloneArrayTests.cs" />
+    <Compile Include="CloneClassesTests.cs" />
+    <Compile Include="CloneDateTimeTests.cs" />
+    <Compile Include="CloneNullableTypesTests.cs" />
+    <Compile Include="CloneIntPtrTests.cs" />
+    <Compile Include="CloneStringTests.cs" />
+    <Compile Include="ClonePrimitiveTypesTests.cs" />
+    <Compile Include="CloneObject.cs" />
+    <Compile Include="CloneStructsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Minicloner.Tests
 {
-    public class ClonerDateTimeTests
+    public class CloneDateTimeTests
     {
         [Fact]
         public void CloneDefaultDateTime()
