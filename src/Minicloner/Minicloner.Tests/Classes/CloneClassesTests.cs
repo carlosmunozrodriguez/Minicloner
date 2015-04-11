@@ -1,30 +1,20 @@
 ﻿using System;
 using Minicloner.Tests.Fakes;
+using Minicloner.Tests.Fakes.Properties;
 using Xunit;
 
-namespace Minicloner.Tests
+namespace Minicloner.Tests.Classes
 {
     public class CloneClassesTests
     {
         [Fact]
         public void Clone_EmptyClass()
         {
-            var emptyClass = new EmptyClass();
-            var cloned = new Cloner().Clone(emptyClass);
+            var source = new EmptyClass();
+            var cloned = new Cloner().Clone(source);
 
             Assert.IsType<EmptyClass>(cloned);
-            Assert.NotSame(emptyClass, cloned);
-        }
-
-        [Fact]
-        public void Clone_Class_With_PublicValueTypeField()
-        {
-            var classWithPublicField = new Class_With_PublicValueTypeField { PublicInt32Field = 1 };
-            var cloned = new Cloner().Clone(classWithPublicField);
-
-            Assert.IsType<Class_With_PublicValueTypeField>(cloned);
-            Assert.NotSame(classWithPublicField, cloned);
-            Assert.Equal(classWithPublicField.PublicInt32Field, cloned.PublicInt32Field);
+            Assert.NotSame(source, cloned);
         }
 
         [Fact]
@@ -35,17 +25,6 @@ namespace Minicloner.Tests
 
             Assert.IsType<Class_Without_ParameterlessConstructor>(cloned);
             Assert.NotSame(source, cloned);
-        }
-
-        [Fact]
-        public void Clone_Class_With_PrivateValueTypeField()
-        {
-            var classWithPrivateField = new Class_With_PrivateValueTypeField(1);
-            var cloned = new Cloner().Clone(classWithPrivateField);
-
-            Assert.IsType<Class_With_PrivateValueTypeField>(cloned);
-            Assert.NotSame(classWithPrivateField, cloned);
-            Assert.Equal(classWithPrivateField.Get_PrivateValueTypeField(), cloned.Get_PrivateValueTypeField());
         }
 
         [Fact]

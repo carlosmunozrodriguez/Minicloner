@@ -51,18 +51,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\CloneClassesAccessModifiersTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Fakes\AccessModifiers\Class_With_InternalField.cs" />
+    <Compile Include="Fakes\AccessModifiers\Class_With_PrivateField.cs" />
+    <Compile Include="Fakes\AccessModifiers\Class_With_ProtectedInternalField.cs" />
+    <Compile Include="Fakes\AccessModifiers\Class_With_ProtectedField.cs" />
+    <Compile Include="Fakes\AccessModifiers\Class_With_PublicField.cs" />
     <Compile Include="Fakes\EmptyStruct.cs" />
     <Compile Include="Fakes\Class_Without_ParameterlessConstructor.cs" />
-    <Compile Include="Fakes\Class_With_PrivateGetter.cs" />
-    <Compile Include="Fakes\Class_With_PrivateSetter.cs" />
-    <Compile Include="Fakes\Class_With_PrivateValueTypeField.cs" />
-    <Compile Include="Fakes\Class_With_PublicAutoImplementedProperty.cs" />
-    <Compile Include="Fakes\Class_With_PublicValueTypeField.cs" />
+    <Compile Include="Fakes\Properties\Class_With_PrivateGetter.cs" />
+    <Compile Include="Fakes\Properties\Class_With_PrivateSetter.cs" />
+    <Compile Include="Fakes\Properties\Class_With_PublicAutoImplementedProperty.cs" />
     <Compile Include="Fakes\Class_With_ReferenceTypeProperty.cs" />
     <Compile Include="Fakes\Class_With_TwoLevels_Of_ReferenceTypeProperties.cs" />
     <Compile Include="Fakes\EmptyClass.cs" />
     <Compile Include="CloneArraysTests.cs" />
-    <Compile Include="CloneClassesTests.cs" />
+    <Compile Include="Classes\CloneClassesTests.cs" />
     <Compile Include="CloneDateTimeTests.cs" />
     <Compile Include="CloneNullableTypesTests.cs" />
     <Compile Include="CloneIntPtrTests.cs" />
@@ -80,6 +86,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Minicloner.Test.OtherAssembly\Minicloner.Test.OtherAssembly.csproj">
+      <Project>{805779EF-E584-4E01-9D9E-ACA755FAFC27}</Project>
+      <Name>Minicloner.Test.OtherAssembly</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Minicloner\Minicloner.csproj">
       <Project>{829608F2-CC79-4056-B94E-38D99E09C051}</Project>
       <Name>Minicloner</Name>
