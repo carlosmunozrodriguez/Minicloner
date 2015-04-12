@@ -54,11 +54,11 @@
     <Compile Include="Classes\CloneClassesAccessModifiersTests.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Fakes\AccessModifiers\Class_With_InternalField.cs" />
-    <Compile Include="Fakes\AccessModifiers\Class_With_PrivateField.cs" />
-    <Compile Include="Fakes\AccessModifiers\Class_With_ProtectedInternalField.cs" />
-    <Compile Include="Fakes\AccessModifiers\Class_With_ProtectedField.cs" />
-    <Compile Include="Fakes\AccessModifiers\Class_With_PublicField.cs" />
+    <Compile Include="Fakes\Fields\Class_With_InternalField.cs" />
+    <Compile Include="Fakes\Fields\Class_With_PrivateField.cs" />
+    <Compile Include="Fakes\Fields\Class_With_ProtectedInternalField.cs" />
+    <Compile Include="Fakes\Fields\Class_With_ProtectedField.cs" />
+    <Compile Include="Fakes\Fields\Class_With_PublicField.cs" />
     <Compile Include="Fakes\EmptyStruct.cs" />
     <Compile Include="Fakes\Class_Without_ParameterlessConstructor.cs" />
     <Compile Include="Fakes\Properties\Class_With_PrivateGetter.cs" />
