@@ -40,6 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fakes\Class_With_InternalField_From_OtherAssembly.cs" />
+    <Compile Include="Fakes\Class_With_ProtectedInternalParameterlessConstructor_From_OtherAssembly.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Fakes\Class_With_InternalParameterlessConstructor_From_OtherAssembly.cs" />
     <Compile Include="Fakes\Class_With_ProtectedInternalField_From_OtherAssembly.cs">
       <SubType>Code</SubType>
     </Compile>

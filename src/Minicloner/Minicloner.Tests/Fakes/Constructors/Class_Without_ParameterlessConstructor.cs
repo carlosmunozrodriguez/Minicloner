@@ -1,4 +1,4 @@
-namespace Minicloner.Tests.Fakes
+namespace Minicloner.Tests.Fakes.Constructors
 {
     public class Class_Without_ParameterlessConstructor
     {
