@@ -91,9 +91,9 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Minicloner.Test.OtherAssembly\Minicloner.Test.OtherAssembly.csproj">
+    <ProjectReference Include="..\Minicloner.Test.OtherAssembly\Minicloner.Tests.OtherAssembly.csproj">
       <Project>{805779EF-E584-4E01-9D9E-ACA755FAFC27}</Project>
-      <Name>Minicloner.Test.OtherAssembly</Name>
+      <Name>Minicloner.Tests.OtherAssembly</Name>
     </ProjectReference>
     <ProjectReference Include="..\Minicloner\Minicloner.csproj">
       <Project>{829608F2-CC79-4056-B94E-38D99E09C051}</Project>

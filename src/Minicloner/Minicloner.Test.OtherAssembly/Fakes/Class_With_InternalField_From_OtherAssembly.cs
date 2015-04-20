@@ -1,6 +1,6 @@
 using System;
 
-namespace Minicloner.Test.OtherAssembly.Fakes
+namespace Minicloner.Tests.OtherAssembly.Fakes
 {
     public class Class_With_InternalField_From_OtherAssembly
     {

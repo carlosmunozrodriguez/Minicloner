@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minicloner.Tests", "Miniclo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minicloner", "Minicloner\Minicloner.csproj", "{829608F2-CC79-4056-B94E-38D99E09C051}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minicloner.Test.OtherAssembly", "Minicloner.Test.OtherAssembly\Minicloner.Test.OtherAssembly.csproj", "{805779EF-E584-4E01-9D9E-ACA755FAFC27}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minicloner.Tests.OtherAssembly", "Minicloner.Test.OtherAssembly\Minicloner.Tests.OtherAssembly.csproj", "{805779EF-E584-4E01-9D9E-ACA755FAFC27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
