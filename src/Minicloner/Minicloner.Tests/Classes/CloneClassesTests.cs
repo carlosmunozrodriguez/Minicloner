@@ -18,16 +18,6 @@ namespace Minicloner.Tests.Classes
         }
 
         [Fact]
-        public void Clone_Class_Without_Parameterless_Constructor()
-        {
-            var source = new Class_Without_ParameterlessConstructor(null);
-            var cloned = new Cloner().Clone(source);
-
-            Assert.IsType<Class_Without_ParameterlessConstructor>(cloned);
-            Assert.NotSame(source, cloned);
-        }
-
-        [Fact]
         public void Clone_Class_With_PublicAutoImplementedProperty()
         {
             var source = new Class_With_PublicAutoImplementedProperty { PublicAutoImplementedProperty = 1 };

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Minicloner.Tests.Classes
 {
-    public class CloneClassesAccessModifiersTests
+    public class CloneClassesFieldsTests
     {
         [Fact]
         public void Clone_Class_With_PublicField()
@@ -31,6 +31,18 @@ namespace Minicloner.Tests.Classes
         }
 
         [Fact]
+        public void Clone_Class_With_ProtectedField()
+        {
+            var source = new Class_With_ProtectedField(1);
+            var cloned = new Cloner().Clone(source);
+
+            Assert.IsType<Class_With_ProtectedField>(cloned);
+            Assert.NotSame(source, cloned);
+
+            Assert.Equal(source.Get_ProtectedField(), cloned.Get_ProtectedField());
+        }
+
+        [Fact]
         public void Clone_Class_With_InternalField()
         {
             var source = new Class_With_InternalField { InternalField = 1 };
@@ -52,18 +64,6 @@ namespace Minicloner.Tests.Classes
             Assert.NotSame(source, cloned);
 
             Assert.Equal(source.Get_InternalField(), cloned.Get_InternalField());
-        }
-
-        [Fact]
-        public void Clone_Class_With_ProtectedField()
-        {
-            var source = new Class_With_ProtectedField(1);
-            var cloned = new Cloner().Clone(source);
-
-            Assert.IsType<Class_With_ProtectedField>(cloned);
-            Assert.NotSame(source, cloned);
-
-            Assert.Equal(source.Get_ProtectedField(), cloned.Get_ProtectedField());
         }
 
         [Fact]
