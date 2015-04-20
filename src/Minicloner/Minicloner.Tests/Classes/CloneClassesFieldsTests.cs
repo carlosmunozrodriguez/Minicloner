@@ -1,10 +1,10 @@
 ﻿using Minicloner.Test.OtherAssembly.Fakes;
-using Minicloner.Tests.Fakes.AccessModifiers;
+using Minicloner.Tests.Fakes.Fields;
 using Xunit;
 
 namespace Minicloner.Tests.Classes
 {
-    public class CloneClassesAccessModifiersTests
+    public class CloneClassesFieldsTests
     {
         [Fact]
         public void Clone_Class_With_PublicField()

@@ -11,9 +11,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Minicloner.Tests</RootNamespace>
     <AssemblyName>Minicloner.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>bb0b88a1</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,7 +50,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\CloneClassesAccessModifiersTests.cs">
+    <Compile Include="Classes\CloneClassesFieldsTests.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\CloneClassesConstructorsTests.cs" />
@@ -62,12 +61,12 @@
     <Compile Include="Fakes\Constructors\Class_With_ProtectedInternalParameterlessConstructor.cs" />
     <Compile Include="Fakes\Constructors\Class_With_ProtectedParameterlessConstructor.cs" />
     <Compile Include="Fakes\Constructors\Class_With_PublicParameterlessConstructor.cs" />
-    <Compile Include="Fakes\AccessModifiers\Class_With_InternalField.cs" />
-    <Compile Include="Fakes\AccessModifiers\Class_With_PrivateField.cs" />
-    <Compile Include="Fakes\AccessModifiers\Class_With_ProtectedInternalField.cs" />
-    <Compile Include="Fakes\AccessModifiers\Class_With_ProtectedField.cs" />
-    <Compile Include="Fakes\AccessModifiers\Class_With_PublicField.cs" />
     <Compile Include="Fakes\Constructors\Class_With_Two_NonParameterlessConstructors.cs" />
+    <Compile Include="Fakes\Fields\Class_With_InternalField.cs" />
+    <Compile Include="Fakes\Fields\Class_With_PrivateField.cs" />
+    <Compile Include="Fakes\Fields\Class_With_ProtectedInternalField.cs" />
+    <Compile Include="Fakes\Fields\Class_With_ProtectedField.cs" />
+    <Compile Include="Fakes\Fields\Class_With_PublicField.cs" />
     <Compile Include="Fakes\EmptyStruct.cs" />
     <Compile Include="Fakes\Constructors\Class_With_OneParameterConstructor.cs" />
     <Compile Include="Fakes\Properties\Class_With_PrivateGetter.cs" />
@@ -89,9 +88,6 @@
     <Compile Include="Fakes\Struct_With_PublicValueTypeField.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
@@ -104,7 +100,9 @@
       <Name>Minicloner</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

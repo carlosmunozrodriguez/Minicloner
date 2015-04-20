@@ -4,7 +4,7 @@ namespace Minicloner.Test.OtherAssembly.Fakes
 {
     public class Class_With_ProtectedInternalField_From_OtherAssembly
     {
-        internal Int32 ProtectedInternalField;
+        protected internal Int32 ProtectedInternalField;
 
         public Class_With_ProtectedInternalField_From_OtherAssembly(Int32 parameter)
         {
