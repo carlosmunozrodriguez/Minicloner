@@ -1,5 +1,4 @@
 ﻿using Minicloner.Test.OtherAssembly.Fakes;
-using Minicloner.Tests.Fakes;
 using Minicloner.Tests.Fakes.Constructors;
 using Xunit;
 
@@ -19,6 +18,7 @@ namespace Minicloner.Tests.Classes
             Assert.Equal(source.Int32Property, cloned.Int32Property);
         }
 
+        #region Parameterless constructors
         [Fact]
         public void Clone_Class_With_PublicParameterlessConstructor()
         {
@@ -115,15 +115,42 @@ namespace Minicloner.Tests.Classes
             Assert.Equal(source.PropertyInitializedInConstructor, cloned.PropertyInitializedInConstructor);
             Assert.Equal(source.Int32Property, cloned.Int32Property);
         }
+        #endregion
 
         [Fact]
-        public void Clone_Class_Without_ParameterlessConstructor()
+        public void Clone_Class_Without_OneParameterConstructor()
         {
-            var source = new Class_Without_ParameterlessConstructor(null);
+            var source = new Class_With_OneParameterConstructor(1);
             var cloned = new Cloner().Clone(source);
 
-            Assert.IsType<Class_Without_ParameterlessConstructor>(cloned);
+            Assert.IsType<Class_With_OneParameterConstructor>(cloned);
             Assert.NotSame(source, cloned);
+
+            Assert.Equal(source.Int32Property, cloned.Int32Property);
+        }
+
+        [Fact]
+        public void Clone_Class_With_OneParameterConstructor_And_ParameterlessContructor()
+        {
+            var source = new Class_With_OneParameterConstructor_And_ParameterlessContructor(1);
+            var cloned = new Cloner().Clone(source);
+
+            Assert.IsType<Class_With_OneParameterConstructor_And_ParameterlessContructor>(cloned);
+            Assert.NotSame(source, cloned);
+
+            Assert.Equal(source.Int32Property, cloned.Int32Property);
+        }
+
+        [Fact]
+        public void Clone_Class_With_Two_NonParameterlessConstructors()
+        {
+            var source = new Class_With_Two_NonParameterlessConstructors(2, 3);
+            var cloned = new Cloner().Clone(source);
+
+            Assert.IsType<Class_With_Two_NonParameterlessConstructors>(cloned);
+            Assert.NotSame(source, cloned);
+
+            Assert.Equal(source.Int32Property, cloned.Int32Property);
         }
     }
 }

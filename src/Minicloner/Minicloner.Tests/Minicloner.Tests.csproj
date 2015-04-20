@@ -57,6 +57,7 @@
     <Compile Include="Classes\CloneClassesConstructorsTests.cs" />
     <Compile Include="Fakes\Constructors\Class_With_DefaultConstructor.cs" />
     <Compile Include="Fakes\Constructors\Class_With_InternalParameterlessConstructor.cs" />
+    <Compile Include="Fakes\Constructors\Class_With_OneParameterConstructor_And_ParameterlessContructor.cs" />
     <Compile Include="Fakes\Constructors\Class_With_PrivateParameterlessConstructor.cs" />
     <Compile Include="Fakes\Constructors\Class_With_ProtectedInternalParameterlessConstructor.cs" />
     <Compile Include="Fakes\Constructors\Class_With_ProtectedParameterlessConstructor.cs" />
@@ -66,8 +67,9 @@
     <Compile Include="Fakes\AccessModifiers\Class_With_ProtectedInternalField.cs" />
     <Compile Include="Fakes\AccessModifiers\Class_With_ProtectedField.cs" />
     <Compile Include="Fakes\AccessModifiers\Class_With_PublicField.cs" />
+    <Compile Include="Fakes\Constructors\Class_With_Two_NonParameterlessConstructors.cs" />
     <Compile Include="Fakes\EmptyStruct.cs" />
-    <Compile Include="Fakes\Constructors\Class_Without_ParameterlessConstructor.cs" />
+    <Compile Include="Fakes\Constructors\Class_With_OneParameterConstructor.cs" />
     <Compile Include="Fakes\Properties\Class_With_PrivateGetter.cs" />
     <Compile Include="Fakes\Properties\Class_With_PrivateSetter.cs" />
     <Compile Include="Fakes\Properties\Class_With_PublicAutoImplementedProperty.cs" />
