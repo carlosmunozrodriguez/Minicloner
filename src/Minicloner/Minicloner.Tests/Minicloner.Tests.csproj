@@ -50,10 +50,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fakes\Static\Class_With_ProtectedInternalStaticReferenceTypeField.cs" />
+    <Compile Include="Fakes\Static\Class_With_ProtectedStaticReferenceTypeField.cs" />
+    <Compile Include="Fakes\Static\Class_With_PrivateStaticReferenceTypeField.cs" />
+    <Compile Include="Fakes\Static\Class_With_InternalStaticReferenceTypeField.cs" />
+    <Compile Include="Fakes\Static\Class_With_PublicStaticReferenceTypeField.cs" />
     <Compile Include="Classes\CloneClassesFieldsTests.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\CloneClassesConstructorsTests.cs" />
+    <Compile Include="Classes\CloneClassesStaticTests.cs" />
     <Compile Include="Fakes\Constructors\Class_With_DefaultConstructor.cs" />
     <Compile Include="Fakes\Constructors\Class_With_InternalParameterlessConstructor.cs" />
     <Compile Include="Fakes\Constructors\Class_With_OneParameterConstructor_And_ParameterlessContructor.cs" />

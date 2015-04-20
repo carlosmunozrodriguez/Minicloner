@@ -1,5 +1,5 @@
 ﻿using Minicloner.Tests.Fakes.Fields;
-using Minicloner.Tests.OtherAssembly.Fakes;
+using Minicloner.Tests.OtherAssembly.Fakes.Fields;
 using Xunit;
 
 namespace Minicloner.Tests.Classes
