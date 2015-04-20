@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Minicloner.Tests")]
+[assembly: AssemblyTitle("Minicloner.Tests.OtherAssembly")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Minicloner.Tests")]
+[assembly: AssemblyProduct("Minicloner.Tests.OtherAssembly")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("51038cb4-5a0e-4550-8544-0a2056b68822")]
+[assembly: Guid("57c7a5f5-dd2b-4dfb-956e-813d91a63cfc")]
 
 // Version information for an assembly consists of the following four values:
 //
