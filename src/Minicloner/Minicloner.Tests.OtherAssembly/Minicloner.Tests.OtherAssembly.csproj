@@ -39,16 +39,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fakes\Class_With_InternalField_From_OtherAssembly.cs" />
-    <Compile Include="Fakes\Class_With_ProtectedInternalParameterlessConstructor_From_OtherAssembly.cs">
+    <Compile Include="Fakes\EmptyClass_From_OtherAssembly.cs" />
+    <Compile Include="Fakes\Fields\Class_With_InternalField_From_OtherAssembly.cs" />
+    <Compile Include="Fakes\Constructors\Class_With_ProtectedInternalParameterlessConstructor_From_OtherAssembly.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Fakes\Class_With_InternalParameterlessConstructor_From_OtherAssembly.cs" />
-    <Compile Include="Fakes\Class_With_ProtectedInternalField_From_OtherAssembly.cs">
+    <Compile Include="Fakes\Constructors\Class_With_InternalParameterlessConstructor_From_OtherAssembly.cs" />
+    <Compile Include="Fakes\Fields\Class_With_ProtectedInternalField_From_OtherAssembly.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Fakes\Static\Class_With_InternalStaticReferenceTypeField_From_OtherAssembly.cs" />
+    <Compile Include="Fakes\Static\Class_With_ProtectedInternalStaticReferenceTypeField_From_OtherAssembly.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

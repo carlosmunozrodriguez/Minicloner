@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Minicloner.Tests.OtherAssembly.Fakes
+namespace Minicloner.Tests.OtherAssembly.Fakes.Constructors
 {
     public class Class_With_InternalParameterlessConstructor_From_OtherAssembly
     {
