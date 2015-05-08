@@ -42,6 +42,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\CloneClassesInheritanceTests.cs" />
+    <Compile Include="Fakes\Inheritance\BaseClass_With_PrivateField.cs" />
+    <Compile Include="Fakes\Inheritance\BaseClass_With_ProtectedField.cs" />
+    <Compile Include="Fakes\Inheritance\BaseClass_With_InternalField.cs" />
+    <Compile Include="Fakes\Inheritance\BaseClass_With_ProtectedInternalField.cs" />
+    <Compile Include="Fakes\Inheritance\BaseClass_With_PublicField.cs" />
+    <Compile Include="Fakes\Inheritance\DerivedClass_With_ProtectedInternalField.cs" />
+    <Compile Include="Fakes\Inheritance\DerivedClass_With_InternalField.cs" />
+    <Compile Include="Fakes\Inheritance\DerivedClass_With_ProtectedField.cs" />
+    <Compile Include="Fakes\Inheritance\DerivedClass_With_PrivateField.cs" />
+    <Compile Include="Fakes\Inheritance\DerivedClass_With_PublicField.cs" />
     <Compile Include="Fakes\Static\Class_With_ProtectedInternalStaticReferenceTypeField.cs" />
     <Compile Include="Fakes\Static\Class_With_ProtectedStaticReferenceTypeField.cs" />
     <Compile Include="Fakes\Static\Class_With_PrivateStaticReferenceTypeField.cs" />
