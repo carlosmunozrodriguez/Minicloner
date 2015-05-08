@@ -1,5 +1,4 @@
 ﻿using Minicloner.Tests.Fakes.Constructors;
-using Minicloner.Tests.OtherAssembly.Fakes;
 using Minicloner.Tests.OtherAssembly.Fakes.Constructors;
 using Xunit;
 

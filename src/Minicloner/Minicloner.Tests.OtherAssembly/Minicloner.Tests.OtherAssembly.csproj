@@ -43,6 +43,10 @@
     <Compile Include="Fakes\Fields\Class_With_ProtectedInternalField_From_OtherAssembly.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Fakes\Inheritance\DerivedClass_With_ProtectedInternalField_From_OtherAssembly.cs" />
+    <Compile Include="Fakes\Inheritance\DerivedClass_With_InternalField_From_OtherAssembly.cs" />
+    <Compile Include="Fakes\Inheritance\BaseClass_With_InternalField_From_OtherAssembly.cs" />
+    <Compile Include="Fakes\Inheritance\BaseClass_With_ProtectedInternalField_From_OtherAssembly.cs" />
     <Compile Include="Fakes\Static\Class_With_InternalStaticReferenceTypeField_From_OtherAssembly.cs" />
     <Compile Include="Fakes\Static\Class_With_ProtectedInternalStaticReferenceTypeField_From_OtherAssembly.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
