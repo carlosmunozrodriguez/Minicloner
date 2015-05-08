@@ -92,9 +92,14 @@ namespace Minicloner
             var cloned = FormatterServices.GetUninitializedObject(type);
 
             // TODO: Allow circular references
-            foreach (var fieldInfo in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            while (type != null)
             {
-                fieldInfo.SetValue(cloned, CloneObject(fieldInfo.GetValue(source)));
+                foreach (var fieldInfo in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+                {
+                    fieldInfo.SetValue(cloned, CloneObject(fieldInfo.GetValue(source)));
+                }
+
+                type = type.BaseType;
             }
 
             return cloned;
