@@ -43,6 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\CloneClassesInheritanceTests.cs" />
+    <Compile Include="Classes\CloneClassesCircularReferenceTests.cs" />
+    <Compile Include="Fakes\CircularReference\MutuallyDependentClassA.cs" />
+    <Compile Include="Fakes\CircularReference\MutuallyDependentClassB.cs" />
+    <Compile Include="Fakes\CircularReference\ReflexiveClass.cs" />
     <Compile Include="Fakes\Inheritance\BaseClass_With_PrivateField.cs" />
     <Compile Include="Fakes\Inheritance\BaseClass_With_ProtectedField.cs" />
     <Compile Include="Fakes\Inheritance\BaseClass_With_InternalField.cs" />
