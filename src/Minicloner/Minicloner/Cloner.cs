@@ -8,16 +8,23 @@ namespace Minicloner
 {
     public class Cloner : ICloner
     {
+        private readonly Dictionary<object, object> _clonedInstances = new Dictionary<object, object>();
+
         public T Clone<T>(T source)
         {
             return (T)CloneObject(source);
         }
 
-        private static object CloneObject(object source)
+        private object CloneObject(object source)
         {
             if (source == null)
             {
                 return null;
+            }
+
+            if (_clonedInstances.ContainsKey(source))
+            {
+                return _clonedInstances[source];
             }
 
             var @string = source as string;
@@ -35,15 +42,14 @@ namespace Minicloner
             return source.GetType().IsValueType ? CloneValueType(source) : CloneReferenceType(source);
         }
 
-        private static object CloneString(string @string)
+        private object CloneString(string @string)
         {
             // We really mean cloning here so if source is string use native String.Copy so string is not interned.
             // TODO: Add an optional options object to Cloner's constructor to allow for optional string interning among other things.
-
-            return String.Copy(@string);
+            return _clonedInstances[@string] = String.Copy(@string);
         }
 
-        private static object CloneArray(Array array)
+        private object CloneArray(Array array)
         {
             // TODO: Find out if the cloned instance is really a clone or differs in something from the original array
 
@@ -60,20 +66,17 @@ namespace Minicloner
                 lowerBounds.Add(array.GetLowerBound(i));
             }
 
-            var newArray = Array.CreateInstance(array.GetType().GetElementType(), lengths.ToArray(), lowerBounds.ToArray());
+            var newArray = (Array)(_clonedInstances[array] = Array.CreateInstance(array.GetType().GetElementType(), lengths.ToArray(), lowerBounds.ToArray()));
 
-            IEnumerable<IEnumerable<int>> listWithEmptyListOfIndices = new List<List<int>> { new List<int>() };
-            var indicesList = lengths
+            foreach (var indices in lengths
                 .Select((length, rankIndex) => Enumerable.Range(lowerBounds[rankIndex], length))
-                .Aggregate(
-                    listWithEmptyListOfIndices,
+                .Aggregate<IEnumerable<int>, IEnumerable<IEnumerable<int>>>(
+                    new List<List<int>> { new List<int>() },
                     (accumulatedCartesianProduct, rightSideOfCartesianProduct) =>
                         from partialIndicesList in accumulatedCartesianProduct
                         from nextIndex in rightSideOfCartesianProduct
                         select partialIndicesList.Concat(new[] { nextIndex }))
-                .Select(indices => indices.ToArray());
-
-            foreach (var indices in indicesList)
+                .Select(indices => indices.ToArray()))
             {
                 newArray.SetValue(CloneObject(array.GetValue(indices)), indices);
             }
@@ -86,10 +89,10 @@ namespace Minicloner
             return source;
         }
 
-        private static object CloneReferenceType(object source)
+        private object CloneReferenceType(object source)
         {
             var type = source.GetType();
-            var cloned = FormatterServices.GetUninitializedObject(type);
+            var cloned = _clonedInstances[source] = FormatterServices.GetUninitializedObject(type);
 
             // TODO: Allow circular references
             while (type != null)
