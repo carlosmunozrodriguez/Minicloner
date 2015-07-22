@@ -118,8 +118,8 @@ namespace Minicloner.Tests.Classes
         {
             Class_With_PublicAutoImplementedProperty[] source =
             {
-                new Class_With_PublicAutoImplementedProperty{ PublicAutoImplementedProperty = 1 }, 
-                new Class_With_PublicAutoImplementedProperty{ PublicAutoImplementedProperty = 2 } 
+                new Class_With_PublicAutoImplementedProperty{ PublicAutoImplementedProperty = 1 },
+                new Class_With_PublicAutoImplementedProperty{ PublicAutoImplementedProperty = 2 }
             };
 
             var cloned = new Cloner().Clone(source);

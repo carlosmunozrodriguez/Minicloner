@@ -61,7 +61,7 @@ namespace Minicloner.Tests
         [Fact]
         public void Clone_ThreeDimensionalArray()
         {
-            Int32[, ,] array3D = {
+            Int32[,,] array3D = {
                                 { { 1, 2 }, { 3, 4 }, { 5, 6 } },
                                 { { 7, 8 }, { 9, 10 }, { 11, 12 } },
                                 { { 13, 14 }, { 15, 16 }, { 17, 18 } },
@@ -69,7 +69,7 @@ namespace Minicloner.Tests
                                };
             var cloned = new Cloner().Clone(array3D);
 
-            Assert.IsType<Int32[, ,]>(cloned);
+            Assert.IsType<Int32[,,]>(cloned);
             Assert.NotSame(array3D, cloned);
             Assert.Equal(array3D.Rank, cloned.Rank);
             Assert.Equal(array3D.GetLength(0), cloned.GetLength(0));
