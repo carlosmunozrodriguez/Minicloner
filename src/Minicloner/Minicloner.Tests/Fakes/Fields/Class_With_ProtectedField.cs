@@ -11,9 +11,6 @@ namespace Minicloner.Tests.Fakes.Fields
             ProtectedField = parameter;
         }
 
-        public Int32 Get_ProtectedField()
-        {
-            return ProtectedField;
-        }
+        public Int32 Get_ProtectedField() => ProtectedField;
     }
 }

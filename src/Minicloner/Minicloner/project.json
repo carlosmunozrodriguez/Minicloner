@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0-*",
+
+  "frameworks": {
+    "netstandard1.6": {
+      "dependencies": {
+        //"NETStandard.Library": "1.6.0", // Let's not depend on the whole Standard but only on the abosolute dependencies
+        "System.Runtime.InteropServices": "4.1.0",
+        "System.Linq": "4.1.0",
+        // End of .NETStandard.Library 1.6.0
+        "System.Reflection.TypeExtensions": "4.1.0"
+      }
+    },
+
+    "net461": {}
+  }
+}

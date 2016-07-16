@@ -6,14 +6,8 @@ namespace Minicloner.Tests.Fakes.Inheritance
     {
         private Int32 _privateFieldInBaseClass;
 
-        public void Set_PrivateField_In_BaseClass(Int32 int32Parameter)
-        {
-            _privateFieldInBaseClass = int32Parameter;
-        }
+        public void Set_PrivateField_In_BaseClass(Int32 int32Parameter) => _privateFieldInBaseClass = int32Parameter;
 
-        public Int32 Get_PrivateField_In_BaseClass()
-        {
-            return _privateFieldInBaseClass;
-        }
+        public Int32 Get_PrivateField_In_BaseClass() => _privateFieldInBaseClass;
     }
 }

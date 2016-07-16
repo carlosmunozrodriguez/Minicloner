@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
 
 namespace Minicloner
 {
@@ -39,14 +38,14 @@ namespace Minicloner
                 return CloneArray(array);
             }
 
-            return source.GetType().IsValueType ? CloneValueType(source) : CloneReferenceType(source);
+            return source.GetType().GetTypeInfo().IsValueType ? CloneValueType(source) : CloneReferenceType(source);
         }
 
         private object CloneString(string @string)
         {
             // We really mean cloning here so if source is string use native String.Copy so string is not interned.
             // TODO: Add an optional options object to Cloner's constructor to allow for optional string interning among other things.
-            return _clonedInstances[@string] = String.Copy(@string);
+            return _clonedInstances[@string] = @string.Copy(); // We are using here our reflection based hack to access non-standard method
         }
 
         private object CloneArray(Array array)
@@ -92,9 +91,8 @@ namespace Minicloner
         private object CloneReferenceType(object source)
         {
             var type = source.GetType();
-            var cloned = _clonedInstances[source] = FormatterServices.GetUninitializedObject(type);
+            var cloned = _clonedInstances[source] = FormatterServices.GetUninitializedObject(type); // We are using here our reflection based hack to access non-standard class and method
 
-            // TODO: Allow circular references
             while (type != null)
             {
                 foreach (var fieldInfo in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
@@ -102,7 +100,7 @@ namespace Minicloner
                     fieldInfo.SetValue(cloned, CloneObject(fieldInfo.GetValue(source)));
                 }
 
-                type = type.BaseType;
+                type = type.GetTypeInfo().BaseType;
             }
 
             return cloned;

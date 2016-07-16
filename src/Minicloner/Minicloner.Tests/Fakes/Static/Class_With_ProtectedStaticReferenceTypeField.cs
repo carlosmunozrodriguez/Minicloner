@@ -9,9 +9,6 @@
             ProtectedStaticReferenceTypeField = referenceTypeParameter;
         }
 
-        public static EmptyClass Get_ProtectedStaticReferenceTypeProperty()
-        {
-            return ProtectedStaticReferenceTypeField;
-        }
+        public static EmptyClass Get_ProtectedStaticReferenceTypeProperty() => ProtectedStaticReferenceTypeField;
     }
 }

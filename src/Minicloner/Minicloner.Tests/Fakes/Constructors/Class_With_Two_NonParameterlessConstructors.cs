@@ -14,7 +14,6 @@ namespace Minicloner.Tests.Fakes.Constructors
         public Class_With_Two_NonParameterlessConstructors(Int32 firstInt32Parameter, Int32 secondInt32Parameter)
         {
             Int32Property = firstInt32Parameter + secondInt32Parameter;
-
         }
     }
 }

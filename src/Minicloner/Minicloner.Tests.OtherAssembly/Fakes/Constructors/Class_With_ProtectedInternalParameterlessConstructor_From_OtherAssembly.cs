@@ -11,9 +11,7 @@ namespace Minicloner.Tests.OtherAssembly.Fakes.Constructors
         {
             PropertyInitializedInConstructor = 1;
         }
-        public static Class_With_ProtectedInternalParameterlessConstructor_From_OtherAssembly Create()
-        {
-            return new Class_With_ProtectedInternalParameterlessConstructor_From_OtherAssembly();
-        }
+
+        public static Class_With_ProtectedInternalParameterlessConstructor_From_OtherAssembly Create() => new Class_With_ProtectedInternalParameterlessConstructor_From_OtherAssembly();
     }
 }

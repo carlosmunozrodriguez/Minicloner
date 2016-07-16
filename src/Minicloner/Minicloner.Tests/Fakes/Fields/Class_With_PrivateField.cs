@@ -11,9 +11,6 @@ namespace Minicloner.Tests.Fakes.Fields
             _privateField = parameter;
         }
 
-        public Int32 Get_PrivateField()
-        {
-            return _privateField;
-        }
+        public Int32 Get_PrivateField() => _privateField;
     }
 }

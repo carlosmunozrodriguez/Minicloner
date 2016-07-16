@@ -11,9 +11,6 @@ namespace Minicloner.Tests.OtherAssembly.Fakes.Fields
             ProtectedInternalField = parameter;
         }
 
-        public Int32 Get_ProtectedInternalField()
-        {
-            return ProtectedInternalField;
-        }
+        public Int32 Get_ProtectedInternalField() => ProtectedInternalField;
     }
 }

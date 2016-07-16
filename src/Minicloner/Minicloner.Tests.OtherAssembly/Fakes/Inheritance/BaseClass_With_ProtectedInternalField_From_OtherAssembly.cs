@@ -11,9 +11,6 @@ namespace Minicloner.Tests.OtherAssembly.Fakes.Inheritance
             ProtectedInternalField_In_BaseClass = int32Parameter;
         }
 
-        public Int32 Get_ProtectedInternalField_In_BaseClass()
-        {
-            return ProtectedInternalField_In_BaseClass;
-        }
+        public Int32 Get_ProtectedInternalField_In_BaseClass() => ProtectedInternalField_In_BaseClass;
     }
 }
