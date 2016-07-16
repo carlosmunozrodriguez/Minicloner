@@ -9,9 +9,6 @@
             ProtectedInternalStaticReferenceTypeField = referenceTypeParameter;
         }
 
-        public static EmptyClass_From_OtherAssembly Get_ProtectedInternalStaticReferenceTypeField()
-        {
-            return ProtectedInternalStaticReferenceTypeField;
-        }
+        public static EmptyClass_From_OtherAssembly Get_ProtectedInternalStaticReferenceTypeField() => ProtectedInternalStaticReferenceTypeField;
     }
 }

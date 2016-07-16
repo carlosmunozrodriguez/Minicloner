@@ -11,9 +11,6 @@ namespace Minicloner.Tests.OtherAssembly.Fakes.Inheritance
             InternalField_In_DerivedClass = int32Parameter;
         }
 
-        public Int32 Get_InternalField_In_DerivedClass()
-        {
-            return InternalField_In_DerivedClass;
-        }
+        public Int32 Get_InternalField_In_DerivedClass() => InternalField_In_DerivedClass;
     }
 }

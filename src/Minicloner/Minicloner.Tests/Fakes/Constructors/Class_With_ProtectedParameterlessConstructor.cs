@@ -12,9 +12,6 @@ namespace Minicloner.Tests.Fakes.Constructors
             PropertyInitializedInConstructor = 1;
         }
 
-        public static Class_With_ProtectedParameterlessConstructor Create()
-        {
-            return new Class_With_ProtectedParameterlessConstructor();
-        }
+        public static Class_With_ProtectedParameterlessConstructor Create() => new Class_With_ProtectedParameterlessConstructor();
     }
 }

@@ -9,9 +9,6 @@
             _privateStaticReferenceTypeField = referenceTypeParameter;
         }
 
-        public static EmptyClass Get_PrivateStaticReferenceTypeProperty()
-        {
-            return _privateStaticReferenceTypeField;
-        }
+        public static EmptyClass Get_PrivateStaticReferenceTypeProperty() => _privateStaticReferenceTypeField;
     }
 }
