@@ -18,6 +18,6 @@ namespace Minicloner
                 .GetMethod("GetUninitializedObject", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
                 .CreateDelegate(typeof(Func<Type, object>));
 
-        public static object GetUninitializedObject(Type type) => GetUninitializedObjectDelegate.Invoke(type);
+        public static object GetUninitializedObject(Type type) => GetUninitializedObjectDelegate(type);
     }
 }
