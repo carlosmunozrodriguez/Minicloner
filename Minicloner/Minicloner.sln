@@ -3,18 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Minicloner", "Minicloner\Minicloner.xproj", "{829608F2-CC79-4056-B94E-38D99E09C051}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Minicloner.Tests.OtherAssembly", "Minicloner.Tests.OtherAssembly\Minicloner.Tests.OtherAssembly.xproj", "{805779EF-E584-4E01-9D9E-ACA755FAFC27}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Minicloner.Tests", "Minicloner.Tests\Minicloner.Tests.xproj", "{8A660009-1F0E-4FD1-BD2C-52CC9C3E18FB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7EC6BFED-E3FC-408A-B4EF-ABAB4BE9C04A}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		build.cake = build.cake
 		build.ps1 = build.ps1
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A622D4FB-F3A9-406A-A800-0B0FF68D92A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{46A49E79-9BD3-4984-9386-7B52986E0F26}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Minicloner", "src\Minicloner\Minicloner.xproj", "{829608F2-CC79-4056-B94E-38D99E09C051}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Minicloner.Tests", "test\Minicloner.Tests\Minicloner.Tests.xproj", "{8A660009-1F0E-4FD1-BD2C-52CC9C3E18FB}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Minicloner.Tests.OtherAssembly", "test\Minicloner.Tests.OtherAssembly\Minicloner.Tests.OtherAssembly.xproj", "{805779EF-E584-4E01-9D9E-ACA755FAFC27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,16 +30,21 @@ Global
 		{829608F2-CC79-4056-B94E-38D99E09C051}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{829608F2-CC79-4056-B94E-38D99E09C051}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{829608F2-CC79-4056-B94E-38D99E09C051}.Release|Any CPU.Build.0 = Release|Any CPU
-		{805779EF-E584-4E01-9D9E-ACA755FAFC27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{805779EF-E584-4E01-9D9E-ACA755FAFC27}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{805779EF-E584-4E01-9D9E-ACA755FAFC27}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{805779EF-E584-4E01-9D9E-ACA755FAFC27}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8A660009-1F0E-4FD1-BD2C-52CC9C3E18FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8A660009-1F0E-4FD1-BD2C-52CC9C3E18FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A660009-1F0E-4FD1-BD2C-52CC9C3E18FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A660009-1F0E-4FD1-BD2C-52CC9C3E18FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{805779EF-E584-4E01-9D9E-ACA755FAFC27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{805779EF-E584-4E01-9D9E-ACA755FAFC27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{805779EF-E584-4E01-9D9E-ACA755FAFC27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{805779EF-E584-4E01-9D9E-ACA755FAFC27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{829608F2-CC79-4056-B94E-38D99E09C051} = {A622D4FB-F3A9-406A-A800-0B0FF68D92A5}
+		{8A660009-1F0E-4FD1-BD2C-52CC9C3E18FB} = {46A49E79-9BD3-4984-9386-7B52986E0F26}
+		{805779EF-E584-4E01-9D9E-ACA755FAFC27} = {46A49E79-9BD3-4984-9386-7B52986E0F26}
 	EndGlobalSection
 EndGlobal
