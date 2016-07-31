@@ -9,7 +9,7 @@ namespace Minicloner
     /// </summary>
     static class StringReflectionExtensions
     {
-        public static readonly Func<string, string> CopyDelagate =
+        public static readonly Func<string, string> CopyDelegate =
             (Func<string, string>)
                 typeof(String)
                     .GetTypeInfo()
@@ -18,6 +18,6 @@ namespace Minicloner
                     .GetMethod("Copy", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
                     .CreateDelegate(typeof(Func<string, string>));
 
-        public static string Copy(this string str) => CopyDelagate.Invoke(str);
+        public static string Copy(this string str) => CopyDelegate(str);
     }
 }
