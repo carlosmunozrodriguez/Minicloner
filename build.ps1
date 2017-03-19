@@ -42,7 +42,13 @@ function Invoke-Task {
 
 Invoke-Task AutomatedBuild {
     Invoke-Task Get-DotNet {
-        ./dotnet-install.ps1 -Version 1.0.1
+        $dotnetVersion = "1.0.1"
+
+        if ($IsLinux -or $IsOsX) {
+            ./dotnet-install.sh -Version $dotnetVersion
+        } else {
+            ./dotnet-install.ps1 -Version $dotnetVersion
+        }
     }
 
     Invoke-Task Restore {
