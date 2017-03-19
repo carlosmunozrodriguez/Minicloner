@@ -15,10 +15,6 @@
     - future - Possibly unstable, frequently changing, may contain new finished and unfinished features
     - preview - Pre-release stable with known issues and feature gaps
     - production - Most stable releases
-.PARAMETER ForceProduction
-    Default: false
-    If -Channel Production is used the following message: "Production channel does not exist yet" is returned.
-    Use -ForceProduction with -Channel Production to install the latests production build.
 .PARAMETER Version
     Default: latest
     Represents a build version on specific channel. Possible values:
@@ -46,9 +42,6 @@
 .PARAMETER NoPath
     By default this script will set environment variable PATH for the current process to the binaries folder inside installation folder.
     If set it will display binaries location but not set any environment variable.
-.PARAMETER UserPath
-    By default this script will set environment variable PATH for the current process.
-    Use -UserPath to set environment variable PATH for the current user instead.
 .PARAMETER Verbose
     Displays diagnostics information.
 .PARAMETER AzureFeed
@@ -60,7 +53,6 @@
 [cmdletbinding()]
 param(
    [string]$Channel="rel-1.0.0",
-   [switch]$ForceProduction,
    [string]$Version="Latest",
    [string]$InstallDir="<auto>",
    [string]$Architecture="<auto>",
@@ -68,7 +60,6 @@ param(
    [switch]$DebugSymbols, # TODO: Switch does not work yet. Symbols zip is not being uploaded yet.
    [switch]$DryRun,
    [switch]$NoPath,
-   [switch]$UserPath,
    [string]$AzureFeed="https://dotnetcli.azureedge.net/dotnet",
    [string]$UncachedFeed="https://dotnetcli.blob.core.windows.net/dotnet",
    [string]$ProxyAddress
@@ -210,7 +201,7 @@ function Get-Azure-Channel-From-Channel([string]$Channel) {
     # For compatibility with build scripts accept also directly Azure channels names
     switch ($Channel.ToLower()) {
         { ($_ -eq "future") -or ($_ -eq "dev") } { return "dev" }
-        { $_ -eq "production" -and -not $ForceProduction } { throw "Production channel does not exist yet" }
+        { $_ -eq "production" } { throw "Production channel does not exist yet" }
         default { return $_ }
     }
 }
@@ -391,14 +382,8 @@ function DownloadFile([Uri]$Uri, [string]$OutPath) {
 function Prepend-Sdk-InstallRoot-To-Path([string]$InstallRoot, [string]$BinFolderRelativePath) {
     $BinPath = Get-Absolute-Path $(Join-Path -Path $InstallRoot -ChildPath $BinFolderRelativePath)
     if (-Not $NoPath) {
-        if (-Not $UserPath) {
-            Say "Adding to current process PATH: `"$BinPath`". Note: This change will not be visible if PowerShell was run as a child process."
-            $env:path = "$BinPath;" + $env:path
-        }
-        else {
-            Say "Adding to current user PATH: `"$BinPath`"."
-            [Environment]::SetEnvironmentVariable("Path", "$BinPath;" + [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User), [EnvironmentVariableTarget]::User)
-        }
+        Say "Adding to current process PATH: `"$BinPath`". Note: This change will not be visible if PowerShell was run as a child process."
+        $env:path = "$BinPath;" + $env:path
     }
     else {
         Say "Binaries of dotnet can be found in $BinPath"
