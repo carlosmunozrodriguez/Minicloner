@@ -45,10 +45,14 @@ Invoke-Task AutomatedBuild {
         $dotnetVersion = "1.0.1"
 
         if ($IsLinux -or $IsOsX) {
-            ./dotnet-install.sh -Version $dotnetVersion
+            bash ./dotnet-install.sh -Version $dotnetVersion
         } else {
             ./dotnet-install.ps1 -Version $dotnetVersion
         }
+    }
+
+    Invoke-Task Info {
+        dotnet --info
     }
 
     Invoke-Task Restore {
