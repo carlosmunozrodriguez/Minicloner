@@ -35,7 +35,7 @@ function Invoke-Task {
             Write-Host "Task: $Name failed"
             Write-Host "Task failed in" $sw.Elapsed.ToString()
             Write-Host "-------------------------------------"
-            exit
+            exit 1
         }
     }
 }
