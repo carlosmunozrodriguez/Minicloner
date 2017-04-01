@@ -1,5 +1,4 @@
-﻿using System;
-using Xunit;
+﻿using Xunit;
 
 namespace Minicloner.Tests
 {
@@ -8,7 +7,7 @@ namespace Minicloner.Tests
         [Fact]
         public void Clone_NullInt32()
         {
-            Nullable<Int32> nullInt32 = null;
+            int? nullInt32 = null;
             var cloned = new Cloner().Clone(nullInt32);
 
             Assert.Null(cloned);
@@ -17,10 +16,10 @@ namespace Minicloner.Tests
         [Fact]
         public void Clone_NotNullInt32()
         {
-            Nullable<Int32> notNullInt32 = 1;
+            int? notNullInt32 = 1;
             var cloned = new Cloner().Clone(notNullInt32);
 
-            Assert.IsType<Int32>(cloned);
+            Assert.IsType<int>(cloned);
             Assert.NotSame(notNullInt32, cloned);
             Assert.Equal(notNullInt32, cloned);
         }

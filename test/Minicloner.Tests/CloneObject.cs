@@ -16,7 +16,7 @@ namespace Minicloner.Tests
         [Fact]
         public void Clone_NotNullObject()
         {
-            object notNullObject = new object();
+            var notNullObject = new object();
             var cloned = new Cloner().Clone(notNullObject);
 
             Assert.IsType<object>(cloned);

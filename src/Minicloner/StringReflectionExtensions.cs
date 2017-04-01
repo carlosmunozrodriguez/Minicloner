@@ -7,11 +7,11 @@ namespace Minicloner
     /// Hack class to fix the problem of not having String.Copy(string str) in netstandard1.6
     /// Based on https://github.com/dotnet/corefx/issues/7938#issuecomment-227580931
     /// </summary>
-    static class StringReflectionExtensions
+    internal static class StringReflectionExtensions
     {
-        public static readonly Func<string, string> CopyDelegate =
+        private static readonly Func<string, string> CopyDelegate =
             (Func<string, string>)
-                typeof(String)
+                typeof(string)
                     .GetTypeInfo()
                     .Assembly
                     .GetType("System.String")

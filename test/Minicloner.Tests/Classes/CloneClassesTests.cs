@@ -1,5 +1,4 @@
-﻿using System;
-using Minicloner.Tests.Fakes;
+﻿using Minicloner.Tests.Fakes;
 using Minicloner.Tests.Fakes.Properties;
 using Xunit;
 
@@ -70,7 +69,7 @@ namespace Minicloner.Tests.Classes
             Assert.IsType<Class_With_PublicAutoImplementedProperty>(cloned.ReferenceTypeProperty);
             Assert.NotSame(source.ReferenceTypeProperty, cloned.ReferenceTypeProperty);
 
-            Assert.IsType<Int32>(cloned.ReferenceTypeProperty.PublicAutoImplementedProperty);
+            Assert.IsType<int>(cloned.ReferenceTypeProperty.PublicAutoImplementedProperty);
             Assert.Equal(source.ReferenceTypeProperty.PublicAutoImplementedProperty, cloned.ReferenceTypeProperty.PublicAutoImplementedProperty);
         }
 
@@ -100,7 +99,7 @@ namespace Minicloner.Tests.Classes
             Assert.IsType<Class_With_PublicAutoImplementedProperty>(cloned.ReferenceTypeProperty);
             Assert.NotSame(source.ReferenceTypeProperty, cloned.ReferenceTypeProperty);
 
-            Assert.IsType<Int32>(cloned.ReferenceTypeProperty.PublicAutoImplementedProperty);
+            Assert.IsType<int>(cloned.ReferenceTypeProperty.PublicAutoImplementedProperty);
             Assert.Equal(source.ReferenceTypeProperty.PublicAutoImplementedProperty, cloned.ReferenceTypeProperty.PublicAutoImplementedProperty);
 
             Assert.IsType<Class_With_ReferenceTypeProperty>(cloned.TwoLeveled_ReferenceTypeProperty);
@@ -109,7 +108,7 @@ namespace Minicloner.Tests.Classes
             Assert.IsType<Class_With_PublicAutoImplementedProperty>(cloned.TwoLeveled_ReferenceTypeProperty.ReferenceTypeProperty);
             Assert.NotSame(source.TwoLeveled_ReferenceTypeProperty.ReferenceTypeProperty, cloned.TwoLeveled_ReferenceTypeProperty.ReferenceTypeProperty);
 
-            Assert.IsType<Int32>(cloned.TwoLeveled_ReferenceTypeProperty.ReferenceTypeProperty.PublicAutoImplementedProperty);
+            Assert.IsType<int>(cloned.TwoLeveled_ReferenceTypeProperty.ReferenceTypeProperty.PublicAutoImplementedProperty);
             Assert.Equal(source.TwoLeveled_ReferenceTypeProperty.ReferenceTypeProperty.PublicAutoImplementedProperty, cloned.TwoLeveled_ReferenceTypeProperty.ReferenceTypeProperty.PublicAutoImplementedProperty);
         }
 
@@ -133,7 +132,7 @@ namespace Minicloner.Tests.Classes
                 Assert.IsType<Class_With_PublicAutoImplementedProperty>(cloned[i]);
                 Assert.NotSame(source[i], cloned[i]);
 
-                Assert.IsType<Int32>(cloned[i].PublicAutoImplementedProperty);
+                Assert.IsType<int>(cloned[i].PublicAutoImplementedProperty);
                 Assert.Equal(source[i].PublicAutoImplementedProperty, cloned[i].PublicAutoImplementedProperty);
             }
         }
