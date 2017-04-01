@@ -1,5 +1,4 @@
-﻿using System;
-using Xunit;
+﻿using Xunit;
 
 namespace Minicloner.Tests
 {
@@ -8,120 +7,120 @@ namespace Minicloner.Tests
         [Fact]
         public void Clone_Int16()
         {
-            const Int16 someInt16 = 1;
+            const short someInt16 = 1;
             var cloned = new Cloner().Clone(someInt16);
 
-            Assert.IsType<Int16>(cloned);
+            Assert.IsType<short>(cloned);
             Assert.Equal(someInt16, cloned);
         }
 
         [Fact]
         public void Clone_Int32()
         {
-            const Int32 someInt32 = 1;
+            const int someInt32 = 1;
             var cloned = new Cloner().Clone(someInt32);
 
-            Assert.IsType<Int32>(cloned);
+            Assert.IsType<int>(cloned);
             Assert.Equal(someInt32, cloned);
         }
 
         [Fact]
         public void Clone_Int64()
         {
-            const Int64 someInt64 = 1;
+            const long someInt64 = 1;
             var cloned = new Cloner().Clone(someInt64);
 
-            Assert.IsType<Int64>(cloned);
+            Assert.IsType<long>(cloned);
             Assert.Equal(someInt64, cloned);
         }
 
         [Fact]
         public void Clone_UInt16()
         {
-            const UInt16 someInt16 = 1;
+            const ushort someInt16 = 1;
             var cloned = new Cloner().Clone(someInt16);
 
-            Assert.IsType<UInt16>(cloned);
+            Assert.IsType<ushort>(cloned);
             Assert.Equal(someInt16, cloned);
         }
 
         [Fact]
         public void Clone_UInt32()
         {
-            const UInt32 someUInt32 = 1;
+            const uint someUInt32 = 1;
             var cloned = new Cloner().Clone(someUInt32);
 
-            Assert.IsType<UInt32>(cloned);
+            Assert.IsType<uint>(cloned);
             Assert.Equal(someUInt32, cloned);
         }
 
         [Fact]
         public void Clone_UInt64()
         {
-            const UInt64 someUInt64 = 1;
+            const ulong someUInt64 = 1;
             var cloned = new Cloner().Clone(someUInt64);
 
-            Assert.IsType<UInt64>(cloned);
+            Assert.IsType<ulong>(cloned);
             Assert.Equal(someUInt64, cloned);
         }
 
         [Fact]
         public void Clone_Byte()
         {
-            const Byte someByte = 1;
+            const byte someByte = 1;
             var cloned = new Cloner().Clone(someByte);
 
-            Assert.IsType<Byte>(cloned);
+            Assert.IsType<byte>(cloned);
             Assert.Equal(someByte, cloned);
         }
 
         [Fact]
         public void Clone_SByte()
         {
-            const SByte someSByte = 1;
+            const sbyte someSByte = 1;
             var cloned = new Cloner().Clone(someSByte);
 
-            Assert.IsType<SByte>(cloned);
+            Assert.IsType<sbyte>(cloned);
             Assert.Equal(someSByte, cloned);
         }
 
         [Fact]
         public void Clone_Char()
         {
-            const Char someChar = 'A';
+            const char someChar = 'A';
             var cloned = new Cloner().Clone(someChar);
 
-            Assert.IsType<Char>(cloned);
+            Assert.IsType<char>(cloned);
             Assert.Equal(someChar, cloned);
         }
 
         [Fact]
         public void Clone_Single()
         {
-            const Single someSingle = 1f;
+            const float someSingle = 1f;
             var cloned = new Cloner().Clone(someSingle);
 
-            Assert.IsType<Single>(cloned);
+            Assert.IsType<float>(cloned);
             Assert.Equal(someSingle, cloned);
         }
 
         [Fact]
         public void Clone_Double()
         {
-            const Double someDouble = 1d;
+            const double someDouble = 1d;
             var cloned = new Cloner().Clone(someDouble);
 
-            Assert.IsType<Double>(cloned);
+            Assert.IsType<double>(cloned);
             Assert.Equal(someDouble, cloned);
         }
 
         [Fact]
         public void Clone_Boolean()
         {
-            const Boolean someBoolean = true;
+            const bool someBoolean = true;
             var cloned = new Cloner().Clone(someBoolean);
 
-            Assert.IsType<Boolean>(cloned);
+            Assert.IsType<bool>(cloned);
             Assert.Equal(someBoolean, cloned);
         }
 
@@ -132,7 +131,7 @@ namespace Minicloner.Tests
             const decimal someDecimal = 1m;
             var cloned = new Cloner().Clone(someDecimal);
 
-            Assert.IsType<Decimal>(cloned);
+            Assert.IsType<decimal>(cloned);
             Assert.Equal(someDecimal, cloned);
         }
     }

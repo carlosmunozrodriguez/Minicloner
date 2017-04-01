@@ -8,10 +8,10 @@ namespace Minicloner.Tests
         [Fact]
         public void Clone_EmptyInt32Array()
         {
-            Int32[] array = { };
+            int[] array = { };
             var cloned = new Cloner().Clone(array);
 
-            Assert.IsType<Int32[]>(cloned);
+            Assert.IsType<int[]>(cloned);
             Assert.NotSame(array, cloned);
             Assert.Empty(cloned);
         }
@@ -19,10 +19,10 @@ namespace Minicloner.Tests
         [Fact]
         public void Clone_NonEmptyInt32Array()
         {
-            Int32[] array = { 1, 2, 3, 4, 5 };
+            int[] array = { 1, 2, 3, 4, 5 };
             var cloned = new Cloner().Clone(array);
 
-            Assert.IsType<Int32[]>(cloned);
+            Assert.IsType<int[]>(cloned);
             Assert.NotSame(array, cloned);
             Assert.Equal(array.Rank, cloned.Rank);
             Assert.Equal(array.Length, cloned.Length);
@@ -36,14 +36,14 @@ namespace Minicloner.Tests
         [Fact]
         public void Clone_TwoDimensionalArray()
         {
-            Int32[,] array2D = {
+            int[,] array2D = {
                                 { 1, 2 },
                                 { 3, 4 },
                                 { 5, 6 }
                                };
             var cloned = new Cloner().Clone(array2D);
 
-            Assert.IsType<Int32[,]>(cloned);
+            Assert.IsType<int[,]>(cloned);
             Assert.NotSame(array2D, cloned);
             Assert.Equal(array2D.Rank, cloned.Rank);
             Assert.Equal(array2D.GetLength(0), cloned.GetLength(0));
@@ -61,7 +61,7 @@ namespace Minicloner.Tests
         [Fact]
         public void Clone_ThreeDimensionalArray()
         {
-            Int32[,,] array3D = {
+            int[,,] array3D = {
                                 { { 1, 2 }, { 3, 4 }, { 5, 6 } },
                                 { { 7, 8 }, { 9, 10 }, { 11, 12 } },
                                 { { 13, 14 }, { 15, 16 }, { 17, 18 } },
@@ -69,7 +69,7 @@ namespace Minicloner.Tests
                                };
             var cloned = new Cloner().Clone(array3D);
 
-            Assert.IsType<Int32[,,]>(cloned);
+            Assert.IsType<int[,,]>(cloned);
             Assert.NotSame(array3D, cloned);
             Assert.Equal(array3D.Rank, cloned.Rank);
             Assert.Equal(array3D.GetLength(0), cloned.GetLength(0));
@@ -93,9 +93,9 @@ namespace Minicloner.Tests
         {
             // 1-dimensional array (not vector) has length 5 and index starts in -10.
             // Since it's non 0-based it is not an Int32[] but an Int32[*] with Rank 1
-            var array = Array.CreateInstance(typeof(Int32), new[] { 5 }, new[] { -10 });
+            var array = Array.CreateInstance(typeof(int), new[] { 5 }, new[] { -10 });
             var count = 0;
-            for (int i = array.GetLowerBound(0); i <= array.GetUpperBound(0); i++)
+            for (var i = array.GetLowerBound(0); i <= array.GetUpperBound(0); i++)
             {
                 array.SetValue(count++, i);
             }
@@ -104,7 +104,7 @@ namespace Minicloner.Tests
             var cloned = new Cloner().Clone(array);
 
             // typeof(Int32).MakeArrayType(1) is a multidimensional array with Rank == 1,
-            Assert.IsType(typeof(Int32).MakeArrayType(1), cloned);
+            Assert.IsType(typeof(int).MakeArrayType(1), cloned);
             Assert.NotSame(array, cloned);
             Assert.Equal(array.Rank, cloned.Rank);
             Assert.Equal(array.Length, cloned.Length);
@@ -119,11 +119,11 @@ namespace Minicloner.Tests
         public void Clone_Non0Based_TwoDimensionalArray()
         {
             // 2-dimensional array with lengths 2 and 3 and with indices that starts in -10 and -20.
-            var array = Array.CreateInstance(typeof(Int32), new[] { 2, 3 }, new[] { -10, -20 });
+            var array = Array.CreateInstance(typeof(int), new[] { 2, 3 }, new[] { -10, -20 });
             var count = 0;
-            for (int i = array.GetLowerBound(0); i <= array.GetUpperBound(0); i++)
+            for (var i = array.GetLowerBound(0); i <= array.GetUpperBound(0); i++)
             {
-                for (int j = array.GetLowerBound(1); j <= array.GetUpperBound(1); j++)
+                for (var j = array.GetLowerBound(1); j <= array.GetUpperBound(1); j++)
                 {
                     array.SetValue(count++, i, j);
                 }
@@ -133,7 +133,7 @@ namespace Minicloner.Tests
             var cloned = new Cloner().Clone(array);
 
             // typeof(Int32).MakeArrayType(2) is a multidimensional array with Rank == 2,
-            Assert.IsType(typeof(Int32).MakeArrayType(2), cloned);
+            Assert.IsType(typeof(int).MakeArrayType(2), cloned);
             Assert.NotSame(array, cloned);
             Assert.Equal(array.Rank, cloned.Rank);
             Assert.Equal(array.GetLength(0), cloned.GetLength(0));
@@ -141,7 +141,7 @@ namespace Minicloner.Tests
 
             for (var i = -10; i <= -9; i++)
             {
-                for (int j = -20; j <= -18; j++)
+                for (var j = -20; j <= -18; j++)
                 {
                     Assert.Equal(array.GetValue(i, j), cloned.GetValue(i, j));
                 }

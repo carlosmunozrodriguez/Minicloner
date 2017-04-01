@@ -1,16 +1,14 @@
-using System;
-
 namespace Minicloner.Tests.OtherAssembly.Fakes.Fields
 {
     public class Class_With_ProtectedInternalField_From_OtherAssembly
     {
-        protected internal Int32 ProtectedInternalField;
+        protected internal int ProtectedInternalField;
 
-        public Class_With_ProtectedInternalField_From_OtherAssembly(Int32 parameter)
+        public Class_With_ProtectedInternalField_From_OtherAssembly(int parameter)
         {
             ProtectedInternalField = parameter;
         }
 
-        public Int32 Get_ProtectedInternalField() => ProtectedInternalField;
+        public int Get_ProtectedInternalField() => ProtectedInternalField;
     }
 }

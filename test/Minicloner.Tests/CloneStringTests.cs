@@ -1,5 +1,4 @@
-﻿using System;
-using Xunit;
+﻿using Xunit;
 
 namespace Minicloner.Tests
 {
@@ -8,7 +7,7 @@ namespace Minicloner.Tests
         [Fact]
         public void Clone_NullString()
         {
-            const String nullString = null;
+            const string nullString = null;
             var cloned = new Cloner().Clone(nullString);
 
             Assert.Null(cloned);
@@ -17,10 +16,10 @@ namespace Minicloner.Tests
         [Fact]
         public void Clone_EmptyString()
         {
-            const String emptyString = "";
+            const string emptyString = "";
             var cloned = new Cloner().Clone(emptyString);
 
-            Assert.IsType<String>(cloned);
+            Assert.IsType<string>(cloned);
             Assert.NotSame(emptyString, cloned);
             Assert.Equal(emptyString, cloned);
         }
@@ -28,10 +27,10 @@ namespace Minicloner.Tests
         [Fact]
         public void Clone_SomeString()
         {
-            const String someString = "qwertyáéíóúñ";
+            const string someString = "qwertyáéíóúñ";
             var cloned = new Cloner().Clone(someString);
 
-            Assert.IsType<String>(cloned);
+            Assert.IsType<string>(cloned);
             Assert.NotSame(someString, cloned);
             Assert.Equal(someString, cloned);
         }

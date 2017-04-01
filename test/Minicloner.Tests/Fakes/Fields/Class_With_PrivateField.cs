@@ -1,16 +1,14 @@
-using System;
-
 namespace Minicloner.Tests.Fakes.Fields
 {
     public class Class_With_PrivateField
     {
-        private readonly Int32 _privateField;
+        private readonly int _privateField;
 
-        public Class_With_PrivateField(Int32 parameter)
+        public Class_With_PrivateField(int parameter)
         {
             _privateField = parameter;
         }
 
-        public Int32 Get_PrivateField() => _privateField;
+        public int Get_PrivateField() => _privateField;
     }
 }
