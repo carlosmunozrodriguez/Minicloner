@@ -6,9 +6,6 @@ namespace Minicloner.Tests.Fakes.CircularReference
 
         public MutuallyDependentClassA A { get; set; }
 
-        public MutuallyDependentClassB(int int32Parameter)
-        {
-            Int32Property = int32Parameter;
-        }
+        public MutuallyDependentClassB(int int32Parameter) => Int32Property = int32Parameter;
     }
 }

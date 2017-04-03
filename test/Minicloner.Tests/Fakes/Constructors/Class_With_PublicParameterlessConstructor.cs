@@ -5,9 +5,6 @@ namespace Minicloner.Tests.Fakes.Constructors
         public int PropertyInitializedInConstructor { get; private set; }
         public int Int32Property { get; set; }
 
-        public Class_With_PublicParameterlessConstructor()
-        {
-            PropertyInitializedInConstructor = 1;
-        }
+        public Class_With_PublicParameterlessConstructor() => PropertyInitializedInConstructor = 1;
     }
 }

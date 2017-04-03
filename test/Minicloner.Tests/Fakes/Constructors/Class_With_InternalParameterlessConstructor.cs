@@ -5,9 +5,6 @@
         public int Int32Property { get; set; }
         public int PropertyInitializedInConstructor { get; private set; }
 
-        internal Class_With_InternalParameterlessConstructor()
-        {
-            PropertyInitializedInConstructor = 1;
-        }
+        internal Class_With_InternalParameterlessConstructor() => PropertyInitializedInConstructor = 1;
     }
 }

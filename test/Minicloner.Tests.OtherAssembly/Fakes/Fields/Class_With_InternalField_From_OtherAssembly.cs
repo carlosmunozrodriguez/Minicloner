@@ -4,10 +4,7 @@ namespace Minicloner.Tests.OtherAssembly.Fakes.Fields
     {
         internal int InternalField;
 
-        public Class_With_InternalField_From_OtherAssembly(int parameter)
-        {
-            InternalField = parameter;
-        }
+        public Class_With_InternalField_From_OtherAssembly(int parameter) => InternalField = parameter;
 
         public int Get_InternalField() => InternalField;
     }
