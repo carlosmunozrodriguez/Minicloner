@@ -4,10 +4,7 @@ namespace Minicloner.Tests.Fakes.Fields
     {
         private readonly int _privateField;
 
-        public Class_With_PrivateField(int parameter)
-        {
-            _privateField = parameter;
-        }
+        public Class_With_PrivateField(int parameter) => _privateField = parameter;
 
         public int Get_PrivateField() => _privateField;
     }

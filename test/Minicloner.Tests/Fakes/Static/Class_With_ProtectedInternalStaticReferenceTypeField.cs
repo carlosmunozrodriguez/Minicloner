@@ -4,9 +4,6 @@
     {
         internal static EmptyClass InternalStaticReferenceTypeField;
 
-        public Class_With_InternalStaticReferenceTypeField(EmptyClass referenceTypeParameter)
-        {
-            InternalStaticReferenceTypeField = referenceTypeParameter;
-        }
+        public Class_With_InternalStaticReferenceTypeField(EmptyClass referenceTypeParameter) => InternalStaticReferenceTypeField = referenceTypeParameter;
     }
 }

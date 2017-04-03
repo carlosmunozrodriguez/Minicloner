@@ -4,10 +4,7 @@ namespace Minicloner.Tests.Fakes.Fields
     {
         protected readonly int ProtectedField;
 
-        public Class_With_ProtectedField(int parameter)
-        {
-            ProtectedField = parameter;
-        }
+        public Class_With_ProtectedField(int parameter) => ProtectedField = parameter;
 
         public int Get_ProtectedField() => ProtectedField;
     }

@@ -64,6 +64,6 @@ Invoke-Task AutomatedBuild {
     }
 
     Invoke-Task Test {
-        dotnet test test/Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --verbosity minimal --logger "trx;LogFileName=TestResults.trx"
+        dotnet test test/Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --logger "trx;LogFileName=TestResults.trx" --no-build --verbosity minimal
     }
 }
