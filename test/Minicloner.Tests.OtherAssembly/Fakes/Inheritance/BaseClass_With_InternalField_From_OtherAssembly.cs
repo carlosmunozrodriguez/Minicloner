@@ -4,10 +4,7 @@
     {
         internal int InternalField_In_BaseClass;
 
-        public void Set_InternalField_In_BaseClass(int int32Parameter)
-        {
-            InternalField_In_BaseClass = int32Parameter;
-        }
+        public void Set_InternalField_In_BaseClass(int int32Parameter) => InternalField_In_BaseClass = int32Parameter;
 
         public int Get_InternalField_In_BaseClass() => InternalField_In_BaseClass;
     }

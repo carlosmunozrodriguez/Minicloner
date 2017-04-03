@@ -4,10 +4,7 @@
     {
         protected internal int ProtectedInternalField_In_DerivedClass;
 
-        public void Set_ProtectedInternalField_In_DerivedClass(int int32Parameter)
-        {
-            ProtectedInternalField_In_DerivedClass = int32Parameter;
-        }
+        public void Set_ProtectedInternalField_In_DerivedClass(int int32Parameter) => ProtectedInternalField_In_DerivedClass = int32Parameter;
 
         public int Get_ProtectedInternalField_In_DerivedClass() => ProtectedInternalField_In_DerivedClass;
     }

@@ -4,10 +4,7 @@
     {
         private static EmptyClass _privateStaticReferenceTypeField;
 
-        public Class_With_PrivateStaticReferenceTypeField(EmptyClass referenceTypeParameter)
-        {
-            _privateStaticReferenceTypeField = referenceTypeParameter;
-        }
+        public Class_With_PrivateStaticReferenceTypeField(EmptyClass referenceTypeParameter) => _privateStaticReferenceTypeField = referenceTypeParameter;
 
         public static EmptyClass Get_PrivateStaticReferenceTypeProperty() => _privateStaticReferenceTypeField;
     }
