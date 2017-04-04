@@ -32,20 +32,16 @@ namespace Minicloner
                 {
                     // TODO: Find out if the cloned instance is really a clone or differs in something from the original array
 
-                    // Unoptimized
-                    //var lengths = Enumerable.Range(0, array.Rank)
-                    //    .Select(x => array.GetLength(x));
-
                     var rank = array.Rank;
-                    var lengths = new List<int>(rank);
-                    var lowerBounds = new List<int>(rank);
+                    var lengths = new int[rank];
+                    var lowerBounds = new int[rank];
                     for (var i = 0; i < rank; i++)
                     {
-                        lengths.Add(array.GetLength(i));
-                        lowerBounds.Add(array.GetLowerBound(i));
+                        lengths[i] = array.GetLength(i);
+                        lowerBounds[i] = array.GetLowerBound(i);
                     }
 
-                    var newArray = (Array)(_clonedInstances[array] = Array.CreateInstance(array.GetType().GetElementType(), lengths.ToArray(), lowerBounds.ToArray()));
+                    var newArray = (Array)(_clonedInstances[array] = Array.CreateInstance(array.GetType().GetElementType(), lengths, lowerBounds));
 
                     foreach (var indices in lengths
                         .Select((length, rankIndex) => Enumerable.Range(lowerBounds[rankIndex], length))
