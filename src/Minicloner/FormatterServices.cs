@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NET462
+using System;
 using System.Reflection;
 
 namespace Minicloner
@@ -11,13 +12,15 @@ namespace Minicloner
     {
         private static readonly Func<Type, object> GetUninitializedObjectDelegate =
             (Func<Type, object>)
-                typeof(string)
+                typeof(string) // String or other type that belongs to mscorlib.dll assembly
                     .GetTypeInfo()
                     .Assembly
                     .GetType("System.Runtime.Serialization.FormatterServices")
+                    .GetTypeInfo()
                     .GetMethod("GetUninitializedObject", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
                     .CreateDelegate(typeof(Func<Type, object>));
 
         public static object GetUninitializedObject(Type type) => GetUninitializedObjectDelegate(type);
     }
 }
+#endif

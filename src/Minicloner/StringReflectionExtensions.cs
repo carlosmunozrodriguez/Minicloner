@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NET462
+using System;
 using System.Reflection;
 
 namespace Minicloner
@@ -13,11 +14,10 @@ namespace Minicloner
             (Func<string, string>)
                 typeof(string)
                     .GetTypeInfo()
-                    .Assembly
-                    .GetType("System.String")
                     .GetMethod("Copy", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
                     .CreateDelegate(typeof(Func<string, string>));
 
         public static string Copy(this string str) => CopyDelegate(str);
     }
 }
+#endif

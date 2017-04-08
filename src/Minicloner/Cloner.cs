@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+#if NET462
+using System.Runtime.Serialization;
+#endif
 
 namespace Minicloner
 {
@@ -26,7 +29,13 @@ namespace Minicloner
 
                 // We really mean cloning here so if @object is string use native String.Copy so string is not interned.
                 // TODO: Add an optional options object to Cloner's constructor to allow for optional string interning among other things.
-                object CloneString(string @string) => _clonedInstances[@string] = @string.Copy(); // We are using here our reflection based hack to access non-standard method
+                object CloneString(string @string) =>
+#if NET462
+                    _clonedInstances[@string] = string.Copy(@string);
+#else
+                    _clonedInstances[@string] = @string.Copy();
+#endif
+
 
                 object CloneArray(Array array)
                 {
@@ -62,11 +71,11 @@ namespace Minicloner
                 object CloneReferenceType(object referenceTypeObject)
                 {
                     var type = referenceTypeObject.GetType();
-                    var cloned = _clonedInstances[referenceTypeObject] = FormatterServices.GetUninitializedObject(type); // We are using here our reflection based hack to access non-standard class and method
+                    var cloned = _clonedInstances[referenceTypeObject] = FormatterServices.GetUninitializedObject(type);
 
                     while (type != null)
                     {
-                        foreach (var fieldInfo in type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+                        foreach (var fieldInfo in type.GetTypeInfo().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
                         {
                             fieldInfo.SetValue(cloned, CloneObject(fieldInfo.GetValue(referenceTypeObject)));
                         }
