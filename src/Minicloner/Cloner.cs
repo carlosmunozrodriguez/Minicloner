@@ -36,11 +36,9 @@ namespace Minicloner
                     _clonedInstances[@string] = @string.Copy();
 #endif
 
-
                 object CloneArray(Array array)
                 {
                     // TODO: Find out if the cloned instance is really a clone or differs in something from the original array
-
                     var rank = array.Rank;
                     var lengths = new int[rank];
                     var lowerBounds = new int[rank];

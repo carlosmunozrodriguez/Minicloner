@@ -12,7 +12,7 @@ namespace Minicloner
     {
         private static readonly Func<Type, object> GetUninitializedObjectDelegate =
             (Func<Type, object>)
-                typeof(string) // String or other type that belongs to mscorlib.dll assembly
+                typeof(string) // String or other type that belongs to mscorlib assembly
                     .GetTypeInfo()
                     .Assembly
                     .GetType("System.Runtime.Serialization.FormatterServices")
