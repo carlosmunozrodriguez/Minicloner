@@ -1,23 +1,22 @@
-﻿#if !NET462
+﻿#if NETSTANDARD1_0
 using System;
 using System.Reflection;
 
 namespace Minicloner
 {
     /// <summary>
-    /// Hack class to fix the problem of not having String.Copy(string str) in netstandard1.6
+    /// Shim class to fix the problem of not having String.Copy(string str) in netstandard
     /// Based on https://github.com/dotnet/corefx/issues/7938#issuecomment-227580931
     /// </summary>
-    internal static class StringReflectionExtensions
+    internal static class String
     {
         private static readonly Func<string, string> CopyDelegate =
             (Func<string, string>)
                 typeof(string)
-                    .GetTypeInfo()
-                    .GetMethod("Copy", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
+                    .GetRuntimeMethod("Copy", new[] { typeof(string) })
                     .CreateDelegate(typeof(Func<string, string>));
 
-        public static string Copy(this string str) => CopyDelegate(str);
+        public static string Copy(string str) => CopyDelegate(str);
     }
 }
 #endif

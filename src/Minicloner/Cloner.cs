@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-#if NET462
+#if NET45
 using System.Runtime.Serialization;
 #endif
 
@@ -21,24 +21,23 @@ namespace Minicloner
                 switch (@object)
                 {
                     case null: return null;
-                    case object alreadyCloned when _clonedInstances.ContainsKey(alreadyCloned): return _clonedInstances[alreadyCloned];
+                    case object alreadyCloned when _clonedInstances.ContainsKey(alreadyCloned):
+                        return _clonedInstances[alreadyCloned];
                     case string @string: return CloneString(@string);
                     case Array array: return CloneArray(array);
-                    default: return @object.GetType().GetTypeInfo().IsValueType ? @object : CloneReferenceType(@object);
+                    default:
+                        return @object.GetType()
+#if NETSTANDARD1_0
+                            .GetTypeInfo()
+#endif
+                            .IsValueType ? @object : CloneReferenceType(@object);
                 }
 
-                // We really mean cloning here so if @object is string use native String.Copy so string is not interned.
-                // TODO: Add an optional options object to Cloner's constructor to allow for optional string interning among other things.
-                object CloneString(string @string) =>
-#if NET462
-                    _clonedInstances[@string] = string.Copy(@string);
-#else
-                    _clonedInstances[@string] = @string.Copy();
-#endif
+                // Use native String.Copy so string is not interned.
+                object CloneString(string @string) => _clonedInstances[@string] = String.Copy(@string);
 
                 object CloneArray(Array array)
                 {
-                    // TODO: Find out if the cloned instance is really a clone or differs in something from the original array
                     var rank = array.Rank;
                     var lengths = new int[rank];
                     var lowerBounds = new int[rank];
@@ -48,40 +47,55 @@ namespace Minicloner
                         lowerBounds[i] = array.GetLowerBound(i);
                     }
 
-                    var newArray = (Array)(_clonedInstances[array] = Array.CreateInstance(array.GetType().GetElementType(), lengths, lowerBounds));
+                    var clone =
+                        (Array)(_clonedInstances[array] =
+                            Array.CreateInstance(array.GetType().GetElementType(), lengths, lowerBounds));
 
-                    foreach (var indices in lengths
+                    foreach (var indices in
+                        // This code generates a list of all coordinates in the n-dimensional array
+                        // so it can be traversed by a 1-dimensional foreach
+                        lengths
                         .Select((length, rankIndex) => Enumerable.Range(lowerBounds[rankIndex], length))
                         .Aggregate<IEnumerable<int>, IEnumerable<IEnumerable<int>>>(
-                            new List<List<int>> { new List<int>() },
+                            new[] { new int[0] },
                             (accumulatedCartesianProduct, rightSideOfCartesianProduct) =>
                                 from partialIndicesList in accumulatedCartesianProduct
                                 from nextIndex in rightSideOfCartesianProduct
                                 select partialIndicesList.Concat(new[] { nextIndex }))
                         .Select(indices => indices.ToArray()))
                     {
-                        newArray.SetValue(CloneObject(array.GetValue(indices)), indices);
+                        clone.SetValue(CloneObject(array.GetValue(indices)), indices);
                     }
 
-                    return newArray;
+                    return clone;
                 }
 
                 object CloneReferenceType(object referenceTypeObject)
                 {
                     var type = referenceTypeObject.GetType();
-                    var cloned = _clonedInstances[referenceTypeObject] = FormatterServices.GetUninitializedObject(type);
+                    var clone = _clonedInstances[referenceTypeObject] = FormatterServices.GetUninitializedObject(type);
 
                     while (type != null)
                     {
-                        foreach (var fieldInfo in type.GetTypeInfo().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+                        foreach (var fieldInfo in type
+                            .GetRuntimeFields()
+                            .Where(
+                                x => !x.IsStatic &&     // All instances should already share the same value.
+                                x.DeclaringType == type // Don't clone parent class fields yet
+                            )
+                        )
                         {
-                            fieldInfo.SetValue(cloned, CloneObject(fieldInfo.GetValue(referenceTypeObject)));
+                            fieldInfo.SetValue(clone, CloneObject(fieldInfo.GetValue(referenceTypeObject)));
                         }
 
-                        type = type.GetTypeInfo().BaseType;
+                        type = type
+#if NETSTANDARD1_0
+                            .GetTypeInfo()
+#endif
+                            .BaseType;
                     }
 
-                    return cloned;
+                    return clone;
                 }
             }
         }
