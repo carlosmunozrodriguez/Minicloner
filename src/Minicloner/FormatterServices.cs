@@ -1,11 +1,11 @@
-﻿#if !NET462
+﻿#if NETSTANDARD1_0
 using System;
 using System.Reflection;
 
 namespace Minicloner
 {
     /// <summary>
-    /// Hack to fix the problem of not having FormatterServices class in netstandard1.6
+    /// Shim class to fix the problem of not having FormatterServices class in netstandard
     /// Based on https://github.com/dotnet/corefx/issues/7938#issuecomment-227580931
     /// </summary>
     internal static class FormatterServices
@@ -16,8 +16,7 @@ namespace Minicloner
                     .GetTypeInfo()
                     .Assembly
                     .GetType("System.Runtime.Serialization.FormatterServices")
-                    .GetTypeInfo()
-                    .GetMethod("GetUninitializedObject", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static)
+                    .GetRuntimeMethod("GetUninitializedObject", new[] { typeof(Type) })
                     .CreateDelegate(typeof(Func<Type, object>));
 
         public static object GetUninitializedObject(Type type) => GetUninitializedObjectDelegate(type);
