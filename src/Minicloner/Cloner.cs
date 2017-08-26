@@ -21,7 +21,7 @@ namespace Minicloner
                 switch (@object)
                 {
                     case null: return null;
-                    case object alreadyCloned when _clonedInstances.ContainsKey(alreadyCloned):
+                    case var alreadyCloned when _clonedInstances.ContainsKey(alreadyCloned):
                         return _clonedInstances[alreadyCloned];
                     case string @string: return CloneString(@string);
                     case Array array: return CloneArray(array);
