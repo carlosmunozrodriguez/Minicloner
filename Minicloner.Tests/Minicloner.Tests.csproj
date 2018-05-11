@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Minicloner\Minicloner.csproj" />
+    <ProjectReference Include="..\Minicloner\Minicloner.csproj" />
     <ProjectReference Include="..\Minicloner.Tests.OtherAssembly\Minicloner.Tests.OtherAssembly.csproj" />
   </ItemGroup>
 
