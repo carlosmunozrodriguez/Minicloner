@@ -27,6 +27,6 @@ Invoke-Task AutomatedBuild {
     }
 
     Invoke-Task Test {
-        dotnet test test/Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --logger "trx;" --no-build
+        dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --logger "trx;" --no-build
     }
 }
