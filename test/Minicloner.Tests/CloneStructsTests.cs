@@ -12,7 +12,9 @@ namespace Minicloner.Tests
             var cloned = new Cloner().Clone(emptyStruct);
 
             Assert.IsType<EmptyStruct>(cloned);
+#pragma warning disable xUnit2005 // We are comparing instances not values
             Assert.NotSame(emptyStruct, cloned);
+#pragma warning restore xUnit2005
         }
 
         [Fact]
@@ -22,7 +24,9 @@ namespace Minicloner.Tests
             var cloned = new Cloner().Clone(structWithPublicField);
 
             Assert.IsType<Struct_With_PublicValueTypeField>(cloned);
+#pragma warning disable xUnit2005 // We are comparing instances not values
             Assert.NotSame(structWithPublicField, cloned);
+#pragma warning restore xUnit2005
             Assert.Equal(structWithPublicField.PublicInt32Field, cloned.PublicInt32Field);
         }
     }

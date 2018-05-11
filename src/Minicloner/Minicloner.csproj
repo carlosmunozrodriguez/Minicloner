@@ -2,11 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard1.0;net45</TargetFrameworks>
-    <AssemblyName>Minicloner</AssemblyName>
-    <PackageId>Minicloner</PackageId>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
 </Project>
