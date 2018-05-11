@@ -42,15 +42,12 @@ function Invoke-Task {
 
 Invoke-Task AutomatedBuild {
     Invoke-Task Get-DotNet-Sdk {
-        $dotnetSdkVersion1 = "1.0.4"
-        $dotnetSdkVersion2 = "2.0.0"
+        $dotnetSdkVersion = "2.1.200"
 
         if ($IsLinux -or $IsOsX) {
-            bash ./dotnet-install.sh -Channel Current -Version $dotnetSdkVersion1
-            bash ./dotnet-install.sh -Channel Current -Version $dotnetSdkVersion2
+            bash ./dotnet-install.sh -Channel Current -Version $dotnetSdkVersion
         } else {
-            ./dotnet-install.ps1 -Channel Current -Version $dotnetSdkVersion1
-            ./dotnet-install.ps1 -Channel Current -Version $dotnetSdkVersion2
+            ./dotnet-install.ps1 -Channel Current -Version $dotnetSdkVersion
         }
     }
 
@@ -58,15 +55,15 @@ Invoke-Task AutomatedBuild {
         dotnet --info
     }
 
-    Invoke-Task Restore {
-        dotnet restore --verbosity detailed
+    Invoke-Task Clean {
+        dotnet clean
     }
 
     Invoke-Task Build {
-        dotnet build --configuration Release --verbosity normal
+        dotnet build --configuration Release
     }
 
     Invoke-Task Test {
-        dotnet test test/Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --logger "trx;" --no-build --verbosity minimal
+        dotnet test test/Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --logger "trx;" --no-build
     }
 }
