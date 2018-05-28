@@ -8,6 +8,7 @@ namespace Minicloner.Tests
         public void Clone_NullInt32()
         {
             int? nullInt32 = null;
+            // ReSharper disable once ExpressionIsAlwaysNull - We want to clone a nullable object
             var cloned = new Cloner().Clone(nullInt32);
 
             Assert.Null(cloned);

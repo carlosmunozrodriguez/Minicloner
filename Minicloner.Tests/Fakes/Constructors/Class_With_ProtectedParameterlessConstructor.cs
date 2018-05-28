@@ -3,7 +3,7 @@
     public class Class_With_ProtectedParameterlessConstructor
     {
         public int Int32Property { get; set; }
-        public int PropertyInitializedInConstructor { get; private set; }
+        public int PropertyInitializedInConstructor { get; }
 
         protected Class_With_ProtectedParameterlessConstructor() => PropertyInitializedInConstructor = 1;
 
