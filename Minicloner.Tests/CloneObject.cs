@@ -8,6 +8,7 @@ namespace Minicloner.Tests
         public void Clone_NullObject()
         {
             object nullObject = null;
+            // ReSharper disable once ExpressionIsAlwaysNull - We want to clone null
             var cloned = new Cloner().Clone(nullObject);
 
             Assert.Null(cloned);

@@ -3,7 +3,7 @@
     public class Class_With_ProtectedInternalParameterlessConstructor_From_OtherAssembly
     {
         public int Int32Property { get; set; }
-        public int PropertyInitializedInConstructor { get; private set; }
+        public int PropertyInitializedInConstructor { get; }
 
         protected internal Class_With_ProtectedInternalParameterlessConstructor_From_OtherAssembly() => PropertyInitializedInConstructor = 1;
 
