@@ -1,9 +1,9 @@
 language: csharp
 mono: none
 dotnet: 2.1.200
+install:
+    - apt install dotnet-dev-1.1.9
 script:
-    - ./dotnet-install.sh --channel Current --version 1.1.9
-    - ./dotnet-install.sh --channel Current --version 2.1.200
     - dotnet --info
     - dotnet clean
     - dotnet build --configuration Release
