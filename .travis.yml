@@ -2,7 +2,7 @@ language: csharp
 mono: none
 dotnet: 2.1.200
 install:
-    - apt install dotnet-dev-1.1.9
+    - apt install dotnet-dev-1.1.9 -y
 script:
     - dotnet --info
     - dotnet clean
