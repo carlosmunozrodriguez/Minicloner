@@ -1,4 +1,7 @@
 steps:
+- script: dotnet --info
+  displayName: dotnet info
+  failOnStderr: true
 - script: dotnet build --configuration Release
   displayName: Build
   failOnStderr: true
