@@ -1,4 +1,9 @@
 steps:
+- task: DotNetCoreInstaller@0
+  displayName: Install dotnet SDK
+  inputs:
+    packageType: sdk
+    version: 2.1.300
 - script: dotnet --info
   displayName: dotnet info
   failOnStderr: true
