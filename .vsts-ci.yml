@@ -1,7 +1,7 @@
 steps:
-- displayName: Build
-  script: dotnet build --configuration Release
+- script: dotnet build --configuration Release
+  displayName: Build
   failOnStderr: true
-- displayName: Test
-  script: dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --logger "trx;" --no-build
+- script: dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --logger "trx;" --no-build
+  displayName: Test
   failOnStderr: true
