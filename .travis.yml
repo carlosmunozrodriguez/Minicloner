@@ -4,7 +4,5 @@ dotnet: 2.1.200
 install:
     - sudo apt-get install dotnet-dev-1.1.9 -y
 script:
-    - dotnet --info
-    - dotnet clean
     - dotnet build --configuration Release
     - dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --no-build
