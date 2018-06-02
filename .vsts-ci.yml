@@ -1,7 +1,23 @@
 steps:
-- script: dotnet build --configuration Release
+- task: DotNetCoreInstaller@0
+  displayName: Install dotnet SDK
+  inputs:
+    version: 2.1.300
+- task: DotNetCoreCLI@2
+  displayName: SDK Info
+  inputs:
+    command: custom
+    custom: --info
+- task: DotNetCoreCLI@2
   displayName: Build
-  failOnStderr: true
-- script: dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --logger "trx;" --no-build
+  inputs:
+    command: build
+    arguments: --configuration Release
+- task: DotNetCoreCLI@2
   displayName: Test
-  failOnStderr: true
+  inputs:
+    command: test
+    projects: Minicloner.Tests/Minicloner.Tests.csproj
+    arguments: --configuration Release
+    publishTestResults: true
+    nobuild: true

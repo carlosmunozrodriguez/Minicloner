@@ -9,7 +9,7 @@ Invoke-Task AutomatedBuild {
             bash ./dotnet-install.sh --channel Current --version $dotnetSdkVersion1
             bash ./dotnet-install.sh --channel Current --version $dotnetSdkVersion2
         } else {
-            ./dotnet-install.ps1 -Channel Current -Version $dotnetSdkVersion1 -Runtime dotnet
+            ./dotnet-install.ps1 -Channel Current -Version $dotnetSdkVersion1
             ./dotnet-install.ps1 -Channel Current -Version $dotnetSdkVersion2
         }
     }
