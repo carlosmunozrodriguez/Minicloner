@@ -4,13 +4,20 @@ steps:
   inputs:
     version: 2.1.300
 - task: DotNetCoreCLI@2
-  displayName: dotnet info
+  displayName: SDK Info
   inputs:
     command: custom
-    arguments: --info
-- script: dotnet build --configuration Release
+    custom: --info
+- task: DotNetCoreCLI@2
   displayName: Build
-  failOnStderr: true
-- script: dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --logger "trx;" --no-build
+  inputs:
+    command: build
+    arguments: --configuration Release
+- task: DotNetCoreCLI@2
   displayName: Test
-  failOnStderr: true
+  inputs:
+    command: Test
+    projects: Minicloner.Tests/Minicloner.Tests.csproj
+    arguments: --configuration Release
+    publishTestResults: true
+    nobuild: true
