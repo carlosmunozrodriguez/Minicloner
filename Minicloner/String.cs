@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NETSTANDARD1_0
+using System;
 using System.Reflection;
 
 namespace Minicloner
@@ -18,3 +19,4 @@ namespace Minicloner
         public static string Copy(string str) => CopyDelegate(str);
     }
 }
+#endif
