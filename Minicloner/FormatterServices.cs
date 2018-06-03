@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NETSTANDARD1_0
+using System;
 using System.Reflection;
 
 namespace Minicloner
@@ -21,3 +22,4 @@ namespace Minicloner
         public static object GetUninitializedObject(Type type) => GetUninitializedObjectDelegate(type);
     }
 }
+#endif

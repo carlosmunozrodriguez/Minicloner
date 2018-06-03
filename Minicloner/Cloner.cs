@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+#if NET45
+using System.Runtime.Serialization;
+#endif
 
 namespace Minicloner
 {
@@ -24,7 +27,9 @@ namespace Minicloner
                     case Array array: return CloneArray(array);
                     default:
                         return @object.GetType()
+#if NETSTANDARD1_0
                             .GetTypeInfo()
+#endif
                             .IsValueType ? @object : CloneReferenceType(@object);
                 }
 
@@ -84,7 +89,9 @@ namespace Minicloner
                         }
 
                         type = type
+#if NETSTANDARD1_0
                             .GetTypeInfo()
+#endif
                             .BaseType;
                     }
 
