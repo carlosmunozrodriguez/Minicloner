@@ -5,7 +5,7 @@ using System.Reflection;
 namespace Minicloner
 {
     /// <summary>
-    /// Shim class to fix the problem of not having String.Copy(string str) in netstandard
+    /// Shim class to fix the problem of not having String.Copy(string str) in netstandard1.0
     /// Based on https://github.com/dotnet/corefx/issues/7938#issuecomment-227580931
     /// </summary>
     internal static class String
