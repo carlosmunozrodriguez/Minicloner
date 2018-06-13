@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Minicloner\Minicloner.csproj" />
-    <ProjectReference Include="..\Minicloner.Tests.OtherAssembly\Minicloner.Tests.OtherAssembly.csproj" />
+    <ProjectReference Include="..\Minicloner.Tests.Fakes\Minicloner.Tests.Fakes.csproj" />
   </ItemGroup>
 
   <ItemGroup>

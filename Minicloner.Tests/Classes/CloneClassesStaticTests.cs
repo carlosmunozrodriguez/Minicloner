@@ -1,7 +1,5 @@
 ﻿using Minicloner.Tests.Fakes;
 using Minicloner.Tests.Fakes.Static;
-using Minicloner.Tests.OtherAssembly.Fakes;
-using Minicloner.Tests.OtherAssembly.Fakes.Static;
 using Xunit;
 
 namespace Minicloner.Tests.Classes
@@ -57,20 +55,7 @@ namespace Minicloner.Tests.Classes
             Assert.IsType<Class_With_InternalStaticReferenceTypeField>(cloned);
             Assert.NotSame(source, cloned);
 
-            Assert.Same(value, Class_With_InternalStaticReferenceTypeField.InternalStaticReferenceTypeField);
-        }
-
-        [Fact]
-        public void DontClone_InternalStaticReferenceTypeField_From_OtherAssembly()
-        {
-            var value = new EmptyClass_From_OtherAssembly();
-            var source = new Class_With_InternalStaticReferenceTypeField_From_OtherAssembly(value);
-            var cloned = new Cloner().Clone(source);
-
-            Assert.IsType<Class_With_InternalStaticReferenceTypeField_From_OtherAssembly>(cloned);
-            Assert.NotSame(source, cloned);
-
-            Assert.Same(value, Class_With_InternalStaticReferenceTypeField_From_OtherAssembly.Get_InternalStaticReferenceTypeField());
+            Assert.Same(value, Class_With_InternalStaticReferenceTypeField.Get_InternalStaticReferenceTypeField());
         }
 
         [Fact]
@@ -83,20 +68,20 @@ namespace Minicloner.Tests.Classes
             Assert.IsType<Class_With_ProtectedInternalStaticReferenceTypeField>(cloned);
             Assert.NotSame(source, cloned);
 
-            Assert.Same(value, Class_With_ProtectedInternalStaticReferenceTypeField.ProtectedInternalStaticReferenceTypeField);
+            Assert.Same(value, Class_With_ProtectedInternalStaticReferenceTypeField.Get_ProtectedInternalStaticReferenceTypeField());
         }
 
         [Fact]
-        public void DontClone_ProtectedInternalStaticReferenceTypeField_From_OtherAssembly()
+        public void DontClone_PrivateProtectedStaticReferenceTypeField()
         {
-            var value = new EmptyClass_From_OtherAssembly();
-            var source = new Class_With_ProtectedInternalStaticReferenceTypeField_From_OtherAssembly(value);
+            var value = new EmptyClass();
+            var source = new Class_With_PrivateProtectedStaticReferenceTypeField(value);
             var cloned = new Cloner().Clone(source);
 
-            Assert.IsType<Class_With_ProtectedInternalStaticReferenceTypeField_From_OtherAssembly>(cloned);
+            Assert.IsType<Class_With_PrivateProtectedStaticReferenceTypeField>(cloned);
             Assert.NotSame(source, cloned);
 
-            Assert.Same(value, Class_With_ProtectedInternalStaticReferenceTypeField_From_OtherAssembly.Get_ProtectedInternalStaticReferenceTypeField());
+            Assert.Same(value, Class_With_PrivateProtectedStaticReferenceTypeField.Get_PrivateProtectedStaticReferenceTypeField());
         }
     }
 }

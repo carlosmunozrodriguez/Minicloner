@@ -13,7 +13,7 @@ namespace Minicloner.Tests.Classes
 
             Assert.IsType<ReflexiveClass>(cloned);
             Assert.NotSame(source, cloned);
-            Assert.Equal(source.Int32Property, cloned.Int32Property);
+            Assert.Equal(source.Property, cloned.Property);
 
             Assert.IsType<ReflexiveClass>(cloned.Self);
             Assert.Same(cloned, cloned.Self);
@@ -30,12 +30,12 @@ namespace Minicloner.Tests.Classes
 
             Assert.IsType<MutuallyDependentClassA>(clonedA);
             Assert.NotSame(sourceA, clonedA);
-            Assert.Equal(sourceA.Int32Property, clonedA.Int32Property);
+            Assert.Equal(sourceA.Property, clonedA.Property);
 
             var clonedB = clonedA.B;
             Assert.IsType<MutuallyDependentClassB>(clonedB);
             Assert.NotSame(sourceB, clonedB);
-            Assert.Equal(sourceB.Int32Property, clonedB.Int32Property);
+            Assert.Equal(sourceB.Property, clonedB.Property);
 
             Assert.Same(clonedA, clonedB.A);
         }
