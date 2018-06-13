@@ -1,5 +1,5 @@
 ﻿using Minicloner.Tests.Fakes;
-using Minicloner.Tests.Fakes.Properties;
+using Minicloner.Tests.Fakes.AutoImplementedProperties;
 using Xunit;
 
 namespace Minicloner.Tests.Classes
@@ -14,40 +14,6 @@ namespace Minicloner.Tests.Classes
 
             Assert.IsType<EmptyClass>(cloned);
             Assert.NotSame(source, cloned);
-        }
-
-        [Fact]
-        public void Clone_Class_With_PublicAutoImplementedProperty()
-        {
-            var source = new Class_With_PublicAutoImplementedProperty { PublicAutoImplementedProperty = 1 };
-            var cloned = new Cloner().Clone(source);
-
-            Assert.IsType<Class_With_PublicAutoImplementedProperty>(cloned);
-            Assert.NotSame(source, cloned);
-            Assert.Equal(source.PublicAutoImplementedProperty, cloned.PublicAutoImplementedProperty);
-        }
-
-        [Fact]
-        public void Clone_Class_With_PrivateSetter()
-        {
-            var source = new Class_With_PrivateSetter();
-            source.Set_Int32Property_With_PrivateSetter(1);
-            var cloned = new Cloner().Clone(source);
-
-            Assert.IsType<Class_With_PrivateSetter>(cloned);
-            Assert.NotSame(source, cloned);
-            Assert.Equal(source.Int32Property_With_PrivateSetter, cloned.Int32Property_With_PrivateSetter);
-        }
-
-        [Fact]
-        public void Clone_Class_With_PrivateGetter()
-        {
-            var source = new Class_With_PrivateGetter { Int32Property_With_PrivateGetter = 1 };
-            var cloned = new Cloner().Clone(source);
-
-            Assert.IsType<Class_With_PrivateGetter>(cloned);
-            Assert.NotSame(source, cloned);
-            Assert.Equal(source.Get_Int32Property_With_PrivateGetter(), cloned.Get_Int32Property_With_PrivateGetter());
         }
 
         [Fact]

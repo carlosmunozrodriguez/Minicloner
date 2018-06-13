@@ -20,14 +20,14 @@ namespace Minicloner.Tests
         [Fact]
         public void Clone_Struct_With_PublicField()
         {
-            var structWithPublicField = new Struct_With_PublicValueTypeField { PublicInt32Field = 1 };
+            var structWithPublicField = new Struct_With_PublicValueTypeField { PublicField = 1 };
             var cloned = new Cloner().Clone(structWithPublicField);
 
             Assert.IsType<Struct_With_PublicValueTypeField>(cloned);
 #pragma warning disable xUnit2005 // We are comparing instances not values
             Assert.NotSame(structWithPublicField, cloned);
 #pragma warning restore xUnit2005
-            Assert.Equal(structWithPublicField.PublicInt32Field, cloned.PublicInt32Field);
+            Assert.Equal(structWithPublicField.PublicField, cloned.PublicField);
         }
     }
 }

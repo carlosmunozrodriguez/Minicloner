@@ -1,5 +1,4 @@
 ﻿using Minicloner.Tests.Fakes.Fields;
-using Minicloner.Tests.OtherAssembly.Fakes.Fields;
 using Xunit;
 
 namespace Minicloner.Tests.Classes
@@ -45,22 +44,10 @@ namespace Minicloner.Tests.Classes
         [Fact]
         public void Clone_Class_With_InternalField()
         {
-            var source = new Class_With_InternalField { InternalField = 1 };
+            var source = new Class_With_InternalField(1);
             var cloned = new Cloner().Clone(source);
 
             Assert.IsType<Class_With_InternalField>(cloned);
-            Assert.NotSame(source, cloned);
-
-            Assert.Equal(source.InternalField, cloned.InternalField);
-        }
-
-        [Fact]
-        public void Clone_Class_With_InternalField_From_OtherAssembly()
-        {
-            var source = new Class_With_InternalField_From_OtherAssembly(1);
-            var cloned = new Cloner().Clone(source);
-
-            Assert.IsType<Class_With_InternalField_From_OtherAssembly>(cloned);
             Assert.NotSame(source, cloned);
 
             Assert.Equal(source.Get_InternalField(), cloned.Get_InternalField());
@@ -69,25 +56,25 @@ namespace Minicloner.Tests.Classes
         [Fact]
         public void Clone_Class_With_ProtectedInternalField()
         {
-            var source = new Class_With_ProtectedInternalField { ProtectedInternalField = 1 };
+            var source = new Class_With_ProtectedInternalField(1);
             var cloned = new Cloner().Clone(source);
 
             Assert.IsType<Class_With_ProtectedInternalField>(cloned);
             Assert.NotSame(source, cloned);
 
-            Assert.Equal(source.ProtectedInternalField, cloned.ProtectedInternalField);
+            Assert.Equal(source.Get_ProtectedInternalField(), cloned.Get_ProtectedInternalField());
         }
 
         [Fact]
-        public void Clone_Class_With_ProtectedInternalField_From_OtherAssembly()
+        public void Clone_Class_With_Private_ProtectedField()
         {
-            var source = new Class_With_ProtectedInternalField_From_OtherAssembly(1);
+            var source = new Class_With_PrivateProtectedField(1);
             var cloned = new Cloner().Clone(source);
 
-            Assert.IsType<Class_With_ProtectedInternalField_From_OtherAssembly>(cloned);
+            Assert.IsType<Class_With_PrivateProtectedField>(cloned);
             Assert.NotSame(source, cloned);
 
-            Assert.Equal(source.Get_ProtectedInternalField(), cloned.Get_ProtectedInternalField());
+            Assert.Equal(source.Get_PrivateProtectedField(), cloned.Get_PrivateProtectedField());
         }
     }
 }
