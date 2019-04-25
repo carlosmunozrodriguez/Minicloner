@@ -4,7 +4,11 @@ jobs:
     vmImage: windows-2019
   steps:
   - task: UseDotNet@2
-    displayName: Install dotnet SDK
+    displayName: Install dotnet SDK 1.1.9
+    inputs:
+      version: 1.1.9
+  - task: UseDotNet@2
+    displayName: Install dotnet SDK 2.2.203
     inputs:
       version: 2.2.203
   - task: DotNetCoreCLI@2
@@ -30,7 +34,11 @@ jobs:
     vmImage: ubuntu-16.04
   steps:
   - task: UseDotNet@2
-    displayName: Install dotnet SDK
+    displayName: Install dotnet SDK 1.1.9
+    inputs:
+      version: 1.1.9
+  - task: UseDotNet@2
+    displayName: Install dotnet SDK 2.2.203
     inputs:
       version: 2.2.203
   - task: DotNetCoreCLI@2
@@ -56,7 +64,11 @@ jobs:
     vmImage: macOS-10.14
   steps:
   - task: UseDotNet@2
-    displayName: Install dotnet SDK
+    displayName: Install dotnet SDK 1.1.9
+    inputs:
+      version: 1.1.9
+  - task: UseDotNet@2
+    displayName: Install dotnet SDK 2.2.203
     inputs:
       version: 2.2.203
   - task: DotNetCoreCLI@2
