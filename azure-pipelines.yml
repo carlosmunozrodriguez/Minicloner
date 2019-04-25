@@ -8,11 +8,6 @@ jobs:
     inputs:
       version: 2.2.203
   - task: DotNetCoreCLI@2
-    displayName: SDK Info
-    inputs:
-      command: custom
-      custom: --info
-  - task: DotNetCoreCLI@2
     displayName: Build
     inputs:
       command: build
@@ -31,11 +26,6 @@ jobs:
       version: 1.0.5
       packageType: runtime
   - task: DotNetCoreCLI@2
-    displayName: SDK Info
-    inputs:
-      command: custom
-      custom: --info
-  - task: DotNetCoreCLI@2
     displayName: Test .NET Core 1.0
     inputs:
       command: test
@@ -51,11 +41,6 @@ jobs:
     displayName: Install dotnet SDK 2.2.203
     inputs:
       version: 2.2.203
-  - task: DotNetCoreCLI@2
-    displayName: SDK Info
-    inputs:
-      command: custom
-      custom: --info
   - task: DotNetCoreCLI@2
     displayName: Build
     inputs:
@@ -96,11 +81,6 @@ jobs:
     inputs:
       version: 2.2.203
   - task: DotNetCoreCLI@2
-    displayName: SDK Info
-    inputs:
-      command: custom
-      custom: --info
-  - task: DotNetCoreCLI@2
     displayName: Build
     inputs:
       command: build
@@ -118,11 +98,6 @@ jobs:
     inputs:
       version: 1.0.5
       packageType: runtime
-  - task: DotNetCoreCLI@2
-    displayName: SDK Info
-    inputs:
-      command: custom
-      custom: --info
   - task: DotNetCoreCLI@2
     displayName: Test .NET Core 1.0
     inputs:
