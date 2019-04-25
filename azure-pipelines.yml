@@ -21,9 +21,9 @@ jobs:
       publishTestResults: true
       nobuild: true
   - task: UseDotNet@2
-    displayName: Install dotnet SDK 1.1.9
+    displayName: Install dotnet SDK 1.1.13
     inputs:
-      version: 1.1.9
+      version: 1.1.13
   - task: DotNetCoreCLI@1
     displayName: Test .NET Core 1.0
     inputs:
@@ -53,14 +53,9 @@ jobs:
       publishTestResults: true
       nobuild: true
   - task: UseDotNet@2
-    displayName: Install dotnet SDK 1.1.9
+    displayName: Install dotnet SDK 1.1.13
     inputs:
-      version: 1.1.9
-  - task: DotNetCoreCLI@2
-    displayName: SDK Info
-    inputs:
-      command: custom
-      custom: --info
+      version: 1.1.13
   - task: DotNetCoreCLI@1
     displayName: Test .NET Core 1.0
     inputs:
@@ -90,9 +85,9 @@ jobs:
       publishTestResults: true
       nobuild: true
   - task: UseDotNet@2
-    displayName: Install dotnet SDK 1.1.9
+    displayName: Install dotnet SDK 1.1.13
     inputs:
-      version: 1.1.9
+      version: 1.1.13
   - task: DotNetCoreCLI@1
     displayName: Test .NET Core 1.0
     inputs:
