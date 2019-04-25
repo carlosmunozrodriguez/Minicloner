@@ -29,7 +29,7 @@ jobs:
     inputs:
       command: test
       projects: Minicloner.Tests/Minicloner.Tests.csproj
-      arguments: --configuration Release --framework netcoreapp1.0 --no-build
+      arguments: --configuration Release --framework netcoreapp1.0 --no-build --verbosity detailed
       publishTestResults: true
 - job: Linux
   pool:
