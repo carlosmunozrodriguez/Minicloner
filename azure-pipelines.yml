@@ -24,7 +24,7 @@ jobs:
     displayName: Install dotnet SDK 1.1.9
     inputs:
       version: 1.1.9
-  - task: DotNetCoreCLI@2
+  - task: DotNetCoreCLI@1
     displayName: Test .NET Core 1.0
     inputs:
       command: test
@@ -62,7 +62,7 @@ jobs:
     inputs:
       command: custom
       custom: --info
-  - task: DotNetCoreCLI@2
+  - task: DotNetCoreCLI@1
     displayName: Test .NET Core 1.0
     inputs:
       command: test
@@ -95,7 +95,7 @@ jobs:
     displayName: Install dotnet SDK 1.1.9
     inputs:
       version: 1.1.9
-  - task: DotNetCoreCLI@2
+  - task: DotNetCoreCLI@1
     displayName: Test .NET Core 1.0
     inputs:
       command: test
