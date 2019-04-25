@@ -1,8 +1,10 @@
+dist: xenial
 language: csharp
 mono: none
-dotnet: 2.1.200
+dotnet: 2.2.203
 install:
     - sudo apt-get install dotnet-dev-1.1.9 -y
 script:
+    - dotnet --info
     - dotnet build --configuration Release
     - dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --no-build

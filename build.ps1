@@ -3,7 +3,7 @@ Import-Module ./invoke-task.psm1
 Invoke-Task AutomatedBuild {
     Invoke-Task Get-DotNet-Sdk {
         $dotnetSdkVersion1 = "1.1.9"
-        $dotnetSdkVersion2 = "2.1.300"
+        $dotnetSdkVersion2 = "2.2.203"
 
         if ($IsLinux -or $IsOsX) {
             bash ./dotnet-install.sh --channel Current --version $dotnetSdkVersion1

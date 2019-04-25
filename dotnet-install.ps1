@@ -73,6 +73,8 @@
 .PARAMETER SkipNonVersionedFiles
     Default: false
     Skips installing non-versioned files if they already exist, such as dotnet.exe.
+.PARAMETER NoCdn
+    Disable downloading from the Azure CDN, and use the uncached feed directly.
 #>
 [cmdletbinding()]
 param(
@@ -91,12 +93,17 @@ param(
    [string]$FeedCredential,
    [string]$ProxyAddress,
    [switch]$ProxyUseDefaultCredentials,
-   [switch]$SkipNonVersionedFiles
+   [switch]$SkipNonVersionedFiles,
+   [switch]$NoCdn
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference="Stop"
 $ProgressPreference="SilentlyContinue"
+
+if ($NoCdn) {
+    $AzureFeed = $UncachedFeed
+}
 
 $BinFolderRelativePath=""
 
@@ -219,7 +226,7 @@ function GetHTTPResponse([Uri] $Uri)
             }
             # Default timeout for HttpClient is 100s.  For a 50 MB download this assumes 500 KB/s average, any less will time out
             # 10 minutes allows it to work over much slower connections.
-            $HttpClient.Timeout = New-TimeSpan -Minutes 10
+            $HttpClient.Timeout = New-TimeSpan -Minutes 20
             $Response = $HttpClient.GetAsync("${Uri}${FeedCredential}").Result
             if (($Response -eq $null) -or (-not ($Response.IsSuccessStatusCode))) {
                  # The feed credential is potentially sensitive info. Do not log FeedCredential to console output.
@@ -461,6 +468,12 @@ function Extract-Dotnet-Package([string]$ZipPath, [string]$OutPath) {
 }
 
 function DownloadFile([Uri]$Uri, [string]$OutPath) {
+    if ($Uri -notlike "http*") {
+        Say-Verbose "Copying file from $Uri to $OutPath"
+        Copy-Item $Uri.AbsolutePath $OutPath
+        return
+    }
+
     $Stream = $null
 
     try {
