@@ -1,8 +1,8 @@
 steps:
-- task: DotNetCoreInstaller@0
+- task: UseDotNet@2
   displayName: Install dotnet SDK
   inputs:
-    version: 2.1.300
+    version: 2.2.203
 - task: DotNetCoreCLI@2
   displayName: SDK Info
   inputs:
