@@ -4,11 +4,6 @@ jobs:
     vmImage: windows-2019
   steps:
   - task: UseDotNet@2
-    displayName: Install dotnet SDK 1.0.4
-    inputs:
-      version: 1.0.5
-      packageType: runtime
-  - task: UseDotNet@2
     displayName: Install dotnet SDK 2.2.203
     inputs:
       version: 2.2.203
@@ -23,11 +18,29 @@ jobs:
       command: build
       arguments: --configuration Release
   - task: DotNetCoreCLI@2
-    displayName: Test
+    displayName: Test .NET Core 2.0
     inputs:
       command: test
       projects: Minicloner.Tests/Minicloner.Tests.csproj
-      arguments: --configuration Release
+      arguments: --configuration Release --framework netcoreapp2.0
+      publishTestResults: true
+      nobuild: true
+  - task: UseDotNet@2
+    displayName: Install dotnet SDK 1.0.5
+    inputs:
+      version: 1.0.5
+      packageType: runtime
+  - task: DotNetCoreCLI@2
+    displayName: SDK Info
+    inputs:
+      command: custom
+      custom: --info
+  - task: DotNetCoreCLI@2
+    displayName: Test .NET Core 1.0
+    inputs:
+      command: test
+      projects: Minicloner.Tests/Minicloner.Tests.csproj
+      arguments: --configuration Release --framework netcoreapp1.0
       publishTestResults: true
       nobuild: true
 - job: Linux
@@ -35,11 +48,6 @@ jobs:
     vmImage: ubuntu-16.04
   steps:
   - task: UseDotNet@2
-    displayName: Install dotnet SDK 1.0.4
-    inputs:
-      version: 1.0.5
-      packageType: runtime
-  - task: UseDotNet@2
     displayName: Install dotnet SDK 2.2.203
     inputs:
       version: 2.2.203
@@ -54,11 +62,29 @@ jobs:
       command: build
       arguments: --configuration Release
   - task: DotNetCoreCLI@2
-    displayName: Test
+    displayName: Test .NET Core 2.0
     inputs:
       command: test
       projects: Minicloner.Tests/Minicloner.Tests.csproj
-      arguments: --configuration Release
+      arguments: --configuration Release --framework netcoreapp2.0
+      publishTestResults: true
+      nobuild: true
+  - task: UseDotNet@2
+    displayName: Install dotnet SDK 1.0.5
+    inputs:
+      version: 1.0.5
+      packageType: runtime
+  - task: DotNetCoreCLI@2
+    displayName: SDK Info
+    inputs:
+      command: custom
+      custom: --info
+  - task: DotNetCoreCLI@2
+    displayName: Test .NET Core 1.0
+    inputs:
+      command: test
+      projects: Minicloner.Tests/Minicloner.Tests.csproj
+      arguments: --configuration Release --framework netcoreapp1.0
       publishTestResults: true
       nobuild: true
 - job: macOS
@@ -66,11 +92,6 @@ jobs:
     vmImage: macOS-10.14
   steps:
   - task: UseDotNet@2
-    displayName: Install dotnet SDK 1.0.4
-    inputs:
-      version: 1.0.5
-      packageType: runtime
-  - task: UseDotNet@2
     displayName: Install dotnet SDK 2.2.203
     inputs:
       version: 2.2.203
@@ -85,10 +106,28 @@ jobs:
       command: build
       arguments: --configuration Release
   - task: DotNetCoreCLI@2
-    displayName: Test
+    displayName: Test .NET Core 2.0
     inputs:
       command: test
       projects: Minicloner.Tests/Minicloner.Tests.csproj
-      arguments: --configuration Release
+      arguments: --configuration Release --framework netcoreapp2.0
+      publishTestResults: true
+      nobuild: true
+  - task: UseDotNet@2
+    displayName: Install dotnet SDK 1.0.5
+    inputs:
+      version: 1.0.5
+      packageType: runtime
+  - task: DotNetCoreCLI@2
+    displayName: SDK Info
+    inputs:
+      command: custom
+      custom: --info
+  - task: DotNetCoreCLI@2
+    displayName: Test .NET Core 1.0
+    inputs:
+      command: test
+      projects: Minicloner.Tests/Minicloner.Tests.csproj
+      arguments: --configuration Release --framework netcoreapp1.0
       publishTestResults: true
       nobuild: true
