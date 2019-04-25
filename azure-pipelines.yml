@@ -29,9 +29,8 @@ jobs:
     inputs:
       command: test
       projects: Minicloner.Tests/Minicloner.Tests.csproj
-      arguments: --configuration Release --framework netcoreapp1.0
+      arguments: --configuration Release --framework netcoreapp1.0 --no-build
       publishTestResults: true
-      nobuild: true
 - job: Linux
   pool:
     vmImage: ubuntu-16.04
@@ -67,9 +66,8 @@ jobs:
     inputs:
       command: test
       projects: Minicloner.Tests/Minicloner.Tests.csproj
-      arguments: --configuration Release --framework netcoreapp1.0
+      arguments: --configuration Release --framework netcoreapp1.0 --no-build
       publishTestResults: true
-      nobuild: true
 - job: macOS
   pool:
     vmImage: macOS-10.14
@@ -100,6 +98,5 @@ jobs:
     inputs:
       command: test
       projects: Minicloner.Tests/Minicloner.Tests.csproj
-      arguments: --configuration Release --framework netcoreapp1.0
+      arguments: --configuration Release --framework netcoreapp1.0 --no-build
       publishTestResults: true
-      nobuild: true
