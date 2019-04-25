@@ -6,7 +6,8 @@ jobs:
   - task: UseDotNet@2
     displayName: Install dotnet SDK 1.0.4
     inputs:
-      version: 1.0.4
+      version: 1.0.5
+      packageType: runtime
   - task: UseDotNet@2
     displayName: Install dotnet SDK 2.2.203
     inputs:
@@ -36,7 +37,8 @@ jobs:
   - task: UseDotNet@2
     displayName: Install dotnet SDK 1.0.4
     inputs:
-      version: 1.0.4
+      version: 1.0.5
+      packageType: runtime
   - task: UseDotNet@2
     displayName: Install dotnet SDK 2.2.203
     inputs:
@@ -66,7 +68,8 @@ jobs:
   - task: UseDotNet@2
     displayName: Install dotnet SDK 1.0.4
     inputs:
-      version: 1.0.4
+      version: 1.0.5
+      packageType: runtime
   - task: UseDotNet@2
     displayName: Install dotnet SDK 2.2.203
     inputs:
