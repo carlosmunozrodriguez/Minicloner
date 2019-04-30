@@ -4,13 +4,19 @@ jobs:
     vmImage: windows-2019
   steps:
   - template: build-steps.yml
+    parameters:
+      os: Windows
 - job: Linux
   pool:
     vmImage: ubuntu-16.04
   steps:
   - template: build-steps.yml
+    parameters:
+      os: Linux
 - job: macOS
   pool:
     vmImage: macOS-10.14
   steps:
   - template: build-steps.yml
+    parameters:
+      os: macOS
