@@ -24,7 +24,7 @@ Invoke-Task AutomatedBuild {
     }
 
     Invoke-Task Test-2.0 {
-        dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=Tests-NetCore2.0.trx" --no-build
+        dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=NetCore2.0.trx" --no-build
     }
 
     Invoke-Task Get-DotNet-Sdk-1.1 {
@@ -38,6 +38,6 @@ Invoke-Task AutomatedBuild {
     }
 
     Invoke-Task Test-1.0 {
-        dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=Tests-NetCore2.0.trx" --no-build
+        dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=NetCore2.0.trx" --no-build
     }
 }
