@@ -20,7 +20,7 @@ steps:
   displayName: Publish Test Results .NET Core 2.0
   inputs:
     testRunner: 'VSTest'
-    testResultsFiles: '**/Tests-NetCore2.0-${{ parameters.os }}.trx'
+    testResultsFiles: '**/Tests-NetCore2.0-${{ parameters.os }}*.trx'
     testRunTitle: '.NET Core 2.0 - ${{ parameters.os }}'
     failTaskOnFailedTests: true
 - task: UseDotNet@2
@@ -37,6 +37,6 @@ steps:
   displayName: Publish Test Results .NET Core 1.0
   inputs:
     testRunner: 'VSTest'
-    testResultsFiles: '**/Tests-NetCore1.0-${{ parameters.os }}.trx'
+    testResultsFiles: '**/Tests-NetCore1.0-${{ parameters.os }}*.trx'
     testRunTitle: '.NET Core 1.0 - ${{ parameters.os }}'
     failTaskOnFailedTests: true
