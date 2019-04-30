@@ -15,14 +15,13 @@ steps:
     projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
     arguments: '--configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=NetCore2.0-${{ parameters.os }}.trx" --no-build'
     publishTestResults: false
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results .NET Core 2.0'
+  inputs:
+    testRunner: 'VSTest'
+    testResultsFiles: '**/NetCore2.0-${{ parameters.os }}*.trx'
     testRunTitle: '.NET Core 2.0 - ${{ parameters.os }}'
-#- task: PublishTestResults@2
-#  displayName: 'Publish Test Results .NET Core 2.0'
-#  inputs:
-#    testRunner: 'VSTest'
-#    testResultsFiles: '**/NetCore2.0-${{ parameters.os }}*.trx'
-#    testRunTitle: '.NET Core 2.0 - ${{ parameters.os }}'
-#    failTaskOnFailedTests: true
+    failTaskOnFailedTests: true
 - task: UseDotNet@2
   displayName: 'Install dotnet SDK 1.1.12'
   inputs:
@@ -33,17 +32,10 @@ steps:
     command: 'test'
     projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
     arguments: '--configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=NetCore1.0-${{ parameters.os }}.trx" --no-build'
-    testRunTitle: '.NET Core 1.0 - ${{ parameters.os }}'
-#- task: PublishTestResults@2
-#  displayName: 'Publish Test Results .NET Core 1.0'
-#  inputs:
-#    testRunner: 'VSTest'
-#    testResultsFiles: '**/NetCore1.0-${{ parameters.os }}*.trx'
-#    testRunTitle: '.NET Core 1.0 - ${{ parameters.os }}'
-#    failTaskOnFailedTests: true
 - task: PublishTestResults@2
-  displayName: 'Publish Test Results'
+  displayName: 'Publish Test Results .NET Core 1.0'
   inputs:
     testRunner: 'VSTest'
-    testResultsFiles: '**/*.trx'
+    testResultsFiles: '**/NetCore1.0-${{ parameters.os }}*.trx'
+    testRunTitle: '.NET Core 1.0 - ${{ parameters.os }}'
     failTaskOnFailedTests: true
