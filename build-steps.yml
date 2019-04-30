@@ -15,6 +15,7 @@ steps:
     projects: Minicloner.Tests/Minicloner.Tests.csproj
     arguments: --configuration Release --framework netcoreapp2.0
     nobuild: true
+    publishTestResults: false
 - task: UseDotNet@2
   displayName: Install dotnet SDK 1.1.12
   inputs:
@@ -25,4 +26,8 @@ steps:
     command: test
     projects: Minicloner.Tests/Minicloner.Tests.csproj
     arguments: --configuration Release --framework netcoreapp1.0 --logger trx --no-build
-    publishTestResults: true
+- task: PublishTestResults@2
+  displayName: Publish Test Results
+  inputs:
+    testRunner: 'VSTest'
+    testResultsFiles: '*.trx'
