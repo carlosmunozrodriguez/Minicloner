@@ -5,13 +5,10 @@ jobs:
     matrix:
       Windows:
         imageName: 'windows-2019'
-        os: 'Windows'
       Linux:
         imageName: 'ubuntu-16.04'
-        os: 'Linux'
       macOS:
         imageName: 'macOS-10.14'
-        os: 'macOS'
 
   pool:
     vmImage: $(imageName)
@@ -33,15 +30,15 @@ jobs:
     inputs:
       command: 'test'
       projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
-      arguments: '--configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=NetCore2.0-$(os).trx" --no-build'
+      arguments: '--configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=$(imageName)-NetCore2.0.trx" --no-build'
       publishTestResults: false
 
   - task: PublishTestResults@2
     displayName: 'Publish Test Results .NET Core 2.0'
     inputs:
       testRunner: 'VSTest'
-      testResultsFiles: '**/NetCore2.0-$(os)*.trx'
-      testRunTitle: '.NET Core 2.0 - $(os)'
+      testResultsFiles: '**/$(imageName)-NetCore2.0*.trx'
+      testRunTitle: '$(imageName) - .NET Core 2.0'
       failTaskOnFailedTests: true
 
   - task: UseDotNet@2
@@ -54,12 +51,12 @@ jobs:
     inputs:
       command: 'test'
       projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
-      arguments: '--configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=NetCore1.0-  $(os).trx" --no-build'
+      arguments: '--configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=$(imageName)-NetCore1.0.trx" --no-build'
 
   - task: PublishTestResults@2
     displayName: 'Publish Test Results .NET Core 1.0'
     inputs:
       testRunner: 'VSTest'
-      testResultsFiles: '**/NetCore1.0-$(os)*.trx'
-      testRunTitle: '.NET Core 1.0 - $(os)'
+      testResultsFiles: '**/$(imageName)-NetCore1.0*.trx'
+      testRunTitle: '$(imageName) - .NET Core 1.0'
       failTaskOnFailedTests: true
