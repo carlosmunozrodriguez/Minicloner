@@ -25,3 +25,4 @@ steps:
     command: test
     projects: Minicloner.Tests/Minicloner.Tests.csproj
     arguments: --configuration Release --framework netcoreapp1.0 --logger trx --no-build
+    publishTestResults: true
