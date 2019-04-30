@@ -13,7 +13,7 @@ steps:
   inputs:
     command: test
     projects: Minicloner.Tests/Minicloner.Tests.csproj
-    arguments: --configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=Test-2.0-${{ parameters.os }}"
+    arguments: --configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=Tests-NetCore2.0-${{ parameters.os }}.trx"
     nobuild: true
     publishTestResults: false
 - task: UseDotNet@2
@@ -25,7 +25,7 @@ steps:
   inputs:
     command: test
     projects: Minicloner.Tests/Minicloner.Tests.csproj
-    arguments: --configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=Test-2.0-${{ parameters.os }}" --no-build
+    arguments: --configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=Tests-NetCore1.0-${{ parameters.os }}.trx" --no-build
 - task: PublishTestResults@2
   displayName: Publish Test Results
   inputs:
