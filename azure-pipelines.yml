@@ -18,19 +18,17 @@ jobs:
       command: test
       projects: Minicloner.Tests/Minicloner.Tests.csproj
       arguments: --configuration Release --framework netcoreapp2.0
-      publishTestResults: true
       nobuild: true
   - task: UseDotNet@2
-    displayName: Install dotnet SDK 1.1.13
+    displayName: Install dotnet SDK 1.1.12
     inputs:
-      version: 1.1.13
+      version: 1.1.12
   - task: DotNetCoreCLI@1
     displayName: Test .NET Core 1.0
     inputs:
       command: test
       projects: Minicloner.Tests/Minicloner.Tests.csproj
       arguments: --configuration Release --framework netcoreapp1.0 --no-build --verbosity diagnostic
-      publishTestResults: true
 - job: Linux
   pool:
     vmImage: ubuntu-16.04
@@ -50,19 +48,17 @@ jobs:
       command: test
       projects: Minicloner.Tests/Minicloner.Tests.csproj
       arguments: --configuration Release --framework netcoreapp2.0
-      publishTestResults: true
       nobuild: true
   - task: UseDotNet@2
-    displayName: Install dotnet SDK 1.1.13
+    displayName: Install dotnet SDK 1.1.12
     inputs:
-      version: 1.1.13
+      version: 1.1.12
   - task: DotNetCoreCLI@1
     displayName: Test .NET Core 1.0
     inputs:
       command: test
       projects: Minicloner.Tests/Minicloner.Tests.csproj
       arguments: --configuration Release --framework netcoreapp1.0 --no-build
-      publishTestResults: true
 - job: macOS
   pool:
     vmImage: macOS-10.14
@@ -82,16 +78,14 @@ jobs:
       command: test
       projects: Minicloner.Tests/Minicloner.Tests.csproj
       arguments: --configuration Release --framework netcoreapp2.0
-      publishTestResults: true
       nobuild: true
   - task: UseDotNet@2
-    displayName: Install dotnet SDK 1.1.13
+    displayName: Install dotnet SDK 1.1.12
     inputs:
-      version: 1.1.13
+      version: 1.1.12
   - task: DotNetCoreCLI@1
     displayName: Test .NET Core 1.0
     inputs:
       command: test
       projects: Minicloner.Tests/Minicloner.Tests.csproj
       arguments: --configuration Release --framework netcoreapp1.0 --no-build
-      publishTestResults: true
