@@ -13,7 +13,7 @@ steps:
   inputs:
     command: test
     projects: Minicloner.Tests/Minicloner.Tests.csproj
-    arguments: --configuration Release --framework netcoreapp2.0
+    arguments: --configuration Release --framework netcoreapp2.0 --logger trx
     nobuild: true
     publishTestResults: false
 - task: UseDotNet@2
@@ -30,4 +30,4 @@ steps:
   displayName: Publish Test Results
   inputs:
     testRunner: 'VSTest'
-    testResultsFiles: '*.trx'
+    testResultsFiles: '**/*.trx'
