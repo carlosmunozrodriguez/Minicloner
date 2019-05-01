@@ -41,22 +41,23 @@ jobs:
       testRunTitle: '$(imageName) - .NET Core 2.0'
       failTaskOnFailedTests: true
 
-  - ${{ if eq('$(imageName)', 'windows-2019') }}:
-    - task: DotNetCoreCLI@2
-      displayName: 'Test .NET Framework 4.5'
-      inputs:
-        command: 'test'
-        projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
-        arguments: '--configuration Release --framework net452 --logger "trx;LogFileName=$(imageName)-NetFramework4.5.trx" --no-build'
-        publishTestResults: false
+  - task: DotNetCoreCLI@2
+    displayName: 'Test .NET Framework 4.5'
+    condition: eq( variables['Agent.OS'], 'Windows_NT' )
+    inputs:
+      command: 'test'
+      projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
+      arguments: '--configuration Release --framework net452 --logger "trx;LogFileName=$(imageName)-NetFramework4.5.trx" -no-build'
+      publishTestResults: false
 
-    - task: PublishTestResults@2
-      displayName: 'Publish Test Results .NET Framework 4.5'
-      inputs:
-        testRunner: 'VSTest'
-        testResultsFiles: '**/$(imageName)-NetFramework4.5*.trx'
-        testRunTitle: '$(imageName) - .NET Framework 4.5'
-        failTaskOnFailedTests: true
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results .NET Framework 4.5'
+    condition: eq( variables['Agent.OS'], 'Windows_NT' )
+    inputs:
+      testRunner: 'VSTest'
+      testResultsFiles: '**/$(imageName)-NetFramework4.5*.trx'
+      testRunTitle: '$(imageName) - .NET Framework 4.5'
+      failTaskOnFailedTests: true
 
   - task: UseDotNet@2
     displayName: 'Install dotnet SDK 1.1.12'
