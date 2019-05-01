@@ -1,79 +1,80 @@
 jobs:
-- job: Windows
+- job: Build
+
+  strategy:
+    matrix:
+      Windows:
+        imageName: 'windows-2019'
+      Linux:
+        imageName: 'ubuntu-16.04'
+      macOS:
+        imageName: 'macOS-10.14'
+
   pool:
-    vmImage: windows-2019
-    steps:
-    - task: UseDotNet@2
-      displayName: Install dotnet SDK
-      inputs:
-        version: 2.2.203
-    - task: DotNetCoreCLI@2
-      displayName: SDK Info
-      inputs:
-        command: custom
-        custom: --info
-    - task: DotNetCoreCLI@2
-      displayName: Build
-      inputs:
-        command: build
-        arguments: --configuration Release
-    - task: DotNetCoreCLI@2
-      displayName: Test
-      inputs:
-        command: test
-        projects: Minicloner.Tests/Minicloner.Tests.csproj
-        arguments: --configuration Release
-        publishTestResults: true
-        nobuild: true
-- job: Linux
-  pool:
-    vmImage: ubuntu-16.04
-    steps:
-    - task: UseDotNet@2
-      displayName: Install dotnet SDK
-      inputs:
-        version: 2.2.203
-    - task: DotNetCoreCLI@2
-      displayName: SDK Info
-      inputs:
-        command: custom
-        custom: --info
-    - task: DotNetCoreCLI@2
-      displayName: Build
-      inputs:
-        command: build
-        arguments: --configuration Release
-    - task: DotNetCoreCLI@2
-      displayName: Test
-      inputs:
-        command: test
-        projects: Minicloner.Tests/Minicloner.Tests.csproj
-        arguments: --configuration Release
-        publishTestResults: true
-        nobuild: true
-- job: macOS
-  pool:
-    vmImage: macOS-10.14
-    steps:
-    - task: UseDotNet@2
-      displayName: Install dotnet SDK
-      inputs:
-        version: 2.2.203
-    - task: DotNetCoreCLI@2
-      displayName: SDK Info
-      inputs:
-        command: custom
-        custom: --info
-    - task: DotNetCoreCLI@2
-      displayName: Build
-      inputs:
-        command: build
-        arguments: --configuration Release
-    - task: DotNetCoreCLI@2
-      displayName: Test
-      inputs:
-        command: test
-        projects: Minicloner.Tests/Minicloner.Tests.csproj
-        arguments: --configuration Release
-        publishTestResults: true
-        nobuild: true
+    vmImage: $(imageName)
+
+  steps:
+  - task: UseDotNet@2
+    displayName: 'Install dotnet SDK 2.2.203'
+    inputs:
+      version: '2.2.203'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build'
+    inputs:
+      command: 'build'
+      arguments: '--configuration Release'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Test .NET Core 2.0'
+    inputs:
+      command: 'test'
+      projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
+      arguments: '--configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=$(imageName)-NetCore2.0.trx" --no-build'
+      publishTestResults: false
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results .NET Core 2.0'
+    inputs:
+      testRunner: 'VSTest'
+      testResultsFiles: '**/$(imageName)-NetCore2.0*.trx'
+      testRunTitle: '$(imageName) - .NET Core 2.0'
+      failTaskOnFailedTests: true
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Test .NET Framework 4.5'
+    condition: eq( variables['Agent.OS'], 'Windows_NT' )
+    inputs:
+      command: 'test'
+      projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
+      arguments: '--configuration Release --framework net452 --logger "trx;LogFileName=$(imageName)-NetFramework4.5.trx" --no-build'
+      publishTestResults: false
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results .NET Framework 4.5'
+    condition: eq( variables['Agent.OS'], 'Windows_NT' )
+    inputs:
+      testRunner: 'VSTest'
+      testResultsFiles: '**/$(imageName)-NetFramework4.5*.trx'
+      testRunTitle: '$(imageName) - .NET Framework 4.5'
+      failTaskOnFailedTests: true
+
+  - task: UseDotNet@2
+    displayName: 'Install dotnet SDK 1.1.12'
+    inputs:
+      version: '1.1.12'
+
+  - task: DotNetCoreCLI@1
+    displayName: 'Test .NET Core 1.0'
+    inputs:
+      command: 'test'
+      projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
+      arguments: '--configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=$(imageName)-NetCore1.0.trx" --no-build'
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results .NET Core 1.0'
+    inputs:
+      testRunner: 'VSTest'
+      testResultsFiles: '**/$(imageName)-NetCore1.0*.trx'
+      testRunTitle: '$(imageName) - .NET Core 1.0'
+      failTaskOnFailedTests: true

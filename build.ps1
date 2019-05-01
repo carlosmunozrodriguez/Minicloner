@@ -1,15 +1,12 @@
 Import-Module ./invoke-task.psm1
 
 Invoke-Task AutomatedBuild {
-    Invoke-Task Get-DotNet-Sdk {
-        $dotnetSdkVersion1 = "1.1.9"
+    Invoke-Task Get-DotNet-Sdk-2.2 {
         $dotnetSdkVersion2 = "2.2.203"
 
         if ($IsLinux -or $IsOsX) {
-            bash ./dotnet-install.sh --channel Current --version $dotnetSdkVersion1
             bash ./dotnet-install.sh --channel Current --version $dotnetSdkVersion2
         } else {
-            ./dotnet-install.ps1 -Channel Current -Version $dotnetSdkVersion1
             ./dotnet-install.ps1 -Channel Current -Version $dotnetSdkVersion2
         }
     }
@@ -26,7 +23,27 @@ Invoke-Task AutomatedBuild {
         dotnet build --configuration Release
     }
 
-    Invoke-Task Test {
-        dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --logger "trx;" --no-build
+    Invoke-Task Test-2.0 {
+        dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=NetCore2.0.trx" --no-build
+    }
+
+    if (-not ($IsLinux -or $IsOsX)) {
+        Invoke-Task Test-Net4.5 {
+            dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --framework net452 --logger "trx;LogFileName=NetFramework4.5.trx" --no-build
+        }
+    }
+
+    Invoke-Task Get-DotNet-Sdk-1.1 {
+        $dotnetSdkVersion1 = "1.1.12"
+
+        if ($IsLinux -or $IsOsX) {
+            bash ./dotnet-install.sh --channel Current --version $dotnetSdkVersion1
+        } else {
+            ./dotnet-install.ps1 -Channel Current -Version $dotnetSdkVersion1
+        }
+    }
+
+    Invoke-Task Test-1.0 {
+        dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=NetCore1.0.trx" --no-build
     }
 }
