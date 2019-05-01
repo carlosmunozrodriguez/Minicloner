@@ -47,7 +47,7 @@ jobs:
     inputs:
       command: 'test'
       projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
-      arguments: '--configuration Release --framework net452 --logger "trx;LogFileName=$(imageName)-NetFramework4.5.trx" -no-build'
+      arguments: '--configuration Release --framework net452 --logger "trx;LogFileName=$(imageName)-NetFramework4.5.trx" --no-build'
       publishTestResults: false
 
   - task: PublishTestResults@2
