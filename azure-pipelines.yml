@@ -41,7 +41,7 @@ jobs:
       testRunTitle: '$(imageName) - .NET Core 2.0'
       failTaskOnFailedTests: true
 
-  - ${{ if eq($(imageName), 'windows-2019') }}:
+  - ${{ if eq('$(imageName)', 'windows-2019') }}:
     - task: DotNetCoreCLI@2
       displayName: 'Test .NET Framework 4.5'
       inputs:
