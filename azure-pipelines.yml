@@ -1,14 +1,15 @@
 jobs:
 - job: Build
 
+# Image names can be get from: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml#software
   strategy:
     matrix:
       Windows:
-        imageName: 'windows-latest'
+        imageName: 'windows-2019'
       Linux:
-        imageName: 'ubuntu-latest'
+        imageName: 'ubuntu-20.04'
       macOS:
-        imageName: 'macOS-latest'
+        imageName: 'macOS-10.15'
 
   pool:
     vmImage: $(imageName)
@@ -30,14 +31,14 @@ jobs:
     inputs:
       command: 'test'
       projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
-      arguments: '--configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=$(imageName)-NetCore2.0.trx" --no-build'
+      arguments: '--configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=$(imageName)-netcoreapp2.0.trx" --no-build'
       publishTestResults: false
 
   - task: PublishTestResults@2
     displayName: 'Publish Test Results .NET Core 2.0'
     inputs:
       testRunner: 'VSTest'
-      testResultsFiles: '**/$(imageName)-NetCore2.0*.trx'
+      testResultsFiles: '**/$(imageName)-netcoreapp2.0*.trx'
       testRunTitle: '$(imageName) - .NET Core 2.0'
       failTaskOnFailedTests: true
 
@@ -47,7 +48,7 @@ jobs:
     inputs:
       command: 'test'
       projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
-      arguments: '--configuration Release --framework net452 --logger "trx;LogFileName=$(imageName)-NetFramework4.5.trx" --no-build'
+      arguments: '--configuration Release --framework net452 --logger "trx;LogFileName=$(imageName)-net452.trx" --no-build'
       publishTestResults: false
 
   - task: PublishTestResults@2
@@ -55,7 +56,7 @@ jobs:
     condition: eq( variables['Agent.OS'], 'Windows_NT' )
     inputs:
       testRunner: 'VSTest'
-      testResultsFiles: '**/$(imageName)-NetFramework4.5*.trx'
+      testResultsFiles: '**/$(imageName)-net452*.trx'
       testRunTitle: '$(imageName) - .NET Framework 4.5'
       failTaskOnFailedTests: true
 
@@ -69,12 +70,12 @@ jobs:
     inputs:
       command: 'test'
       projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
-      arguments: '--configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=$(imageName)-NetCore1.0.trx" --no-build'
+      arguments: '--configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=$(imageName)-netcoreapp1.0.trx" --no-build'
 
   - task: PublishTestResults@2
     displayName: 'Publish Test Results .NET Core 1.0'
     inputs:
       testRunner: 'VSTest'
-      testResultsFiles: '**/$(imageName)-NetCore1.0*.trx'
+      testResultsFiles: '**/$(imageName)-netcoreapp1.0*.trx'
       testRunTitle: '$(imageName) - .NET Core 1.0'
       failTaskOnFailedTests: true

@@ -24,12 +24,12 @@ Invoke-Task AutomatedBuild {
     }
 
     Invoke-Task Test-2.0 {
-        dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=NetCore2.0.trx" --no-build
+        dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=netcoreapp2.0.trx" --no-build
     }
 
     if (-not ($IsLinux -or $IsOsX)) {
         Invoke-Task Test-Net4.5 {
-            dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --framework net452 --logger "trx;LogFileName=NetFramework4.5.trx" --no-build
+            dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --framework net452 --logger "trx;LogFileName=net452.trx" --no-build
         }
     }
 
@@ -44,6 +44,6 @@ Invoke-Task AutomatedBuild {
     }
 
     Invoke-Task Test-1.0 {
-        dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=NetCore1.0.trx" --no-build
+        dotnet test Minicloner.Tests/Minicloner.Tests.csproj --configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=netcoreapp1.0.trx" --no-build
     }
 }
