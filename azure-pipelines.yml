@@ -1,23 +1,26 @@
 jobs:
 - job: Build
 
+# Image names can be get from: https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml#software
   strategy:
     matrix:
       Windows:
         imageName: 'windows-2019'
-      Linux:
-        imageName: 'ubuntu-16.04'
+      Ubuntu-18.04:
+        imageName: 'ubuntu-18.04'
+      Ubuntu-20.04:
+        imageName: 'ubuntu-20.04' # ubuntu-20.04 doesn't support net core sdk 1.1'
       macOS:
-        imageName: 'macOS-10.14'
+        imageName: 'macOS-10.15'
 
   pool:
     vmImage: $(imageName)
 
   steps:
   - task: UseDotNet@2
-    displayName: 'Install dotnet SDK 2.2.203'
+    displayName: 'Install dotnet SDK 2.2.207'
     inputs:
-      version: '2.2.203'
+      version: '2.2.207'
 
   - task: DotNetCoreCLI@2
     displayName: 'Build'
@@ -30,14 +33,14 @@ jobs:
     inputs:
       command: 'test'
       projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
-      arguments: '--configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=$(imageName)-NetCore2.0.trx" --no-build'
+      arguments: '--configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=$(imageName)-netcoreapp2.0.trx" --no-build'
       publishTestResults: false
 
   - task: PublishTestResults@2
     displayName: 'Publish Test Results .NET Core 2.0'
     inputs:
       testRunner: 'VSTest'
-      testResultsFiles: '**/$(imageName)-NetCore2.0*.trx'
+      testResultsFiles: '**/$(imageName)-netcoreapp2.0*.trx'
       testRunTitle: '$(imageName) - .NET Core 2.0'
       failTaskOnFailedTests: true
 
@@ -47,7 +50,7 @@ jobs:
     inputs:
       command: 'test'
       projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
-      arguments: '--configuration Release --framework net452 --logger "trx;LogFileName=$(imageName)-NetFramework4.5.trx" --no-build'
+      arguments: '--configuration Release --framework net452 --logger "trx;LogFileName=$(imageName)-net452.trx" --no-build'
       publishTestResults: false
 
   - task: PublishTestResults@2
@@ -55,26 +58,29 @@ jobs:
     condition: eq( variables['Agent.OS'], 'Windows_NT' )
     inputs:
       testRunner: 'VSTest'
-      testResultsFiles: '**/$(imageName)-NetFramework4.5*.trx'
+      testResultsFiles: '**/$(imageName)-net452*.trx'
       testRunTitle: '$(imageName) - .NET Framework 4.5'
       failTaskOnFailedTests: true
 
   - task: UseDotNet@2
-    displayName: 'Install dotnet SDK 1.1.12'
+    displayName: 'Install dotnet SDK 1.1.14'
+    condition: ne( variables.imageName, 'ubuntu-20.04' )
     inputs:
-      version: '1.1.12'
+      version: '1.1.14'
 
   - task: DotNetCoreCLI@1
     displayName: 'Test .NET Core 1.0'
+    condition: ne( variables.imageName, 'ubuntu-20.04' )
     inputs:
       command: 'test'
       projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
-      arguments: '--configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=$(imageName)-NetCore1.0.trx" --no-build'
+      arguments: '--configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=$(imageName)-netcoreapp1.0.trx" --no-build'
 
   - task: PublishTestResults@2
     displayName: 'Publish Test Results .NET Core 1.0'
+    condition: ne( variables.imageName, 'ubuntu-20.04' )
     inputs:
       testRunner: 'VSTest'
-      testResultsFiles: '**/$(imageName)-NetCore1.0*.trx'
+      testResultsFiles: '**/$(imageName)-netcoreapp1.0*.trx'
       testRunTitle: '$(imageName) - .NET Core 1.0'
       failTaskOnFailedTests: true
