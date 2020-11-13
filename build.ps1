@@ -5,9 +5,9 @@ Invoke-Task AutomatedBuild {
         $dotnetSdkVersion2 = "2.2.207"
 
         if ($IsLinux -or $IsOsX) {
-            bash ./dotnet-install.sh --channel Current --version $dotnetSdkVersion2
+            bash ./dotnet-install.sh --version $dotnetSdkVersion2
         } else {
-            ./dotnet-install.ps1 -Channel Current -Version $dotnetSdkVersion2
+            ./dotnet-install.ps1 -Version $dotnetSdkVersion2
         }
     }
 
@@ -37,9 +37,9 @@ Invoke-Task AutomatedBuild {
         $dotnetSdkVersion1 = "1.1.14"
 
         if ($IsLinux -or $IsOsX) {
-            bash ./dotnet-install.sh --channel Current --version $dotnetSdkVersion1
+            bash ./dotnet-install.sh --version $dotnetSdkVersion1
         } else {
-            ./dotnet-install.ps1 -Channel Current -Version $dotnetSdkVersion1
+            ./dotnet-install.ps1 -Version $dotnetSdkVersion1
         }
     }
 

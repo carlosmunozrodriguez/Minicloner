@@ -7,7 +7,7 @@ jobs:
       Windows:
         imageName: 'windows-2019'
       Linux:
-        imageName: 'ubuntu-20.04'
+        imageName: 'ubuntu-18.04' # ubuntu-20.04 doesn't support net core 1.1 anymore'
       macOS:
         imageName: 'macOS-10.15'
 
