@@ -4,11 +4,11 @@ jobs:
   strategy:
     matrix:
       Windows:
-        imageName: 'windows-2019'
+        imageName: 'windows-latest'
       Linux:
-        imageName: 'ubuntu-16.04'
+        imageName: 'ubuntu-latest'
       macOS:
-        imageName: 'macOS-10.14'
+        imageName: 'macOS-latest'
 
   pool:
     vmImage: $(imageName)
