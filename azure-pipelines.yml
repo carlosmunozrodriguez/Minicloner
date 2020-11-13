@@ -64,13 +64,13 @@ jobs:
 
   - task: UseDotNet@2
     displayName: 'Install dotnet SDK 1.1.14'
-    condition: eq( variables.imageName, 'ubuntu-20.04' )
+    condition: ne( variables.imageName, 'ubuntu-20.04' )
     inputs:
       version: '1.1.14'
 
   - task: DotNetCoreCLI@1
     displayName: 'Test .NET Core 1.0'
-    condition: eq( variables.imageName, 'ubuntu-20.04' )
+    condition: ne( variables.imageName, 'ubuntu-20.04' )
     inputs:
       command: 'test'
       projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
@@ -78,7 +78,7 @@ jobs:
 
   - task: PublishTestResults@2
     displayName: 'Publish Test Results .NET Core 1.0'
-    condition: eq( variables.imageName, 'ubuntu-20.04' )
+    condition: ne( variables.imageName, 'ubuntu-20.04' )
     inputs:
       testRunner: 'VSTest'
       testResultsFiles: '**/$(imageName)-netcoreapp1.0*.trx'
