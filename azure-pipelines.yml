@@ -20,10 +20,22 @@ jobs:
       version: '2.2.207'
 
   - task: DotNetCoreCLI@2
+    displayName: 'dotnet --info'
+    inputs:
+      command: 'custom'
+      arguments: '--info'
+
+  - task: DotNetCoreCLI@2
     displayName: 'Build'
     inputs:
       command: 'build'
       arguments: '--configuration Release'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet --info'
+    inputs:
+      command: 'custom'
+      arguments: '--info'
 
   - task: DotNetCoreCLI@2
     displayName: 'Test .NET Core 2.0'
@@ -40,6 +52,12 @@ jobs:
       testResultsFiles: '**/$(imageName)-NetCore2.0*.trx'
       testRunTitle: '$(imageName) - .NET Core 2.0'
       failTaskOnFailedTests: true
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet --info'
+    inputs:
+      command: 'custom'
+      arguments: '--info'
 
   - task: DotNetCoreCLI@2
     displayName: 'Test .NET Framework 4.5'
@@ -60,9 +78,15 @@ jobs:
       failTaskOnFailedTests: true
 
   - task: UseDotNet@2
-    displayName: 'Install dotnet SDK 1.1.12'
+    displayName: 'Install dotnet SDK 1.1.14'
     inputs:
-      version: '1.1.12'
+      version: '1.1.14'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet --info'
+    inputs:
+      command: 'custom'
+      arguments: '--info'
 
   - task: DotNetCoreCLI@1
     displayName: 'Test .NET Core 1.0'
