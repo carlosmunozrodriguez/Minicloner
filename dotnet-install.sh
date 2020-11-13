@@ -144,11 +144,11 @@ get_linux_platform_name() {
     else
         if [ -e /etc/os-release ]; then
             . /etc/os-release
-            echo "$ID.$VERSION_ID"
+            echo "$ID${VERSION_ID:+.${VERSION_ID}}"
             return 0
         elif [ -e /etc/redhat-release ]; then
             local redhatRelease=$(</etc/redhat-release)
-            if [[ $redhatRelease == "CentOS release 6."* || $redhatRelease == "Red Hat Enterprise Linux Server release 6."* ]]; then
+            if [[ $redhatRelease == "CentOS release 6."* || $redhatRelease == "Red Hat Enterprise Linux "*" release 6."* ]]; then
                 echo "rhel.6"
                 return 0
             fi
@@ -159,6 +159,10 @@ get_linux_platform_name() {
     return 1
 }
 
+is_musl_based_distro() {
+    (ldd --version 2>&1 || true) | grep -q musl
+}
+
 get_current_os_name() {
     eval $invocation
 
@@ -166,14 +170,17 @@ get_current_os_name() {
     if [ "$uname" = "Darwin" ]; then
         echo "osx"
         return 0
+    elif [ "$uname" = "FreeBSD" ]; then
+        echo "freebsd"
+        return 0
     elif [ "$uname" = "Linux" ]; then
         local linux_platform_name
         linux_platform_name="$(get_linux_platform_name)" || { echo "linux" && return 0 ; }
 
-        if [[ $linux_platform_name == "rhel.6" ]]; then
+        if [ "$linux_platform_name" = "rhel.6" ]; then
             echo $linux_platform_name
             return 0
-        elif [[ $linux_platform_name == alpine* ]]; then
+        elif is_musl_based_distro; then
             echo "linux-musl"
             return 0
         else
@@ -199,7 +206,7 @@ get_legacy_os_name() {
     else
         if [ -e /etc/os-release ]; then
             . /etc/os-release
-            os=$(get_legacy_os_name_from_platform "$ID.$VERSION_ID" || echo "")
+            os=$(get_legacy_os_name_from_platform "$ID${VERSION_ID:+.${VERSION_ID}}" || echo "")
             if [ -n "$os" ]; then
                 echo "$os"
                 return 0
@@ -231,33 +238,6 @@ check_min_reqs() {
         say_err "curl (recommended) or wget are required to download dotnet. Install missing prerequisite to proceed."
         return 1
     fi
-    return 0
-}
-
-check_pre_reqs() {
-    eval $invocation
-
-    if [ "${DOTNET_INSTALL_SKIP_PREREQS:-}" = "1" ]; then
-        return 0
-    fi
-
-    if [ "$(uname)" = "Linux" ]; then
-        if [ ! -x "$(command -v ldconfig)" ]; then
-            echo "ldconfig is not in PATH, trying /sbin/ldconfig."
-            LDCONFIG_COMMAND="/sbin/ldconfig"
-        else
-            LDCONFIG_COMMAND="ldconfig"
-        fi
-
-        local librarypath=${LD_LIBRARY_PATH:-}
-        LDCONFIG_COMMAND="$LDCONFIG_COMMAND -NXv ${librarypath//:/ }"
-
-        [ -z "$($LDCONFIG_COMMAND 2>/dev/null | grep libunwind)" ] && say_warning "Unable to locate libunwind. Probable prerequisite missing; please install libunwind."
-        [ -z "$($LDCONFIG_COMMAND 2>/dev/null | grep libssl)" ] && say_warning "Unable to locate libssl. Probable prerequisite missing; please install libssl."
-        [ -z "$($LDCONFIG_COMMAND 2>/dev/null | grep libicu)" ] && say_warning "Unable to locate libicu. Probable prerequisite missing; please install libicu."
-        [ -z "$($LDCONFIG_COMMAND 2>/dev/null | grep -F libcurl.so)" ] && say_warning "Unable to locate libcurl. Probable prerequisite missing; please install libcurl."
-    fi
-
     return 0
 }
 
@@ -357,14 +337,16 @@ get_normalized_architecture_from_architecture() {
             ;;
     esac
 
-    say_err "Architecture \`$architecture\` not supported. If you think this is a bug, please report it at https://github.com/dotnet/cli/issues"
+    say_err "Architecture \`$architecture\` not supported. If you think this is a bug, report it at https://github.com/dotnet/install-scripts/issues"
     return 1
 }
 
-# version_info is a conceptual two line string representing commit hash and 4-part version
-# format:
+# The version text returned from the feeds is a 1-line or 2-line string:
+# For the SDK and the dotnet runtime (2 lines):
 # Line 1: # commit_hash
 # Line 2: # 4-part version
+# For the aspnetcore runtime (1 line):
+# Line 1: # 4-part version
 
 # args:
 # version_text - stdin
@@ -372,15 +354,6 @@ get_version_from_version_info() {
     eval $invocation
 
     cat | tail -n 1 | sed 's/\r$//'
-    return 0
-}
-
-# args:
-# version_text - stdin
-get_commit_hash_from_version_info() {
-    eval $invocation
-
-    cat | head -n 1 | sed 's/\r$//'
     return 0
 }
 
@@ -440,10 +413,51 @@ get_latest_version_info() {
 }
 
 # args:
+# json_file - $1
+parse_jsonfile_for_version() {
+    eval $invocation
+
+    local json_file="$1"
+    if [ ! -f "$json_file" ]; then
+        say_err "Unable to find \`$json_file\`"
+        return 1
+    fi
+
+    sdk_section=$(cat $json_file | awk '/"sdk"/,/}/')
+    if [ -z "$sdk_section" ]; then
+        say_err "Unable to parse the SDK node in \`$json_file\`"
+        return 1
+    fi
+
+    sdk_list=$(echo $sdk_section | awk -F"[{}]" '{print $2}')
+    sdk_list=${sdk_list//[\" ]/}
+    sdk_list=${sdk_list//,/$'\n'}
+
+    local version_info=""
+    while read -r line; do
+      IFS=:
+      while read -r key value; do
+        if [[ "$key" == "version" ]]; then
+          version_info=$value
+        fi
+      done <<< "$line"
+    done <<< "$sdk_list"
+    if [ -z "$version_info" ]; then
+        say_err "Unable to find the SDK:version node in \`$json_file\`"
+        return 1
+    fi
+
+    unset IFS;
+    echo "$version_info"
+    return 0
+}
+
+# args:
 # azure_feed - $1
 # channel - $2
 # normalized_architecture - $3
 # version - $4
+# json_file - $5
 get_specific_version_from_version() {
     eval $invocation
 
@@ -451,27 +465,35 @@ get_specific_version_from_version() {
     local channel="$2"
     local normalized_architecture="$3"
     local version="$(to_lowercase "$4")"
+    local json_file="$5"
 
-    case "$version" in
-        latest)
-            local version_info
-            version_info="$(get_latest_version_info "$azure_feed" "$channel" "$normalized_architecture" false)" || return 1
-            say_verbose "get_specific_version_from_version: version_info=$version_info"
-            echo "$version_info" | get_version_from_version_info
-            return 0
-            ;;
-        coherent)
-            local version_info
-            version_info="$(get_latest_version_info "$azure_feed" "$channel" "$normalized_architecture" true)" || return 1
-            say_verbose "get_specific_version_from_version: version_info=$version_info"
-            echo "$version_info" | get_version_from_version_info
-            return 0
-            ;;
-        *)
-            echo "$version"
-            return 0
-            ;;
-    esac
+    if [ -z "$json_file" ]; then
+        case "$version" in
+            latest)
+                local version_info
+                version_info="$(get_latest_version_info "$azure_feed" "$channel" "$normalized_architecture" false)" || return 1
+                say_verbose "get_specific_version_from_version: version_info=$version_info"
+                echo "$version_info" | get_version_from_version_info
+                return 0
+                ;;
+            coherent)
+                local version_info
+                version_info="$(get_latest_version_info "$azure_feed" "$channel" "$normalized_architecture" true)" || return 1
+                say_verbose "get_specific_version_from_version: version_info=$version_info"
+                echo "$version_info" | get_version_from_version_info
+                return 0
+                ;;
+            *)
+                echo "$version"
+                return 0
+                ;;
+        esac
+    else
+        local version_info
+        version_info="$(parse_jsonfile_for_version "$json_file")" || return 1
+        echo "$version_info"
+        return 0
+    fi
 }
 
 # args:
@@ -486,22 +508,67 @@ construct_download_link() {
     local channel="$2"
     local normalized_architecture="$3"
     local specific_version="${4//[$'\t\r\n']}"
+    local specific_product_version="$(get_specific_product_version "$1" "$4")"
 
     local osname
     osname="$(get_current_os_name)" || return 1
 
     local download_link=null
     if [[ "$runtime" == "dotnet" ]]; then
-        download_link="$azure_feed/Runtime/$specific_version/dotnet-runtime-$specific_version-$osname-$normalized_architecture.tar.gz"
+        download_link="$azure_feed/Runtime/$specific_version/dotnet-runtime-$specific_product_version-$osname-$normalized_architecture.tar.gz"
     elif [[ "$runtime" == "aspnetcore" ]]; then
-        download_link="$azure_feed/aspnetcore/Runtime/$specific_version/aspnetcore-runtime-$specific_version-$osname-$normalized_architecture.tar.gz"
+        download_link="$azure_feed/aspnetcore/Runtime/$specific_version/aspnetcore-runtime-$specific_product_version-$osname-$normalized_architecture.tar.gz"
     elif [ -z "$runtime" ]; then
-        download_link="$azure_feed/Sdk/$specific_version/dotnet-sdk-$specific_version-$osname-$normalized_architecture.tar.gz"
+        download_link="$azure_feed/Sdk/$specific_version/dotnet-sdk-$specific_product_version-$osname-$normalized_architecture.tar.gz"
     else
         return 1
     fi
 
     echo "$download_link"
+    return 0
+}
+
+# args:
+# azure_feed - $1
+# specific_version - $2
+get_specific_product_version() {
+    # If we find a 'productVersion.txt' at the root of any folder, we'll use its contents 
+    # to resolve the version of what's in the folder, superseding the specified version.
+    eval $invocation
+
+    local azure_feed="$1"
+    local specific_version="${2//[$'\t\r\n']}"
+    local specific_product_version=$specific_version
+
+    local download_link=null
+    if [[ "$runtime" == "dotnet" ]]; then
+        download_link="$azure_feed/Runtime/$specific_version/productVersion.txt${feed_credential}"
+    elif [[ "$runtime" == "aspnetcore" ]]; then
+        download_link="$azure_feed/aspnetcore/Runtime/$specific_version/productVersion.txt${feed_credential}"
+    elif [ -z "$runtime" ]; then
+        download_link="$azure_feed/Sdk/$specific_version/productVersion.txt${feed_credential}"
+    else
+        return 1
+    fi
+
+    if machine_has "curl"
+    then
+        specific_product_version=$(curl -s --fail "$download_link")
+        if [ $? -ne 0 ]
+        then
+            specific_product_version=$specific_version
+        fi
+    elif machine_has "wget"
+    then
+        specific_product_version=$(wget -qO- "$download_link")
+        if [ $? -ne 0 ]
+        then
+            specific_product_version=$specific_version
+        fi
+    fi
+    specific_product_version="${specific_product_version//[$'\t\r\n']}"
+
+    echo "$specific_product_version"
     return 0
 }
 
@@ -563,24 +630,6 @@ resolve_installation_path() {
 }
 
 # args:
-# install_root - $1
-get_installed_version_info() {
-    eval $invocation
-
-    local install_root="$1"
-    local version_file="$(combine_paths "$install_root" "$local_version_file_relative_path")"
-    say_verbose "Local version file: $version_file"
-    if [ ! -z "$version_file" ] | [ -r "$version_file" ]; then
-        local version_info="$(cat "$version_file")"
-        echo "$version_info"
-        return 0
-    fi
-
-    say_verbose "Local version file not found."
-    return 0
-}
-
-# args:
 # relative_or_absolute_path - $1
 get_absolute_path() {
     eval $invocation
@@ -604,7 +653,7 @@ copy_files_or_dirs_from_list() {
     local osname="$(get_current_os_name)"
     local override_switch=$(
         if [ "$override" = false ]; then
-            if [[ "$osname" == "linux-musl" ]]; then
+            if [ "$osname" = "linux-musl" ]; then
                 printf -- "-u";
             else
                 printf -- "-n";
@@ -616,6 +665,9 @@ copy_files_or_dirs_from_list() {
         local target="$out_path/$path"
         if [ "$override" = true ] || (! ([ -d "$target" ] || [ -e "$target" ])); then
             mkdir -p "$out_path/$(dirname "$path")"
+            if [ -d "$target" ]; then
+                rm -rf "$target"
+            fi
             cp -R $override_switch "$root_path/$path" "$target"
         fi
     done
@@ -684,11 +736,12 @@ downloadcurl() {
     # Append feed_credential as late as possible before calling curl to avoid logging feed_credential
     remote_path="${remote_path}${feed_credential}"
 
+    local curl_options="--retry 20 --retry-delay 2 --connect-timeout 15 -sSL -f --create-dirs "
     local failed=false
     if [ -z "$out_path" ]; then
-        curl --retry 10 -sSL -f --create-dirs "$remote_path" || failed=true
+        curl $curl_options "$remote_path" || failed=true
     else
-        curl --retry 10 -sSL -f --create-dirs -o "$out_path" "$remote_path" || failed=true
+        curl $curl_options -o "$out_path" "$remote_path" || failed=true
     fi
     if [ "$failed" = true ]; then
         say_verbose "Curl download failed"
@@ -704,12 +757,12 @@ downloadwget() {
 
     # Append feed_credential as late as possible before calling wget to avoid logging feed_credential
     remote_path="${remote_path}${feed_credential}"
-
+    local wget_options="--tries 20 --waitretry 2 --connect-timeout 15 "
     local failed=false
     if [ -z "$out_path" ]; then
-        wget -q --tries 10 -O - "$remote_path" || failed=true
+        wget -q $wget_options -O - "$remote_path" || failed=true
     else
-        wget --tries 10 -O "$out_path" "$remote_path" || failed=true
+        wget $wget_options -O "$out_path" "$remote_path" || failed=true
     fi
     if [ "$failed" = true ]; then
         say_verbose "Wget download failed"
@@ -725,26 +778,27 @@ calculate_vars() {
     normalized_architecture="$(get_normalized_architecture_from_architecture "$architecture")"
     say_verbose "normalized_architecture=$normalized_architecture"
 
-    specific_version="$(get_specific_version_from_version "$azure_feed" "$channel" "$normalized_architecture" "$version")"
+    specific_version="$(get_specific_version_from_version "$azure_feed" "$channel" "$normalized_architecture" "$version" "$json_file")"
+    specific_product_version="$(get_specific_product_version "$azure_feed" "$specific_version")"
     say_verbose "specific_version=$specific_version"
     if [ -z "$specific_version" ]; then
-        say_err "Could not get version information."
+        say_err "Could not resolve version information."
         return 1
     fi
 
     download_link="$(construct_download_link "$azure_feed" "$channel" "$normalized_architecture" "$specific_version")"
-    say_verbose "download_link=$download_link"
+    say_verbose "Constructed primary named payload URL: $download_link"
 
     legacy_download_link="$(construct_legacy_download_link "$azure_feed" "$channel" "$normalized_architecture" "$specific_version")" || valid_legacy_download_link=false
 
     if [ "$valid_legacy_download_link" = true ]; then
-        say_verbose "legacy_download_link=$legacy_download_link"
+        say_verbose "Constructed legacy named payload URL: $legacy_download_link"
     else
         say_verbose "Cound not construct a legacy_download_link; omitting..."
     fi
 
     install_root="$(resolve_installation_path "$install_dir")"
-    say_verbose "install_root=$install_root"
+    say_verbose "InstallRoot: $install_root"
 }
 
 install_dotnet() {
@@ -794,25 +848,46 @@ install_dotnet() {
             say_verbose "Legacy zip path: $zip_path"
             say "Downloading legacy link: $download_link"
             download "$download_link" "$zip_path" 2>&1 || download_failed=true
+
+            if [ "$download_failed" = true ]; then
+                say "Cannot download: $download_link"
+            fi
         fi
     fi
 
     if [ "$download_failed" = true ]; then
-        say_err "Could not download $asset_name version $specific_version"
+        say_err "Could not find/download: \`$asset_name\` with version = $specific_version"
+        say_err "Refer to: https://aka.ms/dotnet-os-lifecycle for information on .NET Core support"
         return 1
     fi
 
     say "Extracting zip from $download_link"
     extract_dotnet_package "$zip_path" "$install_root"
 
-    #  Check if the SDK version is now installed; if not, fail the installation.
-    if ! is_dotnet_package_installed "$install_root" "$asset_relative_path" "$specific_version"; then
-        say_err "$asset_name version $specific_version failed to install with an unknown error."
-        return 1
+    #  Check if the SDK version is installed; if not, fail the installation.
+    # if the version contains "RTM" or "servicing"; check if a 'release-type' SDK version is installed.
+    if [[ $specific_version == *"rtm"* || $specific_version == *"servicing"* ]]; then
+        IFS='-'
+        read -ra verArr <<< "$specific_version"
+        release_version="${verArr[0]}"
+        unset IFS;
+        say_verbose "Checking installation: version = $release_version"
+        if is_dotnet_package_installed "$install_root" "$asset_relative_path" "$release_version"; then
+            return 0
+        fi
     fi
 
-    return 0
+    #  Check if the standard SDK version is installed.
+    say_verbose "Checking installation: version = $specific_product_version"
+    if is_dotnet_package_installed "$install_root" "$asset_relative_path" "$specific_product_version"; then
+        return 0
+    fi
+
+    say_err "\`$asset_name\` with version = $specific_product_version failed to install with an unknown error."
+    return 1
 }
+
+args=("$@")
 
 local_version_file_relative_path="/.version"
 bin_folder_relative_path=""
@@ -820,6 +895,7 @@ temporary_file_template="${TMPDIR:-/tmp}/dotnet.XXXXXXXXX"
 
 channel="LTS"
 version="Latest"
+json_file=""
 install_dir="<auto>"
 architecture="<auto>"
 dry_run=false
@@ -832,6 +908,7 @@ verbose=false
 runtime=""
 runtime_id=""
 override_non_versioned_files=true
+non_dynamic_parameters=""
 
 while [ $# -ne 0 ]
 do
@@ -864,6 +941,9 @@ do
             runtime="$1"
             if [[ "$runtime" != "dotnet" ]] && [[ "$runtime" != "aspnetcore" ]]; then
                 say_err "Unsupported value for --runtime: '$1'. Valid values are 'dotnet' and 'aspnetcore'."
+                if [[ "$runtime" == "windowsdesktop" ]]; then
+                    say_err "WindowsDesktop archives are manufactured for Windows platforms only."
+                fi
                 exit 1
             fi
             ;;
@@ -872,31 +952,43 @@ do
             ;;
         --no-path|-[Nn]o[Pp]ath)
             no_path=true
+            non_dynamic_parameters+=" $name"
             ;;
         --verbose|-[Vv]erbose)
             verbose=true
+            non_dynamic_parameters+=" $name"
             ;;
         --no-cdn|-[Nn]o[Cc]dn)
             no_cdn=true
+            non_dynamic_parameters+=" $name"
             ;;
         --azure-feed|-[Aa]zure[Ff]eed)
             shift
             azure_feed="$1"
+            non_dynamic_parameters+=" $name "\""$1"\"""
             ;;
         --uncached-feed|-[Uu]ncached[Ff]eed)
             shift
             uncached_feed="$1"
+            non_dynamic_parameters+=" $name "\""$1"\"""
             ;;
         --feed-credential|-[Ff]eed[Cc]redential)
             shift
             feed_credential="$1"
+            non_dynamic_parameters+=" $name "\""$1"\"""
             ;;
         --runtime-id|-[Rr]untime[Ii]d)
             shift
             runtime_id="$1"
+            non_dynamic_parameters+=" $name "\""$1"\"""
+            ;;
+        --jsonfile|-[Jj][Ss]on[Ff]ile)
+            shift
+            json_file="$1"
             ;;
         --skip-non-versioned-files|-[Ss]kip[Nn]on[Vv]ersioned[Ff]iles)
             override_non_versioned_files=false
+            non_dynamic_parameters+=" $name"
             ;;
         -?|--?|-h|--help|-[Hh]elp)
             script_name="$(basename "$0")"
@@ -916,6 +1008,7 @@ do
             echo "              examples: 2.0; 1.0"
             echo "          - Branch name"
             echo "              examples: release/2.0.0; Master"
+            echo "          Note: The version parameter overrides the channel parameter."
             echo "  -v,--version <VERSION>         Use specific VERSION, Defaults to \`$version\`."
             echo "      -Version"
             echo "          Possible values:"
@@ -934,22 +1027,25 @@ do
             echo "          Possible values:"
             echo "          - dotnet     - the Microsoft.NETCore.App shared runtime"
             echo "          - aspnetcore - the Microsoft.AspNetCore.App shared runtime"
-            echo "  --skip-non-versioned-files         Skips non-versioned files if they already exist, such as the dotnet executable."
-            echo "      -SkipNonVersionedFiles"
             echo "  --dry-run,-DryRun                  Do not perform installation. Display download link."
             echo "  --no-path, -NoPath                 Do not set PATH for the current process."
             echo "  --verbose,-Verbose                 Display diagnostics information."
             echo "  --azure-feed,-AzureFeed            Azure feed location. Defaults to $azure_feed, This parameter typically is not changed by the user."
             echo "  --uncached-feed,-UncachedFeed      Uncached feed location. This parameter typically is not changed by the user."
-            echo "  --no-cdn,-NoCdn                    Disable downloading from the Azure CDN, and use the uncached feed directly."
             echo "  --feed-credential,-FeedCredential  Azure feed shared access token. This parameter typically is not specified."
+            echo "  --skip-non-versioned-files         Skips non-versioned files if they already exist, such as the dotnet executable."
+            echo "      -SkipNonVersionedFiles"
+            echo "  --no-cdn,-NoCdn                    Disable downloading from the Azure CDN, and use the uncached feed directly."
+            echo "  --jsonfile <JSONFILE>              Determines the SDK version from a user specified global.json file."
+            echo "                                     Note: global.json must have a value for 'SDK:Version'"
             echo "  --runtime-id                       Installs the .NET Tools for the given platform (use linux-x64 for portable linux)."
             echo "      -RuntimeId"
             echo "  -?,--?,-h,--help,-Help             Shows this help message"
             echo ""
             echo "Obsolete parameters:"
             echo "  --shared-runtime                   The recommended alternative is '--runtime dotnet'."
-            echo "      -SharedRuntime                 Installs just the shared runtime bits, not the entire SDK."
+            echo "                                     This parameter is obsolete and may be removed in a future version of this script."
+            echo "                                     Installs just the shared runtime bits, not the entire SDK."
             echo ""
             echo "Install Location:"
             echo "  Location is chosen in following order:"
@@ -971,19 +1067,32 @@ if [ "$no_cdn" = true ]; then
     azure_feed="$uncached_feed"
 fi
 
+say "Note that the intended use of this script is for Continuous Integration (CI) scenarios, where:"
+say "- The SDK needs to be installed without user interaction and without admin rights."
+say "- The SDK installation doesn't need to persist across multiple CI runs."
+say "To set up a development environment or to run apps, use installers rather than this script. Visit https://dotnet.microsoft.com/download to get the installer.\n"
+
 check_min_reqs
 calculate_vars
+script_name=$(basename "$0")
 
 if [ "$dry_run" = true ]; then
-    say "Payload URL: $download_link"
+    say "Payload URLs:"
+    say "Primary named payload URL: $download_link"
     if [ "$valid_legacy_download_link" = true ]; then
-        say "Legacy payload URL: $legacy_download_link"
+        say "Legacy named payload URL: $legacy_download_link"
     fi
-    say "Repeatable invocation: ./$(basename "$0") --version $specific_version --channel $channel --install-dir $install_dir"
+    repeatable_command="./$script_name --version "\""$specific_version"\"" --install-dir "\""$install_root"\"" --architecture "\""$normalized_architecture"\"""
+    if [[ "$runtime" == "dotnet" ]]; then
+        repeatable_command+=" --runtime "\""dotnet"\"""
+    elif [[ "$runtime" == "aspnetcore" ]]; then
+        repeatable_command+=" --runtime "\""aspnetcore"\"""
+    fi
+    repeatable_command+="$non_dynamic_parameters"
+    say "Repeatable invocation: $repeatable_command"
     exit 0
 fi
 
-check_pre_reqs
 install_dotnet
 
 bin_path="$(get_absolute_path "$(combine_paths "$install_root" "$bin_folder_relative_path")")"
@@ -994,4 +1103,6 @@ else
     say "Binaries of dotnet can be found in $bin_path"
 fi
 
+say "Note that the script does not resolve dependencies during installation."
+say "To check the list of dependencies, go to https://docs.microsoft.com/dotnet/core/install, select your operating system and check the \"Dependencies\" section."
 say "Installation finished successfully."
