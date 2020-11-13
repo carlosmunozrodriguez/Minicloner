@@ -6,8 +6,10 @@ jobs:
     matrix:
       Windows:
         imageName: 'windows-2019'
-      Linux:
-        imageName: 'ubuntu-18.04' # ubuntu-20.04 doesn't support net core 1.1 anymore'
+      Ubuntu-18.04:
+        imageName: 'ubuntu-18.04'
+      Ubuntu-20.04:
+        imageName: 'ubuntu-20.04' # ubuntu-20.04 doesn't support net core sdk 1.1'
       macOS:
         imageName: 'macOS-10.15'
 
@@ -62,11 +64,13 @@ jobs:
 
   - task: UseDotNet@2
     displayName: 'Install dotnet SDK 1.1.14'
+    condition: ne( $(imageName), 'ubuntu-20.04' )
     inputs:
       version: '1.1.14'
 
   - task: DotNetCoreCLI@1
     displayName: 'Test .NET Core 1.0'
+    condition: ne( $(imageName), 'ubuntu-20.04' )
     inputs:
       command: 'test'
       projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
@@ -74,6 +78,7 @@ jobs:
 
   - task: PublishTestResults@2
     displayName: 'Publish Test Results .NET Core 1.0'
+    condition: ne( $(imageName), 'ubuntu-20.04' )
     inputs:
       testRunner: 'VSTest'
       testResultsFiles: '**/$(imageName)-netcoreapp1.0*.trx'
