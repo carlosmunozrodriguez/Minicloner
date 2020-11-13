@@ -64,7 +64,7 @@ jobs:
 
   - task: UseDotNet@2
     displayName: 'Install dotnet SDK 1.1.14'
-    condition: eq( variables.imageName', 'ubuntu-20.04' )
+    condition: eq( variables.imageName, 'ubuntu-20.04' )
     inputs:
       version: '1.1.14'
 
