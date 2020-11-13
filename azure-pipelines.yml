@@ -23,7 +23,7 @@ jobs:
     displayName: 'dotnet --info'
     inputs:
       command: 'custom'
-      arguments: '--info'
+      custom: '--info'
 
   - task: DotNetCoreCLI@2
     displayName: 'Build'
@@ -35,7 +35,7 @@ jobs:
     displayName: 'dotnet --info'
     inputs:
       command: 'custom'
-      arguments: '--info'
+      custom: '--info'
 
   - task: DotNetCoreCLI@2
     displayName: 'Test .NET Core 2.0'
@@ -57,7 +57,7 @@ jobs:
     displayName: 'dotnet --info'
     inputs:
       command: 'custom'
-      arguments: '--info'
+      custom: '--info'
 
   - task: DotNetCoreCLI@2
     displayName: 'Test .NET Framework 4.5'
@@ -86,7 +86,7 @@ jobs:
     displayName: 'dotnet --info'
     inputs:
       command: 'custom'
-      arguments: '--info'
+      custom: '--info'
 
   - task: DotNetCoreCLI@1
     displayName: 'Test .NET Core 1.0'
