@@ -18,9 +18,28 @@ jobs:
 
   steps:
   - task: UseDotNet@2
-    displayName: 'Install dotnet SDK 2.2.207'
+    displayName: 'Install older dotnet 1.1 runtime'
     inputs:
+      packageType: 'runtime'
+      version: '1.1.14'
+
+  - task: UseDotNet@2
+    displayName: 'Install older dotnet 2.2 runtime'
+    inputs:
+      packageType: 'runtime'
       version: '2.2.207'
+
+  - task: UseDotNet@2
+    displayName: 'Install current dotnet SDK'
+    inputs:
+      packageType: 'sdk'
+      useGlobalJson: true
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet --info'
+    inputs:
+      command: 'custom'
+      custom: '--info'
 
   - task: DotNetCoreCLI@2
     displayName: 'Build'
@@ -32,7 +51,6 @@ jobs:
     displayName: 'Test .NET Core 2.0'
     inputs:
       command: 'test'
-      projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
       arguments: '--configuration Release --framework netcoreapp2.0 --logger "trx;LogFileName=$(imageName)-netcoreapp2.0.trx" --no-build'
       publishTestResults: false
 
@@ -49,7 +67,6 @@ jobs:
     condition: eq( variables['Agent.OS'], 'Windows_NT' )
     inputs:
       command: 'test'
-      projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
       arguments: '--configuration Release --framework net452 --logger "trx;LogFileName=$(imageName)-net452.trx" --no-build'
       publishTestResults: false
 
@@ -61,12 +78,6 @@ jobs:
       testResultsFiles: '**/$(imageName)-net452*.trx'
       testRunTitle: '$(imageName) - .NET Framework 4.5'
       failTaskOnFailedTests: true
-
-  - task: UseDotNet@2
-    displayName: 'Install dotnet SDK 1.1.14'
-    condition: ne( variables.imageName, 'ubuntu-20.04' )
-    inputs:
-      version: '1.1.14'
 
   - task: DotNetCoreCLI@1
     displayName: 'Test .NET Core 1.0'
