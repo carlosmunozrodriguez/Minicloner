@@ -8,8 +8,6 @@ jobs:
         imageName: 'windows-2019'
       Ubuntu-18.04:
         imageName: 'ubuntu-18.04'
-      Ubuntu-20.04:
-        imageName: 'ubuntu-20.04' # ubuntu-20.04 doesn't support net core sdk 1.1'
       macOS:
         imageName: 'macOS-10.15'
 
@@ -28,6 +26,12 @@ jobs:
     inputs:
       packageType: 'runtime'
       version: '2.2.8'
+
+  - task: UseDotNet@2
+    displayName: 'Install older dotnet 3.1 runtime'
+    inputs:
+      packageType: 'runtime'
+      version: '3.1.10'
 
   - task: UseDotNet@2
     displayName: 'Install current dotnet SDK'
