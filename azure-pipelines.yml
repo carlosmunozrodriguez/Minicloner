@@ -7,7 +7,7 @@ jobs:
       Windows:
         imageName: 'windows-2019'
       Ubuntu-18.04:
-        imageName: 'ubuntu-18.04'
+        imageName: 'ubuntu-18.04' # ubuntu-20.04 doesn't support net core sdk 1.1'
       macOS:
         imageName: 'macOS-10.15'
 
@@ -52,6 +52,38 @@ jobs:
       arguments: '--configuration Release'
 
   - task: DotNetCoreCLI@2
+    displayName: 'Test .NET Framework 4.5'
+    condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'))
+    inputs:
+      command: 'test'
+      arguments: '--configuration Release --framework net452 --logger "trx;LogFileName=$(imageName)-net452.trx" --no-build'
+      publishTestResults: false
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results .NET Framework 4.5'
+    condition: and(succeeded(), eq(variables['Agent.OS'], 'Windows_NT'))
+    inputs:
+      testRunner: 'VSTest'
+      testResultsFiles: '**/$(imageName)-net452*.trx'
+      testRunTitle: '$(imageName) - .NET Framework 4.5'
+      failTaskOnFailedTests: true
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Test .NET Core 1.0'
+    inputs:
+      command: 'test'
+      arguments: '--configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=$(imageName)-netcoreapp1.0.trx" --no-build'
+      publishTestResults: false
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results .NET Core 1.0'
+    inputs:
+      testRunner: 'VSTest'
+      testResultsFiles: '**/$(imageName)-netcoreapp1.0*.trx'
+      testRunTitle: '$(imageName) - .NET Core 1.0'
+      failTaskOnFailedTests: true
+
+  - task: DotNetCoreCLI@2
     displayName: 'Test .NET Core 2.0'
     inputs:
       command: 'test'
@@ -66,34 +98,3 @@ jobs:
       testRunTitle: '$(imageName) - .NET Core 2.0'
       failTaskOnFailedTests: true
 
-  - task: DotNetCoreCLI@2
-    displayName: 'Test .NET Framework 4.5'
-    condition: eq( variables['Agent.OS'], 'Windows_NT' )
-    inputs:
-      command: 'test'
-      arguments: '--configuration Release --framework net452 --logger "trx;LogFileName=$(imageName)-net452.trx" --no-build'
-      publishTestResults: false
-
-  - task: PublishTestResults@2
-    displayName: 'Publish Test Results .NET Framework 4.5'
-    condition: eq( variables['Agent.OS'], 'Windows_NT' )
-    inputs:
-      testRunner: 'VSTest'
-      testResultsFiles: '**/$(imageName)-net452*.trx'
-      testRunTitle: '$(imageName) - .NET Framework 4.5'
-      failTaskOnFailedTests: true
-
-  - task: DotNetCoreCLI@1
-    displayName: 'Test .NET Core 1.0'
-    inputs:
-      command: 'test'
-      projects: 'Minicloner.Tests/Minicloner.Tests.csproj'
-      arguments: '--configuration Release --framework netcoreapp1.0 --logger "trx;LogFileName=$(imageName)-netcoreapp1.0.trx" --no-build'
-
-  - task: PublishTestResults@2
-    displayName: 'Publish Test Results .NET Core 1.0'
-    inputs:
-      testRunner: 'VSTest'
-      testResultsFiles: '**/$(imageName)-netcoreapp1.0*.trx'
-      testRunTitle: '$(imageName) - .NET Core 1.0'
-      failTaskOnFailedTests: true

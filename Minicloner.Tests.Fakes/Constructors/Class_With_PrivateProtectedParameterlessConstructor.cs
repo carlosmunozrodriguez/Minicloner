@@ -7,6 +7,6 @@
 
         private protected Class_With_PrivateProtectedParameterlessConstructor() => PropertyInitializedInConstructor = 1;
 
-        public static Class_With_PrivateProtectedParameterlessConstructor Create() => new Class_With_PrivateProtectedParameterlessConstructor();
+        public static Class_With_PrivateProtectedParameterlessConstructor Create() => new();
     }
 }
