@@ -7,6 +7,6 @@
 
         internal Class_With_InternalParameterlessConstructor() => PropertyInitializedInConstructor = 1;
 
-        public static Class_With_InternalParameterlessConstructor Create() => new Class_With_InternalParameterlessConstructor();
+        public static Class_With_InternalParameterlessConstructor Create() => new();
     }
 }
