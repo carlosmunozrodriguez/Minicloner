@@ -46,6 +46,20 @@ jobs:
       custom: '--info'
 
   - task: DotNetCoreCLI@2
+    displayName: 'Install dotnet-outdated'
+    inputs:
+      command: 'custom'
+      custom: 'tool'
+      arguments: 'install --global dotnet-outdated-tool'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet outdated'
+    inputs:
+      command: 'custom'
+      custom: 'outdated'
+      arguments: '--fail-on-updates'
+
+  - task: DotNetCoreCLI@2
     displayName: 'Build'
     inputs:
       command: 'build'
