@@ -58,7 +58,7 @@ Invoke-Task AutomatedBuild {
     }
 
     Invoke-Task Dotnet-outdated {
-        dotnet outdated --fail-on-updates
+        dotnet outdated --fail-on-updates .
     }
 
     Invoke-Task Build {

@@ -57,7 +57,7 @@ jobs:
     inputs:
       command: 'custom'
       custom: 'outdated'
-      arguments: '--fail-on-updates'
+      arguments: '--fail-on-updates .'
 
   - task: DotNetCoreCLI@2
     displayName: 'Build'
