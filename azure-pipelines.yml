@@ -50,7 +50,7 @@ jobs:
     inputs:
       command: 'custom'
       custom: 'tool'
-      arguments: 'install --global dotnet-outdated-tool'
+      arguments: 'update --global dotnet-outdated-tool'
 
   - task: DotNetCoreCLI@2
     displayName: 'dotnet outdated'
@@ -111,4 +111,3 @@ jobs:
       testResultsFiles: '**/$(imageName)-netcoreapp2.0*.trx'
       testRunTitle: '$(imageName) - .NET Core 2.0'
       failTaskOnFailedTests: true
-
