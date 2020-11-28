@@ -53,6 +53,12 @@ jobs:
       arguments: 'update --global dotnet-outdated-tool'
 
   - task: DotNetCoreCLI@2
+    displayName: 'dotnet restore'
+    inputs:
+      command: 'custom'
+      custom: 'restore'
+
+  - task: DotNetCoreCLI@2
     displayName: 'dotnet outdated'
     inputs:
       command: 'custom'
