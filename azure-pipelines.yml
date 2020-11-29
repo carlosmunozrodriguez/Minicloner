@@ -52,24 +52,24 @@ jobs:
       custom: 'tool'
       arguments: 'update --global dotnet-outdated-tool'
 
+  # Required before dotnet outdated as a workaround to a very odd bug: [When running concurrent jobs in Azure Pipelines only macOS-10.15 agent seems to run dotnet outdated correctly](https://github.com/dotnet-outdated/dotnet-outdated/issues/63)
   - task: DotNetCoreCLI@2
     displayName: 'dotnet restore'
     inputs:
-      command: 'custom'
-      custom: 'restore'
+      command: 'restore'
 
   - task: DotNetCoreCLI@2
     displayName: 'dotnet outdated'
     inputs:
       command: 'custom'
       custom: 'outdated'
-      arguments: '--fail-on-updates .'
+      arguments: '--fail-on-updates'
 
   - task: DotNetCoreCLI@2
     displayName: 'Build'
     inputs:
       command: 'build'
-      arguments: '--configuration Release'
+      arguments: '--configuration Release --no-restore'
 
   - task: DotNetCoreCLI@2
     displayName: 'Test .NET Framework 4.5'
