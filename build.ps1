@@ -53,6 +53,14 @@ Invoke-Task AutomatedBuild {
         dotnet clean --configuration Release
     }
 
+    Invoke-Task Install-Dotnet-Outdated {
+        dotnet tool update --global dotnet-outdated-tool
+    }
+
+    Invoke-Task Dotnet-outdated {
+        dotnet outdated --fail-on-updates .
+    }
+
     Invoke-Task Build {
         dotnet build --configuration Release
     }

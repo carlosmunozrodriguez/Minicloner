@@ -46,6 +46,26 @@ jobs:
       custom: '--info'
 
   - task: DotNetCoreCLI@2
+    displayName: 'Install dotnet-outdated'
+    inputs:
+      command: 'custom'
+      custom: 'tool'
+      arguments: 'update --global dotnet-outdated-tool'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet restore'
+    inputs:
+      command: 'custom'
+      custom: 'restore'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet outdated'
+    inputs:
+      command: 'custom'
+      custom: 'outdated'
+      arguments: '--fail-on-updates .'
+
+  - task: DotNetCoreCLI@2
     displayName: 'Build'
     inputs:
       command: 'build'
@@ -97,4 +117,3 @@ jobs:
       testResultsFiles: '**/$(imageName)-netcoreapp2.0*.trx'
       testRunTitle: '$(imageName) - .NET Core 2.0'
       failTaskOnFailedTests: true
-
