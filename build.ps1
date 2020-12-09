@@ -42,7 +42,7 @@ Invoke-Task AutomatedBuild {
     }
 
     Invoke-Task Get-DotNet-Sdk-5.0 {
-        Install-DotNetSdk "5.0.100"
+        Install-DotNetSdk "5.0.101"
     }
 
     Invoke-Task Info {
@@ -58,7 +58,7 @@ Invoke-Task AutomatedBuild {
     }
 
     Invoke-Task Dotnet-outdated {
-        dotnet outdated --fail-on-updates .
+        dotnet outdated --fail-on-updates
     }
 
     Invoke-Task Build {
