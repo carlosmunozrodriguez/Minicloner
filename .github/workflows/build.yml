@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+
+    runs-on: windows-2019
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET 1.1
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: 1.1.14
+    - name: Setup .NET 2.2
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: 2.2.207
+    - name: Setup .NET 3.1
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: 3.1.406
+    - name: dotnet info
+      run: dotnet --info
+    - name: Restore
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test
+      run: dotnet test --configuration Release --no-build
