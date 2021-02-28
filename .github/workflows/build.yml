@@ -37,6 +37,9 @@ jobs:
     - name: dotnet info
       run: dotnet --info
 
+    - name: Clear Nuget cache
+      run: dotnet nuget locals all --clear
+
     - name: Restore
       run: dotnet restore
 
