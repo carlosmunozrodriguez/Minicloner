@@ -41,14 +41,8 @@ jobs:
     - name: dotnet info
       run: dotnet --info
 
-    - name: Clear Nuget cache
-      run: dotnet nuget locals all --clear
-
-    - name: Restore
-      run: dotnet restore
-
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release
 
     - name: Test
       run: dotnet test --configuration Release --no-build
