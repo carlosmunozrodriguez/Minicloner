@@ -41,17 +41,20 @@ jobs:
     - name: dotnet info
       run: dotnet --info
 
+    - name: Install dotnet-outdated
+      run: dotnet tool update --global dotnet-outdated-tool
+
     - name: Clear Nuget cache
       run: dotnet nuget locals all --clear
 
-    - name: Install dotnet-outdated
-      run: dotnet tool update --global dotnet-outdated-tool
+    - name: Restore
+      run: dotnet restore
 
     - name: Run dotnet-outdated
       run: dotnet outdated --fail-on-updates
 
     - name: Build
-      run: dotnet build --configuration Release
+      run: dotnet build --configuration Release --no-restore
 
     - name: Test
       run: dotnet test --configuration Release --no-build
