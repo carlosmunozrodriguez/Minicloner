@@ -44,6 +44,12 @@ jobs:
     - name: Clear Nuget cache
       run: dotnet nuget locals all --clear
 
+    - name: Install dotnet-outdated
+      run: dotnet tool update --global dotnet-outdated-tool
+
+    - name: Run dotnet-outdated
+      run: dotnet outdated --fail-on-updates
+
     - name: Build
       run: dotnet build --configuration Release
 
