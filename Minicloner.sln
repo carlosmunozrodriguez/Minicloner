@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		azure-pipelines.yml = azure-pipelines.yml
 		build.ps1 = build.ps1
+		.github\workflows\build.yml = .github\workflows\build.yml
 		commands.json = commands.json
 		dotnet-install.ps1 = dotnet-install.ps1
 		dotnet-install.sh = dotnet-install.sh
@@ -23,6 +24,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minicloner.Tests", "Minicloner.Tests\Minicloner.Tests.csproj", "{1272F2EE-F8C9-46A9-BA7B-F1EE9AE4943D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minicloner.Tests.Fakes", "Minicloner.Tests.Fakes\Minicloner.Tests.Fakes.csproj", "{15DB69E7-DEA9-4507-B469-0F30DD67E538}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{FBFA88F9-EBBC-4E3F-9BA9-E8E088CB3F6E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{99A04491-E5CA-4534-8906-1B98F24781A0}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +53,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{99A04491-E5CA-4534-8906-1B98F24781A0} = {FBFA88F9-EBBC-4E3F-9BA9-E8E088CB3F6E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5E0B2565-00F4-4199-9937-399C074F2CB9}

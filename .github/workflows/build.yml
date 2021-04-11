@@ -1,0 +1,60 @@
+name: Build
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [windows-2019, ubuntu-18.04, macOS-10.15]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET Core 1.1
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: 1.1.14
+    
+    - name: Setup .NET Core 2.2
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: 2.2.207
+
+    - name: Setup .NET Core 3.1
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: 3.1.406
+
+    - name: Setup .NET 5.0
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: 5.0.103
+
+    - name: dotnet info
+      run: dotnet --info
+
+    - name: Install dotnet-outdated
+      run: dotnet tool update --global dotnet-outdated-tool
+
+    - name: Clear Nuget cache
+      run: dotnet nuget locals all --clear
+
+    - name: Restore
+      run: dotnet restore
+
+    - name: Run dotnet-outdated
+      run: dotnet outdated --fail-on-updates
+
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Test
+      run: dotnet test --configuration Release --no-build
