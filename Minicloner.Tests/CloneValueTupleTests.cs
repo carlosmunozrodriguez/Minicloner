@@ -46,7 +46,7 @@ namespace Minicloner.Tests
             var cloned = new Cloner().Clone(tuple);
 
             Assert.IsType<ValueTuple<Class_With_PublicField>>(cloned);
-            Assert.Equal(tuple.Item1, cloned.Item1);
+            Assert.NotSame(tuple.Item1, cloned.Item1);
             Assert.Equal(tuple.Item1.PublicField, cloned.Item1.PublicField);
         }
     }
