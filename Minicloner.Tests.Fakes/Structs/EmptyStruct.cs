@@ -1,4 +1,4 @@
-namespace Minicloner.Tests.Fakes
+namespace Minicloner.Tests.Fakes.Structs
 {
     public struct EmptyStruct
     {

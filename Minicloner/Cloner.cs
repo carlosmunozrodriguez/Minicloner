@@ -26,7 +26,7 @@ namespace Minicloner
                     .GetTypeInfo()
 #endif
                     .IsValueType
-                    ? @object
+                    ? CloneValueType(@object)
                     : CloneReferenceType(@object)
             };
 
@@ -62,6 +62,35 @@ namespace Minicloner
                 .Select(indices => indices.ToArray()))
             {
                 clone.SetValue(CloneObject(array.GetValue(indices)), indices);
+            }
+
+            return clone;
+        }
+
+        private object CloneValueType(object valueTypeObject)
+        {
+            var type = valueTypeObject.GetType();
+
+            if (type
+#if NETSTANDARD1_0
+                    .GetTypeInfo()
+#endif
+                    .IsPrimitive)
+            {
+                return valueTypeObject;
+            }
+
+            var clone = _clonedInstances[valueTypeObject] = FormatterServices.GetUninitializedObject(type);
+
+            foreach (var fieldInfo in type
+                .GetRuntimeFields()
+                .Where(
+                    x => !x.IsStatic && // All instances should already share the same value.
+                         x.DeclaringType == type // Don't clone parent class fields yet
+                )
+            )
+            {
+                fieldInfo.SetValue(clone, CloneObject(fieldInfo.GetValue(valueTypeObject)));
             }
 
             return clone;

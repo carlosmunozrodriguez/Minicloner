@@ -42,7 +42,7 @@ Invoke-Task AutomatedBuild {
     }
 
     Invoke-Task Get-DotNet-Sdk-5.0 {
-        Install-DotNetSdk "5.0.101"
+        Install-DotNetSdk "5.0.401"
     }
 
     Invoke-Task Info {

@@ -21,9 +21,6 @@ namespace Minicloner.Tests
             var cloned = new Cloner().Clone(notNullInt32);
 
             Assert.IsType<int>(cloned);
-#pragma warning disable xUnit2005 // We are comparing instances not values
-            Assert.NotSame(notNullInt32, cloned);
-#pragma warning restore xUnit2005
             Assert.Equal(notNullInt32, cloned);
         }
     }
