@@ -1,4 +1,5 @@
-﻿using Minicloner.Tests.Fakes;
+﻿using Minicloner.Tests.Fakes.Fields;
+using Minicloner.Tests.Fakes.Structs;
 using Xunit;
 
 namespace Minicloner.Tests
@@ -12,22 +13,35 @@ namespace Minicloner.Tests
             var cloned = new Cloner().Clone(emptyStruct);
 
             Assert.IsType<EmptyStruct>(cloned);
-#pragma warning disable xUnit2005 // We are comparing instances not values
-            Assert.NotSame(emptyStruct, cloned);
-#pragma warning restore xUnit2005
+            Assert.Equal(emptyStruct, cloned);
         }
 
         [Fact]
-        public void Clone_Struct_With_PublicField()
+        public void Clone_Struct_With_ValueTypeField()
         {
-            var structWithPublicField = new Struct_With_PublicValueTypeField { PublicField = 1 };
+            var structWithPublicValueTypeField = new StructWithPublicValueTypeField { PublicField = 1 };
+            var cloned = new Cloner().Clone(structWithPublicValueTypeField);
+
+            Assert.IsType<StructWithPublicValueTypeField>(cloned);
+            Assert.Equal(structWithPublicValueTypeField, cloned);
+            Assert.Equal(structWithPublicValueTypeField.PublicField, cloned.PublicField);
+        }
+
+        [Fact]
+        public void Clone_Struct_With_ReferenceTypeField()
+        {
+            var structWithPublicField = new StructWithPublicReferenceTypeField
+            {
+                ClassWithPublicField = new Class_With_PublicField
+                {
+                    PublicField = 1
+                }
+            };
             var cloned = new Cloner().Clone(structWithPublicField);
 
-            Assert.IsType<Struct_With_PublicValueTypeField>(cloned);
-#pragma warning disable xUnit2005 // We are comparing instances not values
-            Assert.NotSame(structWithPublicField, cloned);
-#pragma warning restore xUnit2005
-            Assert.Equal(structWithPublicField.PublicField, cloned.PublicField);
+            Assert.IsType<StructWithPublicReferenceTypeField>(cloned);
+            Assert.NotSame(structWithPublicField.ClassWithPublicField, cloned.ClassWithPublicField);
+            Assert.Equal(structWithPublicField.ClassWithPublicField.PublicField, cloned.ClassWithPublicField.PublicField);
         }
     }
 }
