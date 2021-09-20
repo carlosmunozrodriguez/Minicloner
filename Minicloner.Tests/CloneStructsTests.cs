@@ -19,10 +19,10 @@ namespace Minicloner.Tests
         [Fact]
         public void Clone_Struct_With_ValueTypeField()
         {
-            var structWithPublicValueTypeField = new StructWithPublicValueTypeField { PublicField = 1 };
+            var structWithPublicValueTypeField = new Struct_With_PublicValueTypeField { PublicField = 1 };
             var cloned = new Cloner().Clone(structWithPublicValueTypeField);
 
-            Assert.IsType<StructWithPublicValueTypeField>(cloned);
+            Assert.IsType<Struct_With_PublicValueTypeField>(cloned);
             Assert.Equal(structWithPublicValueTypeField, cloned);
             Assert.Equal(structWithPublicValueTypeField.PublicField, cloned.PublicField);
         }
@@ -30,7 +30,7 @@ namespace Minicloner.Tests
         [Fact]
         public void Clone_Struct_With_ReferenceTypeField()
         {
-            var structWithPublicField = new StructWithPublicReferenceTypeField
+            var structWithPublicField = new Struct_With_PublicReferenceTypeField
             {
                 ClassWithPublicField = new Class_With_PublicField
                 {
@@ -39,7 +39,7 @@ namespace Minicloner.Tests
             };
             var cloned = new Cloner().Clone(structWithPublicField);
 
-            Assert.IsType<StructWithPublicReferenceTypeField>(cloned);
+            Assert.IsType<Struct_With_PublicReferenceTypeField>(cloned);
             Assert.NotSame(structWithPublicField.ClassWithPublicField, cloned.ClassWithPublicField);
             Assert.Equal(structWithPublicField.ClassWithPublicField.PublicField, cloned.ClassWithPublicField.PublicField);
         }

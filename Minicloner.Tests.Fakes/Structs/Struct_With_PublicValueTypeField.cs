@@ -1,6 +1,6 @@
 ﻿namespace Minicloner.Tests.Fakes.Structs
 {
-    public struct StructWithPublicValueTypeField
+    public struct Struct_With_PublicValueTypeField
     {
         public int PublicField;
     }
