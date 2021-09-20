@@ -1,5 +1,5 @@
-﻿using System;
-using Minicloner.Tests.Fakes.Fields;
+﻿using Minicloner.Tests.Fakes.Fields;
+using System;
 using Xunit;
 
 namespace Minicloner.Tests

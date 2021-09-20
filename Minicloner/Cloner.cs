@@ -82,16 +82,9 @@ namespace Minicloner
 
             var clone = _clonedInstances[valueTypeObject] = FormatterServices.GetUninitializedObject(type);
 
-            foreach (var fieldInfo in type
-                .GetRuntimeFields()
-                .Where(
-                    x => !x.IsStatic && // All instances should already share the same value.
-                         x.DeclaringType == type // Don't clone parent class fields yet
-                )
-            )
-            {
-                fieldInfo.SetValue(clone, CloneObject(fieldInfo.GetValue(valueTypeObject)));
-            }
+            // We don't need to iterate the hierarchy of value types since structs can't inherit from other class/struct
+
+            SetFields(valueTypeObject, type, clone);
 
             return clone;
         }
@@ -101,18 +94,9 @@ namespace Minicloner
             var type = referenceTypeObject.GetType();
             var clone = _clonedInstances[referenceTypeObject] = FormatterServices.GetUninitializedObject(type);
 
-            while (type != null)
+            while (type is not null)
             {
-                foreach (var fieldInfo in type
-                    .GetRuntimeFields()
-                    .Where(
-                        x => !x.IsStatic && // All instances should already share the same value.
-                             x.DeclaringType == type // Don't clone parent class fields yet
-                    )
-                )
-                {
-                    fieldInfo.SetValue(clone, CloneObject(fieldInfo.GetValue(referenceTypeObject)));
-                }
+                SetFields(referenceTypeObject, type, clone);
 
                 type = type
 #if NETSTANDARD1_0
@@ -122,6 +106,20 @@ namespace Minicloner
             }
 
             return clone;
+        }
+
+        private void SetFields(object originalObject, Type type, object clone)
+        {
+            foreach (var fieldInfo in type
+                .GetRuntimeFields()
+                .Where(x =>
+                    !x.IsStatic && // All instances should already share the same value.
+                    x.DeclaringType == type // Don't clone parent class fields yet
+                )
+            )
+            {
+                fieldInfo.SetValue(clone, CloneObject(fieldInfo.GetValue(originalObject)));
+            }
         }
     }
 }
