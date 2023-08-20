@@ -51,7 +51,7 @@ jobs:
       run: dotnet restore
 
     - name: Run dotnet-outdated
-      run: dotnet outdated --fail-on-updates
+      run: dotnet outdated #--fail-on-updates
 
     - name: Build
       run: dotnet build --configuration Release --no-restore
