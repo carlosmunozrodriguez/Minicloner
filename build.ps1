@@ -38,11 +38,11 @@ Invoke-Task AutomatedBuild {
     }
 
     Invoke-Task Get-DotNet-Runtime-3.1 {
-        Install-DotNetRuntime "3.1.10"
+        Install-DotNetRuntime "3.1.32"
     }
 
     Invoke-Task Get-DotNet-Sdk-5.0 {
-        Install-DotNetSdk "5.0.401"
+        Install-DotNetSdk "5.0.408"
     }
 
     Invoke-Task Info {
@@ -54,7 +54,7 @@ Invoke-Task AutomatedBuild {
     }
 
     Invoke-Task Install-Dotnet-Outdated {
-        dotnet tool update --global dotnet-outdated-tool
+        dotnet tool update --global dotnet-outdated-tool --version 4.5.0
     }
 
     Invoke-Task Dotnet-outdated {
