@@ -1,6 +1,6 @@
 # Minicloner
 
-Small library for .NET to deep clone objects
+Small library for .NET to deep clone objects.
 
 ## Build Status
 
